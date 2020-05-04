@@ -1,6 +1,8 @@
 from flask import Flask, request, g, redirect, url_for, render_template
 from flask_babel import Babel
 from config import Config
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 import logging
 import os
@@ -29,6 +31,10 @@ if not app.debug:
 from app.blueprints.reisesteine import reisesteine
 app.register_blueprint(reisesteine)
 
+# database
+db = SQLAlchemy(app)
+migrate = Migrate(app, db)
+from app import models
 
 # set up babel
 babel = Babel(app)
