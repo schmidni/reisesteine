@@ -1,5 +1,7 @@
-from app import app, db, cli
-from app.models import Absender, Stein, Gestein
+from project import app
+from project import cli
+from project import db
+from project.models import Person, Stein, Gestein
 
 @app.shell_context_processor
 def make_shell_context():

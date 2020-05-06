@@ -1,7 +1,7 @@
-from app import db
+from project import db
 from datetime import datetime
 
-class Absender(db.Model):
+class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vorname = db.Column(db.String(32))
     nachname = db.Column(db.String(32))
@@ -17,7 +17,7 @@ class Absender(db.Model):
 
 class Gestein(db.Model):
     name = db.Column(db.String(32), primary_key=True)
-    steine = db.relationship('Stein', backref='gestein', lazy='dynamic')
+    steine = db.relationship('Stein', backref='gesteinsart', lazy='dynamic')
 
     def __repr__(self):
         return '<{}>'.format(self.name) 
@@ -33,8 +33,9 @@ class Stein(db.Model):
     geo_geschichte = db.Column(db.String(1))
     bild_stein = db.Column(db.String(64))
     bild_herkunft = db.Column(db.String(64))
-    absender_id = db.Column(db.Integer, db.ForeignKey('absender.id'))
+    absender_id = db.Column(db.Integer, db.ForeignKey('person.id'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
+    published = db.Column(db.Boolean)
 
     def __repr__(self):
-        return '<{}, {}>'.format(self.name, self.herkunft)    
+        return '<{}, {}, {}>'.format(self.gestein, self.herkunft, self.bild_stein)

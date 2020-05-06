@@ -26,15 +26,14 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('Portfolio startup')
 
-
-# import and register blueprints
-from app.blueprints.reisesteine import reisesteine
-app.register_blueprint(reisesteine)
-
 # database
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-from app import models
+from project import models
+
+# import and register blueprints
+from project.blueprints.reisesteine import reisesteine
+app.register_blueprint(reisesteine)
 
 # set up babel
 babel = Babel(app)
