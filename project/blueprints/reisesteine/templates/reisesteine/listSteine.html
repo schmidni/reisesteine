@@ -1,0 +1,61 @@
+{% extends "layouts/base.html" %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card">
+        <h5 class="card-header">Neuer Stein</h5>
+        <div class="card-body">
+            <form action="{{ url_for('reisesteine.newStein') }}" method="POST">
+                <div class="form-row align-items-center">
+                    <div class="col-sm-3 my-1">
+                        <label class="sr-only" for="inlineFormInputName">Gestein</label>
+                        <input name="gestein" type="text" class="form-control" id="inlineFormInputName" placeholder="Gestein">
+                    </div>
+                    <div class="col-sm-3 my-1">
+                        <label class="sr-only" for="inlineFormInputGroupUsername">Email Einsender</label>
+                        <div class="input-group">
+                            <input name="email" type="text" class="form-control" id="inlineFormInputGroupUsername" placeholder="Email Einsender">
+                        </div>
+                    </div>
+                    <div class="col-auto my-1">
+                        <button type="submit" class="btn btn-primary">Erstellen</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="container mt-5 pt-3">
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Gestein</th>
+            <th scope="col">Herkunft</th>
+            <th scope="col">Einsender</th>
+            <th scrope="col"></th>
+            <th scrope="col"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for stein in steine %}
+        <tr>
+            <th scope="row">{{stein.id}}</th>
+            <td>{{stein.gesteinsart}}</td>
+            <td>{{stein.herkunft}}</td>
+            <td>{{stein.absender}}</td>
+            <td>
+                <a href="{{ url_for('reisesteine.editStein', id=stein.id) }}" class="btn btn-primary btn-sm">editiern</a>
+            </td>
+            <td>
+                <a href="{{ url_for('reisesteine.deleteStein', id=stein.id) }}" class="btn btn-danger btn-sm">löschen</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+{% endblock %}

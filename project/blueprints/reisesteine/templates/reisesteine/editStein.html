@@ -1,0 +1,135 @@
+{% extends "layouts/base.html" %}
+
+{% block body %}
+<div class="container mt-3 pt-3">
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <h5 class="card-header">Absender</h5>
+                    <div class="card-body">
+                        <div class="form-group">
+                            {{ form.user_id.label }}
+                            {{ form.user_id(class_="form-control", readonly=true) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.vorname.label }}
+                            {{ form.vorname(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.nachname.label }}
+                            {{ form.nachname(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.email.label }}
+                            {{ form.email(class_="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                            {% for error in form.email.errors %}
+                            <div class="invalid-feedback">
+                                {{error}}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            {{ form.telefon.label }}
+                            {{ form.telefon(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.instagram.label }}
+                            {{ form.instagram(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.twitter.label }}
+                            {{ form.twitter(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.facebook.label }}
+                            {{ form.facebook(class_="form-control") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+
+                <div class="card">
+                    <h5 class="card-header">Gestein</h5>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.gestein_id.label }}
+                                {{ form.gestein_id(class_="form-control", readonly=true) }}
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                {{ form.gestein.label }}
+
+                                {{ form.gestein(class_="form-control" + (" is-invalid" if form.gestein.errors else "")) }}
+                                {% for error in form.gestein.errors %}
+                                <div class="invalid-feedback">
+                                    {{error}}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card mt-4">
+                    <h5 class="card-header">Stein</h5>
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.stein_id.label }}
+                                {{ form.stein_id(class_="form-control", readonly=true) }}
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                {{ form.herkunft.label }}
+                                {{ form.herkunft(class_="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.longitude.label }}
+                                {{ form.longitude(class_="form-control") }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.latitude.label }}
+                                {{ form.latitude(class_="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            {{ form.titel.label }}
+                            {{ form.titel(class_="form-control") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.bild_stein.label }}
+                            {{ form.bild_stein(class_="form-control-file") }}
+                        </div>
+                        <div class="form-group">
+                            {{ form.bild_herkunft.label }}
+                            {{ form.bild_herkunft(class_="form-control-file") }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 mt-4">
+                <div class="form-group">
+                    {{ form.pers_geschichte.label }}
+                    {{ form.pers_geschichte(class_="form-control", rows=10) }}
+                </div>
+                <div class="form-group">
+                    {{ form.geo_geschichte.label }}
+                    {{ form.geo_geschichte(class_="form-control", rows=10) }}
+                </div>
+            </div>
+            <div class="col-12">
+                {{ form.submit(class_="btn btn-primary") }}
+                <a class="btn btn-secondary" href="{{ url_for('reisesteine.listSteine') }}">Verwerfen</a>
+            </div>
+        </div>
+    </form>
+    <br><br><br>
+</div>
+
+{% endblock %}

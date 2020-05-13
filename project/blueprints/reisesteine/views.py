@@ -1,5 +1,5 @@
 from flask import render_template, Blueprint, g, redirect, request, current_app, abort, url_for
-from project.blueprints.reisesteine.forms import NeuerSteinFormular
+from project.blueprints.reisesteine.forms import editSteinForm
 from project import db
 from project.models import Gestein, Stein, Person
 from werkzeug.utils import secure_filename
@@ -28,23 +28,47 @@ def before_request():
 def index():
     return render_template('reisesteine/home.html')
 
-@reisesteine.route('/neuerStein', methods=['GET', 'POST'])
-def neuerStein():
-    form = NeuerSteinFormular()
+@reisesteine.route('/listSteine')
+def listSteine():
+    steine = Stein.query.all()
+    return render_template('reisesteine/listSteine.html', steine=steine)
+
+@reisesteine.route('/deleteStein/<id>')
+def deleteStein(id):
+    Stein.query.filter_by(id=id).delete()
+    db.session.commit()
+    return redirect(url_for('reisesteine.listSteine'))
+
+@reisesteine.route('/newStein', methods=['POST'])
+def newStein():
+    f_email = request.form.get('email')
+    f_gestein = request.form.get('gestein')
+
+    email = Person.query.filter_by(email=f_email).first()
+    gestein = Gestein.query.filter_by(name=f_gestein).first()
+
+    email = f_email if not email else email.id
+    gestein = f_gestein if not gestein else gestein.id
+
+    return redirect(url_for('reisesteine.editStein', email=email, gestein=gestein))
+
+
+@reisesteine.route('/editStein/<id>', methods=['GET', 'POST'])
+@reisesteine.route('/editStein', defaults={'id': None}, methods=['GET', 'POST'])
+def editStein(id):
+    form = editSteinForm()
 
     if form.validate_on_submit():
-        # get or create absender
-        absender = Person.query.filter_by(email = form.email.data).first()
-        if absender is None:
-            absender = Person(vorname = form.vorname.data, nachname = form.nachname.data, email = form.email.data)
-        
-        # get or create gestein
-        gestein = Gestein.query.filter_by(name = form.gestein.data).first()
-        if gestein is None:
-            gestein = Gestein(name = form.gestein.data)
 
-        fn_stein = ""
-        fn_her = ""
+        # get or create absender
+        absender = Person.get_or_create(id = form.user_id.data)
+        absender.update(**form.data)
+
+        # get or create gestein
+        gestein = Gestein.get_or_create(id = form.gestein_id.data)
+        gestein.name = form.gestein.data
+
+        fn_stein, fn_her = "", ""
         f_stein = form.bild_stein.data
         if f_stein:
             fn_stein = unique_filename('img/steine', secure_filename(f_stein.filename))
@@ -55,29 +79,43 @@ def neuerStein():
             fn_her = unique_filename('img/steine', secure_filename(f_her.filename))
             f_her.save(os.path.join(current_app.static_folder, 'img/steine', fn_her))
 
+        # get or create stein
+        stein = Stein.get_or_create(id=form.stein_id.data)
 
-        # create stein
-        stein = Stein(  gestein = gestein,
-                        herkunft = form.herkunft.data,
-                        longitude = form.longitude.data,
-                        latitude = form.latitude.data,
-                        titel = form.titel.data,
-                        pers_geschichte = form.pers_geschichte.data,
-                        geo_geschichte = form.geo_geschichte.data,
-                        bild_stein = fn_stein,
-                        bild_herkunft = fn_her,
-                        absender_id = absender,
-                        published = False)
-        
-        # db.session.add(stein)
-        # db.session.commit()
-        print(stein)
-        print(gestein)
-        print(absender)
+        # assign
+        stein.populate(form)
+        stein.bild_stein = fn_stein
+        stein.bild_herkunft = fn_her
+        stein.absender = absender
+        stein.gesteinsart = gestein
 
-        return redirect(url_for('reisesteine.index'))
+        db.session.add(stein)
+        db.session.commit()
+        return redirect(url_for('reisesteine.listSteine'))
 
-    return render_template('reisesteine/neuerStein.html', form=form)
+    # edit an existing rock
+    if id is not None:
+        curr_stein = Stein.query.get(id)
+        form.populate(curr_stein)
+
+    # new rock, fill in Absender
+    if request.args.get('email'):
+        a = Person.query.get(request.args.get('email'))
+        if a is not None:
+            form.populate_absender(a)
+        else:
+            form.email.data = request.args.get('email')
+
+    # new rock, fill in Gestein
+    if request.args.get('gestein'):
+        g = Gestein.query.get(request.args.get('gestein'))
+        if g is not None:
+            form.gestein_id.data = g.id
+            form.gestein.data = g.name
+        else:
+            form.gestein.data = request.args.get('gestein')
+
+    return render_template('reisesteine/editStein.html', form=form)
 
 
 def unique_filename(folder, filename):
