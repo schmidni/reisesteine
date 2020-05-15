@@ -31,7 +31,7 @@ def index():
 @reisesteine.route('/listSteine')
 def listSteine():
     steine = Stein.query.all()
-    return render_template('reisesteine/listSteine.html', steine=steine)
+    return render_template('reisesteine/backend/listSteine.html', steine=steine)
 
 @reisesteine.route('/deleteStein/<id>')
 def deleteStein(id):
@@ -115,7 +115,7 @@ def editStein(id):
         else:
             form.gestein.data = request.args.get('gestein')
 
-    return render_template('reisesteine/editStein.html', form=form)
+    return render_template('reisesteine/backend/editStein.html', form=form)
 
 
 def unique_filename(folder, filename):
