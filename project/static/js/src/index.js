@@ -1,16 +1,10 @@
-{% extends "layouts/base_app.html" %}
+// index.js
 
-{% block body %}
+import m from 'mithril';
+import L from 'leaflet';
+import anime from 'animejs';
 
-<div id="map"></div>
-
-
-<svg id="overlay" viewbox="0 0 1920 1080" preserveAspectRatio="xMinYMin slice">
-    <path class="rs-overlay" d="M 0,0 H1920 V1080 H0z M960 260 a 200,200 0 1,0 4,0 a 1,1 0 1,0 -4,0" />
-</svg>
-
-
-<!-- <script>
+// m.render(document.body, "hello world")
 
 var mymap = L.map('map').setView([30,0], 3);
 
@@ -53,7 +47,3 @@ function onMapClick(e) {
         .openOn(mymap);
 }
 mymap.on('click', onMapClick);
-
-</script> -->
-
-{% endblock %}
