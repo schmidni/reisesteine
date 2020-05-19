@@ -1,6 +1,6 @@
 import debounce from '../util/debounce.js';
 import anime from 'animejs';
-
+import m from 'mithril';
 
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -41,6 +41,8 @@ export default class svgFrame {
             this.updateFrame();
         }, 20));
     }
+
+
 
     createFrame = () => {
         this.rect = this.DOM.el.getBoundingClientRect();

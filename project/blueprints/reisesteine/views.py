@@ -24,8 +24,9 @@ def before_request():
         if dfl['lang_code'] != request.full_path.split('/')[1]:
             abort(404)
 
-@reisesteine.route('/mithril')
-def mithril():
+@reisesteine.route('/mithril', defaults={'url': ''})
+@reisesteine.route('/mithril/<url>')
+def mithril(url):
     return render_template('reisesteine/mithril/mithril.html')
 
 @reisesteine.route('/')
