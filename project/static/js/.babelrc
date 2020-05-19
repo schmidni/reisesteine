@@ -5,6 +5,7 @@
         ["@babel/plugin-transform-react-jsx", {
             "pragma": "m",
             "pragmaFrag": "'['"
-        }]
+        }],
+        "transform-class-properties"
     ]
 }
