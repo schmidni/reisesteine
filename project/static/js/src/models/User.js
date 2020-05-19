@@ -14,7 +14,6 @@ export let loadList = function() {
     })
     .then(function(result) {
         list = result.data
-        console.log(result.data);
     })
 }
 

@@ -1,12 +1,29 @@
 import m from 'mithril'
+import anime from 'animejs'
 import * as User from '../models/User.js'
 
 export default class UserList {
-    constructor(){
+    constructor(params){
         User.loadList();
+        // console.log(params.attrs.test)
     }
 
-    view() {
+    deleteEntry = () => {
+        User.deleteLast();
+    }
+
+    onbeforeremove() {
+        return new Promise(function(resolve) {
+            const animateout = anime({
+                targets: '#test',
+                opacity: 0,
+                duration: 1000
+            });
+            animateout.finished.then(resolve);
+        })
+    }
+
+    view(params) {
         return (
             <div className="div-list">
                 { User.all().map((user) => (
@@ -15,8 +32,6 @@ export default class UserList {
                     </div>
 
                 ))}
-                <button onclick={User.deleteLast}>Delete</button>
-                <button onclick={() => history.pushState(null, null, 'hello')}>Push</button>
             </div>
         )
     }

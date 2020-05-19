@@ -51,18 +51,14 @@ export default class svgFrame {
             initial: this.calculatePath('initial'),
             final: this.calculatePath('final')
         };
-        this.DOM.svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        this.DOM.svg.setAttribute('width','100%');
-        this.DOM.svg.setAttribute('height','100%');
-        this.DOM.svg.setAttribute('viewbox',`0 0 ${this.rect.width} ${this.rect.height}`);
-        this.DOM.svg.style.position = 'absolute';
-        this.DOM.svg.style.zIndex = '2';
-        this.DOM.svg.style.display = 'none';
-        this.DOM.svg.innerHTML = `
-                    <path fill="${this.settings.frameFill}" d="${this.paths.initial}"/>
-        `;
-        document.body.insertBefore(this.DOM.svg, this.DOM.el);
+        this.DOM.svg = document.querySelector('#svg')
         this.DOM.shape = this.DOM.svg.querySelector('path');
+
+        this.DOM.svg.setAttribute('viewbox',`0 0 ${this.rect.width} ${this.rect.height}`);
+        this.DOM.shape.setAttribute('fill', this.settings.frameFill);
+        this.DOM.shape.setAttribute('d', this.paths.initial);
+
+        document.body.insertBefore(this.DOM.svg, this.DOM.el);
     }
 
     updateFrame =() => {
