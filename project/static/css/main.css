@@ -28,6 +28,7 @@ h1 {
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 600;
     font-size: 4rem;
+    margin: 0 0 -1rem 0;
 }
 
 h2 {
@@ -44,15 +45,31 @@ h3 {
     margin: 0 0 -5px 0;
 }
 
+/************************** CONTENT ******************************************/
 .rs-coordinates {
     position: absolute;
-    top: 66vh;
+    bottom: 20vh;
     left: 50vw;
     width: 20vw;
     margin-left: -10vw;
     z-index: 3;
     color:white;
     text-align:center;
+}
+
+.rs-content {
+    position: absolute;
+    bottom: 20vh;
+    left: 20vw;
+    z-index: 3;
+    text-align: center;
+    color: white;
+}
+
+.rs-content img {
+    height: 15vw;
+    margin-bottom: 100px;
+    filter: drop-shadow(5px 5px 5px #222);
 }
 
 /************************** SVG OVERLAY ******************************************/

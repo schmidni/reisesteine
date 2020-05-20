@@ -11,7 +11,7 @@ var frame = new svgFrame(document.querySelector('#map'));
 
 myMap.marker.on('click', function(){
     document.getElementById('rs-navigation').classList.add('active');
-    myMap.map.flyTo([56.124940,12.315705], 10, {duration: 1});
+    myMap.map.flyTo([56.124940,12.315705], 8, {duration: 1});
     frame.navigate('zoom');
     m.render(document.getElementById('rs-coordinates'), m(someFunc));
 });
@@ -23,20 +23,24 @@ var someFunc = function() {
                 targets: ctrl.dom.children,
                 opacity: [0,1],
                 translateX: [40,0],
+                translateY: myMap.map.getSize().x*0.015,
                 duration: 1000,
                 easing: "easeInOutQuad",
                 delay: anime.stagger(200, {start: 600})
             });
             animatein.finished.then( () => {
                 let offset = myMap.map.getSize().x*0.15;
-                myMap.map.panBy([-offset, offset*0.1], {duration: 1});
+                myMap.map.panBy([-offset, myMap.map.getSize().x*0.05], {duration: 1});
                 anime({
                     targets: ctrl.dom,
                     translateX: offset,
+                    translateY: -myMap.map.getSize().x*0.05,
                     duration: 1000,
                     easing: "easeInOutQuad"
                 });
-                frame.navigate('offset')
+                frame.navigate('offset');
+                m.render(document.getElementById('rs-content'), m(someFunc2));
+                m.render(document.getElementById('rs-footer'), m(someFunc3));
             });
         },
         view() {
@@ -51,8 +55,40 @@ var someFunc = function() {
     };
 }
 
+var someFunc2 = function() {
+    return {   
+        oncreate: (ctrl) => {
+            let offset = myMap.map.getSize().x*0.15;
+            anime({
+                targets: ctrl.dom,
+                translateX: [-offset, 0],
+                translateY: -myMap.map.getSize().x*0.035,
+                opacity: [0, 1],
+                duration: 1000,
+                easing: "easeInOutQuad"
+            });
+        },
+        view() {
+            return (
+                <div class="rs-content">
+                    <img src="/static/img/steine/Beispiel_1a_Steinaufnahme.png" />
+                    <h1>Schwarzes Glitzern</h1>
+                </div>
+            )
+        }
+    }
+}
 
 
+var someFunc3 = function () {
+    return{
+        view() {
+            return(
+                <div></div>
+            )
+        }
+    }
+}
 // let myVar = new UserList()
 
 // m.mount(document.getElementById('test'), UserList);
