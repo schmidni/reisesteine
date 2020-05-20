@@ -3,9 +3,18 @@ export default class worldMap {
     constructor(el) {
         this.map = this.init(el);
         this.popup = L.popup();
-        this.marker = L.marker([51.5, -0.09])
+        var blackIcon = new L.Icon({
+            iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-black.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+          });
+        this.marker = L.marker([56.124940,12.315705], {icon: blackIcon})
                         .bindPopup("<b>Hello world!</b><br>I am a popup.")
                         .addTo(this.map);
+        this.initEvents();
     }
 
     init = (el) => {
@@ -19,7 +28,7 @@ export default class worldMap {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             minZoom: 3,
-            id: 'mapbox/streets-v11',
+            id: 'mapbox/light-v10',
             tileSize: 512,
             zoomOffset: -1,
             accessToken: 'pk.eyJ1Ijoic2NobWlkbmkiLCJhIjoiY2thODNqaWZhMDk1cTMycXdpbTdtMXMwZSJ9.kWgF03PRqN68LpUFC7UAdw'
@@ -41,6 +50,6 @@ export default class worldMap {
             ev.target.closePopup();
           });
 
-        mymap.on('click', this.onMapClick);
+        this.map.on('click', this.onMapClick);
     }
 }

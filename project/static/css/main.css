@@ -1,3 +1,7 @@
+/************************** GENERAL ******************************************/
+html {
+    font-size: 16px;
+}
 
 body {
     height:100vh;
@@ -11,12 +15,47 @@ div {
     padding: 0;
 }
 
+
+/************************** MAP ******************************************/
 #map {
     height: 100%;
     width: 100%;
     z-index: 1;
 }
 
+/************************** CAPTIONS ******************************************/
+h1 {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 600;
+    font-size: 4rem;
+}
+
+h2 {
+    font-family: 'Libre Baskerville', serif;
+    font-weight: 400;
+    font-size: 2.3rem;
+    margin: 15px 0 0 0;
+}
+
+h3 {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 200;
+    font-size: 2.2rem;
+    margin: 0 0 -5px 0;
+}
+
+.rs-coordinates {
+    position: absolute;
+    top: 66vh;
+    left: 50vw;
+    width: 20vw;
+    margin-left: -10vw;
+    z-index: 3;
+    color:white;
+    text-align:center;
+}
+
+/************************** SVG OVERLAY ******************************************/
 .overlay {
     position: absolute;
     top: 0;
@@ -27,23 +66,55 @@ div {
     display: none;
 }
 
-
-.user-list {
-    list-style: none;
-    margin: 0 0 10px;
-    padding: 0;
+/************************** NAVIGATION ******************************************/
+#rs-navigation {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 120px;
+    width: 100vw;
+    background-image: linear-gradient(to bottom, rgba(256, 256, 256, 1) 0%, rgba(256, 256, 256, 0.9) 75%, rgba(256, 256, 256, 0));
+    z-index: 3;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
 }
 
-.user-list-item {
-    background: #fafafa;
-    border: 1px solid #ddd;
-    color: #333;
-    display: block;
-    margin: 0 0 1px;
-    padding: 8px 15px;
-    text-decoration: none;
+#rs-navigation img {
+    height: 50px;
+    margin-left: 50px;
+    visibility: hidden;
 }
 
-.user-list-item:hover {
-    text-decoration: underline;
+#rs-navigation span {
+    margin: auto;
+    text-align: center;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 200;
+    font-size: 1.8rem;
+}
+
+#rs-navigation div {
+    margin:auto;
+    text-align: center;
+}
+
+#rs-navigation>div:first-child {
+    display:flex;
+    margin-left: 50px;
+    width: 30%;
+}
+
+#rs-navigation>div:last-child {
+    margin-right: 50px;
+    width: 30%;
+}
+
+#rs-navigation.active {
+    background-image: linear-gradient(to bottom, rgba(0,0,0, 0.2) 0%, rgba(0,0,0, 0.1) 75%, rgba(0,0,0, 0));
+    color: white!important;
+}
+
+#rs-navigation.active img {
+    visibility: visible;
 }
