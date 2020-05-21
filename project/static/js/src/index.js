@@ -6,6 +6,10 @@ import worldMap from './components/WorldMap.js';
 import UserList from './components/UserList.js';
 import * as User from './models/User.js';
 
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 var myMap = new worldMap(document.querySelector('#map'));
 var frame = new svgFrame(document.querySelector('#map'));
 
@@ -28,7 +32,7 @@ var someFunc = function() {
                 easing: "easeInOutQuad",
                 delay: anime.stagger(200, {start: 600})
             });
-            animatein.finished.then( () => {
+            animatein.finished.then( () => sleep(500).then(() => {
                 let offset = myMap.map.getSize().x*0.2;
                 myMap.map.panBy([-offset, myMap.map.getSize().x*0.05], {duration: 1});
                 frame.navigate('offset');
@@ -42,7 +46,7 @@ var someFunc = function() {
                     m.render(document.getElementById('rs-content'), m(someFunc2));
                     m.render(document.getElementById('rs-footer'), m(someFunc3));
                 }); 
-            });
+            }));
         },
         view() {
             return (
