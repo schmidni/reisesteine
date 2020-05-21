@@ -9,7 +9,7 @@ export default class svgFrame {
             animation: {
                 shape: {
                     duration: 1000,
-                    easing: {in: 'easeOutQuint', out: 'easeInQuad'}
+                    easing: {in: 'easeOutQuint', out: 'easeOutQuad'}
                 }
             },
             frameFill: 'rgba(4, 20, 40, 0.8)'
@@ -61,7 +61,7 @@ export default class svgFrame {
         else if(path === 'final')
             p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
         else if(path === 'offset')
-            p = `M ${this.rect.width/2+this.rect.width*0.15}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
+            p = `M ${this.rect.width/2+this.rect.width*0.2}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
 
         return p;        
     }
@@ -86,7 +86,7 @@ export default class svgFrame {
             const animateShapeOffset = anime({
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
-                easing: this.settings.animation.shape.easing.in,
+                easing: this.settings.animation.shape.easing.out,
                 d: this.calculatePath('offset')
             }).finished.then(this.isAnimating = false);
         }

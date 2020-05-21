@@ -45,6 +45,16 @@ h3 {
     margin: 0 0 -5px 0;
 }
 
+h4 {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 200;
+    font-size: 2rem;
+}
+
+h4.active {
+    font-weight: 900;
+}
+
 /************************** CONTENT ******************************************/
 .rs-coordinates {
     position: absolute;
@@ -59,7 +69,7 @@ h3 {
 
 .rs-content {
     position: absolute;
-    bottom: 20vh;
+    bottom: 27vh;
     left: 20vw;
     z-index: 3;
     text-align: center;
@@ -70,6 +80,33 @@ h3 {
     height: 15vw;
     margin-bottom: 100px;
     filter: drop-shadow(5px 5px 5px #222);
+}
+
+.rs-footer {
+    position: absolute;
+    bottom: 5vh;
+    left: 0;
+    width: 100vw;
+    z-index: 3;
+    display: flex;
+}
+
+.rs-footer div {
+    display: flex;
+    color:white;
+    margin: auto;
+    text-align: center;
+}
+
+.rs-footer div:first-child {
+    width: 50vw;
+    justify-content: flex-end;
+}
+
+.rs-footer div:last-child {
+    width: 35vw;
+    padding-right: 10vw;
+    justify-content: space-evenly;
 }
 
 /************************** SVG OVERLAY ******************************************/
