@@ -279,8 +279,8 @@ var someFunc4 = function () {
             let len = target.children.length;
 
             let len_w = Math.round(Math.sqrt(len*ratio))
-            let width =  len_w * 400 + 50;
-            let height = Math.ceil(len / len_w) * 400 + 50;
+            let width =  len_w * 600 + 100;
+            let height = Math.ceil(len / len_w) * 600 + 100;
 
             target.style.width = width + 'px';
 
