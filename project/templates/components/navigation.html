@@ -1,7 +1,7 @@
 <div id="rs-navigation">
     <div> 
         <img src="{{ url_for('static', filename='img/logo.png') }}"/>
-        <span>REISESTEINE</span>
+        <span id="rs-reisesteine">REISESTEINE</span>
         <span>ÜBER UNS</span>
     </div>
     <div>
@@ -9,5 +9,11 @@
     </div>
     <div>
         <span>de / en</span>
+
+            <svg class="rs-close" style="display: none" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+                <path fill="#FFF" d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z"/>
+                <path d="M0 0h48v48h-48z" fill="none"/>
+            </svg>    
+
     </div>
 </div>

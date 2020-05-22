@@ -121,6 +121,13 @@ h4.active {
     height: 100%;
     z-index: 2;
     display: none;
+    touch-action: none;
+    user-select: none;
+}
+
+#svg-path {
+    touch-action: none;
+    user-select: none;
 }
 
 /************************** NAVIGATION ******************************************/
@@ -131,7 +138,7 @@ h4.active {
     height: 120px;
     width: 100vw;
     background-image: linear-gradient(to bottom, rgba(256, 256, 256, 1) 0%, rgba(256, 256, 256, 0.9) 75%, rgba(256, 256, 256, 0));
-    z-index: 3;
+    z-index: 4;
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
@@ -165,6 +172,7 @@ h4.active {
 #rs-navigation>div:last-child {
     margin-right: 50px;
     width: 30%;
+    display: flex;
 }
 
 #rs-navigation.active {
@@ -174,4 +182,23 @@ h4.active {
 
 #rs-navigation.active img {
     visibility: visible;
+}
+
+/************************** REISESTEINE DRAGGABLE ******************************************/
+.rs-reisesteine {
+    display: flex;
+    flex-wrap: wrap;
+    z-index: 3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    touch-action: none;
+    user-select: none;
+}
+
+.rs-reisesteine>div {
+    margin: 100px;
+    height: 200px;
+    width: 200px;
+    background-color: white;
 }

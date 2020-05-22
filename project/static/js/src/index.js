@@ -5,6 +5,8 @@ import svgFrame from './components/SVGFrame.js';
 import worldMap from './components/WorldMap.js';
 import UserList from './components/UserList.js';
 import * as User from './models/User.js';
+import interact from 'interactjs';
+
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -15,10 +17,20 @@ var frame = new svgFrame(document.querySelector('#map'));
 
 myMap.marker.on('click', function(){
     document.getElementById('rs-navigation').classList.add('active');
+    document.querySelector('.rs-close').style.display = "block";
     myMap.map.flyTo([56.124940,12.315705], 8, {duration: 1});
     frame.navigate('zoom');
     m.render(document.getElementById('rs-coordinates'), m(someFunc));
 });
+
+document.querySelector('.rs-close').addEventListener('click', () => {
+    frame.navigate('initial');
+    m.render(document.getElementById('rs-content'), null);
+    m.render(document.getElementById('rs-coordinates'),null);
+    m.render(document.getElementById('rs-footer'), null);
+    m.render(document.getElementById('rs-scroll'), null);
+    document.getElementById('rs-navigation').classList.remove('active');
+})
 
 var someFunc = function() {
     return {        
@@ -233,8 +245,6 @@ m.mount(document.getElementById('rs-scroll'), scrollview);
 
 var timeline = null;
 
-
-
 // let myVar = new UserList()
 
 // m.mount(document.getElementById('test'), UserList);
@@ -243,3 +253,100 @@ var timeline = null;
 // m('button', {onclick:() => history.pushState(null, null, 'hello')}, 'Push'),
 // m('button', {onclick:() => m.mount(document.querySelector('#test'), null)}, 'Unmount'),
 // ]));
+
+
+
+document.getElementById('rs-reisesteine').addEventListener('click', () => {
+    m.render(document.getElementById('rs-content'), null);
+    m.render(document.getElementById('rs-coordinates'),null);
+    m.render(document.getElementById('rs-footer'), null);
+    m.render(document.getElementById('rs-scroll'), null);
+    document.getElementById('rs-navigation').classList.add('active');
+    document.querySelector('.rs-close').style.display = "block";
+    frame.navigate('full');
+    m.render(document.getElementById('rs-content'), m(someFunc4));
+});
+
+var someFunc4 = function () {
+    return{
+        oncreate: (ctrl) => {
+            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            const ratio = vw / vh;
+
+            let target = document.querySelector('.rs-reisesteine');
+            
+            let len = target.children.length;
+
+            let len_w = Math.round(Math.sqrt(len*ratio))
+            let width =  len_w * 400 + 50;
+            let height = Math.ceil(len / len_w) * 400 + 50;
+
+            target.style.width = width + 'px';
+
+            const position = { x: -(width-vw) / 2, y: -(height-vh) / 2 }
+
+            target.style.transform = `translate(${position.x}px, ${position.y}px)`;
+
+            const c = interact('.rs-reisesteine').draggable({
+                listeners: {
+                    move (event) {
+
+                    if ((position.x + event.dx) < 200 && (position.x + event.dx) > -(width - vw + 200)){
+                        position.x += event.dx
+                    }
+                    if ((position.y + event.dy) < 200 && (position.y + event.dy) > -(height - vh + 200)){
+                        position.y += event.dy
+                    }
+
+                    event.target.style.transform =
+                        `translate(${position.x}px, ${position.y}px)`
+                    }
+                },
+                inertia: {
+                    resistance: 5,
+                    minSpeed: 10,
+                    smoothEndDuration: 500
+                },
+                allowFrom: '#svg, #svg-path, .rs-reisesteine'
+            })
+            console.log(c);
+        },
+        view() {
+            return(
+                <div class="rs-reisesteine">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            )
+        }
+    }
+};
