@@ -70,13 +70,19 @@ h4.active {
 
 .rs-content {
     position: absolute;
-    bottom: 27vh;
+    top: 23vh;
     left: 20vw;
     z-index: 3;
     text-align: center;
     color: white;
-    opacity: 0;
-    display: none;
+    /* opacity: 0; */
+    /* display: none; */
+    width: 30vw;
+}
+
+.rs-content>div {
+    width: 100%;
+    margin-bottom: 300px;
 }
 
 .rs-content img {
@@ -201,4 +207,10 @@ h4.active {
     height: 300px;
     width: 300px;
     background-color: white;
+}
+
+.rs-reisesteine img {
+    max-height: 100%;
+    max-width: 100%;
+    filter: drop-shadow(5px 5px 5px #222);
 }

@@ -55,7 +55,7 @@ var someFunc = function() {
                     duration: 1000,
                     easing: "easeOutQuad"
                 }).finished.then(() => {
-                    m.render(document.getElementById('rs-content'), m(someFunc2));
+                    m.render(document.getElementById('rs-content'), m(someFunc2, {fadeIn: true}));
                     m.render(document.getElementById('rs-footer'), m(someFunc3));
                 }); 
             }));
@@ -75,64 +75,34 @@ var someFunc = function() {
 var someFunc2 = function() {
     return {   
         oncreate: (ctrl) => {
-            let offset = myMap.map.getSize().x*0.15;
-            anime({
-                targets: ctrl.dom.querySelector('.slide1'),
-                opacity: [0, 1],
-                duration: 2000,
-                easing: "easeInOutQuad",
-                begin: () => {
-                    ctrl.dom.querySelector('.slide1').style.display = 'block';
-                }
-            });
-            timeline = anime.timeline({
-                autoplay: false,
-                duration: 4000,
-            });
-            timeline.add({
-                targets: document.querySelector('.slide1'),
-                opacity: [1, 0],
-                translateY: [0, -300],
-                duration: 1000,
-                easing: 'easeOutQuad',
-                update: (anim) => {
-                    if (anim.progress < 25){
-                        removeall();
-                        document.querySelector('.rs-menu-stein').classList.add('active')
-                    }
-                }
-            }, 0)
-            timeline.add({
-                targets: document.querySelector('.slide2'),
-                opacity: [0,1],
-                translateY: [300, 0],
-                duration: 1000,
-                easing: 'easeInQuad',
-                begin: (anim) => {
-                    anim.animatables[0].target.style.display = 'block';
-                },
-                update: (anim) => {
-                    if (anim.progress > 25 && anim.progress < 75){
-                        removeall();
-                        document.querySelector('.rs-menu-fundort').classList.add('active')
-                    }
-                }
-            }, 0)
+            if (ctrl.attrs.fadeIn){
+                anime({
+                    targets: ctrl.dom.querySelector('.slide1'),
+                    opacity: [0, 1],
+                    duration: 2000,
+                    easing: "easeInOutQuad"
+                });
+            }
+        },
+        onremove: (ctrl) => {
+            if (ctrl.attrs.remove) {
+                ctrl.attrs.remove.remove();
+            }
         },
         view() {
             return (
-            <div>
-                <div class="rs-content slide1">
+            <div class="rs-content">
+                <div class="slide1">
                     <img src="/static/img/steine/Beispiel_1a_Steinaufnahme.png" />
                     <h1>Schwarzes Glitzern</h1>
                 </div>
-                <div class="rs-content slide2">
+                <div class="slide2">
                     <img src="/static/img/steine/Beispiel_1b_Naturaufnahme.jpg" />
                 </div>
-                <div class="rs-content slide3">
+                <div class="slide3">
                     Der Stein ist von einem Strand in Dänemark, aus Gilleleje, ganz im Norden von Seeland, wo ich sehr gerne bin. Ich liebe es, am Strand Steine zu sammeln. Ich suche nach schönen Steinen oder solchen, die eine Form haben, die mich an etwas erinnert: Ein Tier, ein Herz, ein Haus, ganz egal. Damit gestalte ich Bilder, fülle eine Vase oder lege sie einfach aus zum Ansehen.
                 </div>
-                <div class="rs-content slide4">
+                <div class="slide4">
                 Granatamphibolit
                 Gilleleje
                 Die Amphibole im Granatamphibolit lassen ihn sehr schwarz aussehen und im Licht glitzern. Die kleinen roten Einschlüsse sind Granate. Er stammt ursprünglich nicht aus Dänemark, sondern kommt wahrscheinlich aus Südschweden, wo diese Gesteine unter sehr hohen Temperaturen und Drucken vor vielen Millionen Jahren im Innern der Erde entstanden sind. Während der letzten Eiszeit wurde er dann mit einem Gletscher ins heutige Dänemark transportiert. Durch Abrieb im Gletscher- und Meereswasser erhielt er seine runde Form. 
@@ -189,62 +159,6 @@ var someFunc3 = function () {
     }
 }
 
-var scrollY = 0;
-var maxHeight= 3000;
-
-var _event = {
-    y: 0,
-    deltaY: 0
-  };
-var percentage = 0
-
-function onWheel (e) {
-    // for embedded demo
-    e.stopImmediatePropagation();
-    e.preventDefault();
-    e.stopPropagation();
-
-    var evt = _event;
-    evt.deltaY = e.wheelDeltaY || e.deltaY * -1;
-
-    scroll(e);
-
-    percentage = evt.y * -1 / maxHeight;
-    document.querySelector('.rs-scroll').innerHTML = 'scroll Y : ' + evt.deltaY + '  ' + evt.y;
-    timeline.seek(percentage * 4500);
-};
-
-function scroll (e) {
-  var evt = _event;
-  // limit scroll top
-  if ((evt.y + evt.deltaY) > 0 ) {
-    evt.y = 0;
-  // limit scroll bottom
-  } else if ((-(evt.y + evt.deltaY)) >= maxHeight) {
-    evt.y = -maxHeight;
-  } else {
-      evt.y += evt.deltaY;
-  }
-  scrollY = -evt.y
-}
-
-window.addEventListener('wheel', onWheel, { passive: false });
-
-var scrollview = function() {
-    return {   
-        view() {
-            return (
-                <div class="rs-scroll" style="position:absolute; top: 50%; left: 50%; color: black; z-index: 3000;">
-                </div>
-            )
-        }
-    }
-}
-
-m.mount(document.getElementById('rs-scroll'), scrollview);
-
-var timeline = null;
-
 // let myVar = new UserList()
 
 // m.mount(document.getElementById('test'), UserList);
@@ -288,7 +202,7 @@ var someFunc4 = function () {
 
             target.style.transform = `translate(${position.x}px, ${position.y}px)`;
 
-            const c = interact('.rs-reisesteine').draggable({
+            interact('.rs-reisesteine').draggable({
                 listeners: {
                     move (event) {
 
@@ -310,7 +224,59 @@ var someFunc4 = function () {
                 },
                 allowFrom: '#svg, #svg-path, .rs-reisesteine'
             })
-            console.log(c);
+            
+            document.querySelector('.rs-1a').addEventListener('click', (e) => {
+
+                const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
+
+                anime({
+                    targets: siblings,
+                    duration: 500,
+                    opacity: [1, 0],
+                    easing: 'linear'
+                });
+
+                const bb = e.target.getBoundingClientRect();
+                const tt = vh*0.23;
+                const th = vw*0.15;
+                const tw = bb.width*th/bb.height;
+                const tl = vw*0.2 + ((vw*0.3 - tw)/2);
+
+                document.body.appendChild(e.target);
+                e.target.style.position = 'absolute';
+                e.target.style.top = bb.top + 'px';
+                e.target.style.left = bb.left + 'px';
+                e.target.style.height = bb.height + 'px';
+                e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
+                e.target.style.zIndex = 3;
+
+
+                anime({
+                    targets: e.target,
+                    translateX: tl - bb.left,
+                    translateY: tt - bb.top,
+                    height: th,
+                    width: tw,
+                    duration: 1000,
+                    easing: 'easeInOutQuad'
+                }).finished.then(() => {
+                    m.render(document.getElementById('rs-content'), m(someFunc2, {remove: e.target}));
+                    document.querySelector('#rs-content').appendChild(e.target);
+                    anime({
+                        targets: e.target,
+                        opacity: [1, 0],
+                        duration: 3000,
+                        delay: 1000
+                    }).finished.then(() => {
+                        e.target.remove();
+                    });
+                });
+
+                frame.navigate('offset');
+                myMap.map.flyTo([56.124940,12.315705], 8, {duration: 1});
+                setTimeout(() => {myMap.map.panBy([-myMap.map.getSize().x*0.2, myMap.map.getSize().x*0.05], {duration: 1})}, 1500);
+                m.render(document.getElementById('rs-footer'), m(someFunc3));
+            })
         },
         view() {
             return(
@@ -334,7 +300,7 @@ var someFunc4 = function () {
                     <div></div>
                     <div></div>
                     <div></div>
-                    <div></div>
+                    <div style="background-color: rgba(0,0,0,0)!important;"><img class="rs-1a" src="/static/img/steine/Beispiel_1a_Steinaufnahme.png"></img></div>
                     <div></div>
                     <div></div>
                     <div></div>
