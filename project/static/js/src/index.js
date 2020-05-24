@@ -96,7 +96,7 @@ var someFunc2 = function() {
                     <img src="/static/img/steine/Beispiel_1a_Steinaufnahme.png" />
                     <h1>Schwarzes Glitzern</h1>
                 </div>
-                <div class="slide2">
+                {/* <div class="slide2">
                     <img src="/static/img/steine/Beispiel_1b_Naturaufnahme.jpg" />
                 </div>
                 <div class="slide3">
@@ -106,7 +106,7 @@ var someFunc2 = function() {
                 Granatamphibolit
                 Gilleleje
                 Die Amphibole im Granatamphibolit lassen ihn sehr schwarz aussehen und im Licht glitzern. Die kleinen roten Einschlüsse sind Granate. Er stammt ursprünglich nicht aus Dänemark, sondern kommt wahrscheinlich aus Südschweden, wo diese Gesteine unter sehr hohen Temperaturen und Drucken vor vielen Millionen Jahren im Innern der Erde entstanden sind. Während der letzten Eiszeit wurde er dann mit einem Gletscher ins heutige Dänemark transportiert. Durch Abrieb im Gletscher- und Meereswasser erhielt er seine runde Form. 
-                </div>
+                </div> */}
             </div>
             )
         }
@@ -142,11 +142,11 @@ var someFunc3 = function () {
 
                     </div> 
 
-                    <div>
+                    {/* <div>
                     <svg height="50" width="50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
                                 <path fill="#FFF" d="M413.1 222.5l22.2 22.2c9.4 9.4 9.4 24.6 0 33.9L241 473c-9.4 9.4-24.6 9.4-33.9 0L12.7 278.6c-9.4-9.4-9.4-24.6 0-33.9l22.2-22.2c9.5-9.5 25-9.3 34.3.4L184 343.4V56c0-13.3 10.7-24 24-24h32c13.3 0 24 10.7 24 24v287.4l114.8-120.5c9.3-9.8 24.8-10 34.3-.4z"/>
                         </svg>
-                    </div>
+                    </div> */}
 
                     <div>
 
