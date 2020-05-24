@@ -222,7 +222,8 @@ var someFunc4 = function () {
                     minSpeed: 10,
                     smoothEndDuration: 500
                 },
-                allowFrom: '#svg, #svg-path, .rs-reisesteine'
+                allowFrom: '.rs-reisesteine',
+                ignoreFrom: '.rs-reisesteine>div>img'
             })
             
             document.querySelector('.rs-1a').addEventListener('click', (e) => {
@@ -300,7 +301,7 @@ var someFunc4 = function () {
                     <div></div>
                     <div></div>
                     <div></div>
-                    <div style="background-color: rgba(0,0,0,0)!important;"><img class="rs-1a" src="/static/img/steine/Beispiel_1a_Steinaufnahme.png"></img></div>
+                    <div style="cursor: pointer; background-color: rgba(0,0,0,0)!important;"><img class="rs-1a" src="/static/img/steine/Beispiel_1a_Steinaufnahme.png"></img></div>
                     <div></div>
                     <div></div>
                     <div></div>
