@@ -4,7 +4,12 @@ from project import db
 from project.models import Gestein, Stein, Person
 from werkzeug.utils import secure_filename
 
+from PIL import Image
+
+import requests
+import urllib.request
 import os
+import json
 
 reisesteine = Blueprint('reisesteine', __name__, template_folder='templates', url_prefix='/<lang_code>/')
 
@@ -84,6 +89,13 @@ def editStein(id):
             fn_her = unique_filename('img/steine', secure_filename(f_her.filename))
             f_her.save(os.path.join(current_app.static_folder, 'img/steine', fn_her))
 
+        with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
+            width, height = img.size
+        optimize_image(os.path.join('img/steine', fn_stein), min(width, 1000))
+        with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
+            width, height = img.size
+        optimize_image(os.path.join('img/steine', fn_her), min(width, 1980))
+
         # get or create stein
         stein = Stein.get_or_create(id=form.stein_id.data)
 
@@ -131,3 +143,28 @@ def unique_filename(folder, filename):
             n = -1
         n += 1
     return f'{output_filename}{n}{file_extension}'
+
+def optimize_image(filename, width):
+    data = {
+        'auth': {
+            'api_key': current_app.config['KRAKEN_KEY'],
+            'api_secret': current_app.config['KRAKEN_SECRET']
+        },
+        'url': url_for('static', filename=filename, _external=True),
+        'wait': True,
+        'lossy': True,
+        'resize': {
+            'width': width,
+            'strategy': 'landscape'
+        }
+    }
+
+    # response = requests.post('https://api.kraken.io/v1/url', json=data)
+    
+    # if response:
+    #     json_response = response.json()
+    #     urllib.request.urlretrieve(json_response.get('kraked_url'), os.path.join(current_app.static_folder, filename))
+    # else:
+    #     print(response.json().get('message'))
+
+    return 'success'
