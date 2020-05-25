@@ -12,7 +12,7 @@ export default class svgFrame {
                     easing: {in: 'easeOutQuint', out: 'easeOutQuad'}
                 }
             },
-            frameFill: 'rgba(0, 0, 0, 0.7)'
+            frameFill: 'rgba(256, 256, 256, 0.7)'
         }
         this.init();
     }

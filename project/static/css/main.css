@@ -64,7 +64,6 @@ h4.active {
     width: 20vw;
     margin-left: -10vw;
     z-index: 3;
-    color:white;
     text-align:center;
 }
 
@@ -74,7 +73,6 @@ h4.active {
     left: 20vw;
     z-index: 3;
     text-align: center;
-    color: white;
     /* opacity: 0; */
     /* display: none; */
     width: 30vw;
@@ -102,7 +100,6 @@ h4.active {
 
 .rs-footer div {
     display: flex;
-    color:white;
     margin: auto;
     text-align: center;
 }
@@ -183,7 +180,6 @@ h4.active {
 
 #rs-navigation.active {
     background-color: transparent!important;
-    color: white!important;
 }
 
 #rs-navigation.active img {

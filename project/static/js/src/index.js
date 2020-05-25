@@ -220,7 +220,7 @@ var someFunc4 = function () {
                 inertia: {
                     resistance: 5,
                     minSpeed: 10,
-                    smoothEndDuration: 500
+                    smoothEndDuration: 400
                 },
                 allowFrom: '.rs-reisesteine',
                 ignoreFrom: '.rs-reisesteine>div>img'
