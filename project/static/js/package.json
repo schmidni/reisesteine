@@ -11,6 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/runtime": "^7.10.0",
     "animejs": "^3.2.0",
     "interactjs": "^1.9.17",
     "leaflet": "^1.6.0",
@@ -21,10 +22,11 @@
   "devDependencies": {
     "@babel/core": "^7.9.6",
     "@babel/plugin-transform-react-jsx": "^7.9.4",
+    "@babel/plugin-transform-runtime": "^7.10.0",
     "@babel/preset-env": "^7.9.6",
     "babel-loader": "^8.1.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "webpack": "^4.43.0",
-    "webpack-cli": "^3.3.11",
-    "babel-plugin-transform-class-properties": "^6.24.1"
+    "webpack-cli": "^3.3.11"
   }
 }

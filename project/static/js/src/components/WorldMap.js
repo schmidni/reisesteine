@@ -1,20 +1,38 @@
+import m from 'mithril';
 
 export default class worldMap {
     constructor(el) {
         this.map = this.init(el);
         this.popup = L.popup();
-        var blackIcon = new L.Icon({
+        this.coordinates = [];
+        this.marker = [];
+        this.redIcon = new L.Icon({
             iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
-          });
-        this.marker = L.marker([56.124940,12.315705], {icon: blackIcon})
-                        .bindPopup("<b>Hello world!</b><br>I am a popup.")
-                        .addTo(this.map);
+        });
+
+        this.coordinates = this.loadCoordinates(); 
+        this.mapCoordinates();
+
+
         this.initEvents();
+    }
+
+    loadCoordinates = async () => {
+        const result = await fetch(`steine/coordinates/all`);
+        return result.json();
+    }
+
+    mapCoordinates = async () => {
+        let coords = await this.coordinates;
+        coords.forEach(el => {
+        this.marker.push(L.marker(el, {icon: this.redIcon})
+                        .addTo(this.map));
+        });
     }
 
     init = (el) => {
@@ -36,20 +54,20 @@ export default class worldMap {
     }
 
     onMapClick = (e) => {
-        popup
+        this.popup
             .setLatLng(e.latlng)
             .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(mymap);
+            .openOn(this.map);
     }
 
     initEvents = () => {
-        this.marker.on('mouseover',function(ev) {
-            ev.target.openPopup();
-          });
-        this.marker.on('mouseout',function(ev) {
-            ev.target.closePopup();
-          });
+        // this.marker.on('mouseover',function(ev) {
+        //     ev.target.openPopup();
+        //   });
+        // this.marker.on('mouseout',function(ev) {
+        //     ev.target.closePopup();
+        //   });
 
-        this.map.on('click', this.onMapClick);
+        // this.map.on('click', this.onMapClick);
     }
 }

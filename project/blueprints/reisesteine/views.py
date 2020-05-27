@@ -1,4 +1,4 @@
-from flask import render_template, Blueprint, g, redirect, request, current_app, abort, url_for
+from flask import jsonify, render_template, Blueprint, g, redirect, request, current_app, abort, url_for
 from project.blueprints.reisesteine.forms import editSteinForm
 from project import db
 from project.models import Gestein, Stein, Person
@@ -9,7 +9,6 @@ from PIL import Image
 import requests
 import urllib.request
 import os
-import json
 
 reisesteine = Blueprint('reisesteine', __name__, template_folder='templates', url_prefix='/<lang_code>/')
 
@@ -28,11 +27,6 @@ def before_request():
     if 'lang_code' in dfl:
         if dfl['lang_code'] != request.full_path.split('/')[1]:
             abort(404)
-
-@reisesteine.route('/mithril', defaults={'url': ''})
-@reisesteine.route('/mithril/<url>')
-def mithril(url):
-    return render_template('reisesteine/mithril/mithril.html')
 
 @reisesteine.route('/')
 def index():
@@ -61,7 +55,6 @@ def newStein():
     gestein = f_gestein if not gestein else gestein.id
 
     return redirect(url_for('reisesteine.editStein', email=email, gestein=gestein))
-
 
 @reisesteine.route('/editStein/<id>', methods=['GET', 'POST'])
 @reisesteine.route('/editStein', defaults={'id': None}, methods=['GET', 'POST'])
@@ -134,7 +127,6 @@ def editStein(id):
 
     return render_template('reisesteine/backend/editStein.html', form=form)
 
-
 def unique_filename(folder, filename):
     output_filename, file_extension = os.path.splitext(filename)
     n = ''
@@ -168,3 +160,14 @@ def optimize_image(filename, width):
     #     print(response.json().get('message'))
 
     return 'success'
+
+
+@reisesteine.route('/steine/coordinates/all', methods=['GET'])
+def coordinates_all():
+    c = Stein.query.with_entities(Stein.longitude, Stein.latitude).all()
+    return jsonify(c)
+
+@reisesteine.route('/steine/images/all', methods=['GET'])
+def images_all():
+    c = [x for (x,) in Stein.query.with_entities(Stein.bild_stein).all()]
+    return jsonify(c)

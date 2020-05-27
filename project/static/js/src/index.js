@@ -5,8 +5,8 @@ import svgFrame from './components/SVGFrame.js';
 import worldMap from './components/WorldMap.js';
 import UserList from './components/UserList.js';
 import * as User from './models/User.js';
-import interact from 'interactjs';
 
+import reisesteine from './components/reisesteine.js';
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -15,13 +15,13 @@ function sleep(ms) {
 var myMap = new worldMap(document.querySelector('#map'));
 var frame = new svgFrame(document.querySelector('#map'));
 
-myMap.marker.on('click', function(){
-    document.getElementById('rs-navigation').classList.add('active');
-    document.querySelector('.rs-close').style.display = "block";
-    myMap.map.flyTo([56.124940,12.315705], 8, {duration: 1});
-    frame.navigate('zoom');
-    m.render(document.getElementById('rs-coordinates'), m(someFunc));
-});
+// myMap.marker.on('click', function(){
+//     document.getElementById('rs-navigation').classList.add('active');
+//     document.querySelector('.rs-close').style.display = "block";
+//     myMap.map.flyTo([56.124940,12.315705], 8, {duration: 1});
+//     frame.navigate('zoom');
+//     m.render(document.getElementById('rs-coordinates'), m(someFunc));
+// });
 
 document.querySelector('.rs-close').addEventListener('click', () => {
     frame.navigate('initial');
@@ -178,142 +178,5 @@ document.getElementById('rs-reisesteine').addEventListener('click', () => {
     document.getElementById('rs-navigation').classList.add('active');
     document.querySelector('.rs-close').style.display = "block";
     frame.navigate('full');
-    m.render(document.getElementById('rs-content'), m(someFunc4));
+    m.mount(document.getElementById('rs-content'), reisesteine);
 });
-
-var someFunc4 = function () {
-    return{
-        oncreate: (ctrl) => {
-            const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-            const ratio = vw / vh;
-
-            let target = document.querySelector('.rs-reisesteine');
-            
-            let len = target.children.length;
-
-            let len_w = Math.round(Math.sqrt(len*ratio))
-            let width =  len_w * 600 + 100;
-            let height = Math.ceil(len / len_w) * 600 + 100;
-
-            target.style.width = width + 'px';
-
-            const position = { x: -(width-vw) / 2, y: -(height-vh) / 2 }
-
-            target.style.transform = `translate(${position.x}px, ${position.y}px)`;
-
-            interact('.rs-reisesteine').draggable({
-                listeners: {
-                    move (event) {
-
-                    if ((position.x + event.dx) < 200 && (position.x + event.dx) > -(width - vw + 200)){
-                        position.x += event.dx
-                    }
-                    if ((position.y + event.dy) < 200 && (position.y + event.dy) > -(height - vh + 200)){
-                        position.y += event.dy
-                    }
-
-                    event.target.style.transform =
-                        `translate(${position.x}px, ${position.y}px)`
-                    }
-                },
-                inertia: {
-                    resistance: 5,
-                    minSpeed: 10,
-                    smoothEndDuration: 400
-                },
-                allowFrom: '.rs-reisesteine',
-                ignoreFrom: '.rs-reisesteine>div>img'
-            })
-            
-            document.querySelector('.rs-1a').addEventListener('click', (e) => {
-
-                const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
-
-                anime({
-                    targets: siblings,
-                    duration: 500,
-                    opacity: [1, 0],
-                    easing: 'linear'
-                });
-
-                const bb = e.target.getBoundingClientRect();
-                const tt = vh*0.23;
-                const th = vw*0.15;
-                const tw = bb.width*th/bb.height;
-                const tl = vw*0.2 + ((vw*0.3 - tw)/2);
-
-                document.body.appendChild(e.target);
-                e.target.style.position = 'absolute';
-                e.target.style.top = bb.top + 'px';
-                e.target.style.left = bb.left + 'px';
-                e.target.style.height = bb.height + 'px';
-                e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
-                e.target.style.zIndex = 3;
-
-
-                anime({
-                    targets: e.target,
-                    translateX: tl - bb.left,
-                    translateY: tt - bb.top,
-                    height: th,
-                    width: tw,
-                    duration: 1000,
-                    easing: 'easeInOutQuad'
-                }).finished.then(() => {
-                    m.render(document.getElementById('rs-content'), m(someFunc2, {remove: e.target}));
-                    document.querySelector('#rs-content').appendChild(e.target);
-                    anime({
-                        targets: e.target,
-                        opacity: [1, 0],
-                        duration: 3000,
-                        delay: 1000
-                    }).finished.then(() => {
-                        e.target.remove();
-                    });
-                });
-
-                frame.navigate('offset');
-                myMap.map.flyTo([56.124940,12.315705], 8, {duration: 1});
-                setTimeout(() => {myMap.map.panBy([-myMap.map.getSize().x*0.2, myMap.map.getSize().x*0.05], {duration: 1})}, 1500);
-                m.render(document.getElementById('rs-footer'), m(someFunc3));
-            })
-        },
-        view() {
-            return(
-                <div class="rs-reisesteine">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div style="cursor: pointer; background-color: rgba(0,0,0,0)!important;"><img class="rs-1a" src="/static/img/steine/Beispiel_1a_Steinaufnahme.png"></img></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            )
-        }
-    }
-};
