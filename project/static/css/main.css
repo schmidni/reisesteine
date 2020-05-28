@@ -119,6 +119,10 @@ h4.active {
     justify-content: space-evenly;
 }
 
+.rs-footer h4 {
+    cursor: pointer;
+}
+
 /************************** SVG OVERLAY ******************************************/
 .overlay {
     position: absolute;
@@ -200,6 +204,11 @@ h4.active {
     left: 0;
     touch-action: none;
     user-select: none;
+    cursor: grab;
+}
+
+.rs-reisesteine:active {
+    cursor: grabbing;
 }
 
 .rs-reisesteine>div {

@@ -23,14 +23,18 @@ export default class Stein {
     }
 
     onupdate (ctrl) {
-        console.log('update');
-        if(this.info == {}){
-        return;}
+        if(this.info == {})
+            return;
+
+        this.map.flyTo([this.info.longitude, this.info.latitude], 8, {duration: 1});
+        if (ctrl.attrs.zoomTo)
+            this.frame.navigate(ctrl.attrs.zoomTo)
+        else
+            this.frame.navigate('zoom');
 
         m.render(ctrl.dom.querySelector('#rs-coordinates'), m(coordinates, {'animateIn': this.animateCoords, 
                                                                             'info': this.info
-                                                                        }));
-                                                                        
+                                                                        }));          
     }
 
     animateCoords = (target) => {
@@ -57,6 +61,11 @@ export default class Stein {
                 m.render(document.getElementById('rs-info'), m(content, {fadeIn: true, info: this.info}));
             }); 
         }));
+    }
+
+    onremove(ctrl) {
+        if(ctrl.attrs.remove)
+            ctrl.attrs.remove.remove();
     }
 
     view() {
@@ -106,11 +115,6 @@ var content = function() {
                     duration: 2000,
                     easing: "easeInOutQuad"
                 });
-            }
-        },
-        onremove: (ctrl) => {
-            if (ctrl.attrs.remove) {
-                ctrl.attrs.remove.remove();
             }
         },
         view(ctrl) {

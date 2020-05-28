@@ -1,6 +1,7 @@
 import m from 'mithril';
 import interact from 'interactjs';
 import anime from 'animejs';
+import Stein from './stein.js';
 
 export default class Reisesteine {
     constructor () {
@@ -57,69 +58,78 @@ export default class Reisesteine {
                 smoothEndDuration: 400
             },
             allowFrom: '.rs-reisesteine',
-            ignoreFrom: '.rs-reisesteine>div>img'
+            ignoreFrom: '.rs-reisesteine>div>img',
+            cursorChecker () {
+                return null
+            }
         })
         
-        // document.querySelector('.rs-1a').addEventListener('click', (e) => {
+        ctrl.dom.querySelectorAll('.rs-stein').forEach(item => {
+            item.addEventListener('click', (e) => {
 
-        //     const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
+                const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
+                const id = e.target.getAttribute('data-id');
+                anime({
+                    targets: siblings,
+                    duration: 500,
+                    opacity: [1, 0],
+                    easing: 'linear'
+                });
 
-        //     anime({
-        //         targets: siblings,
-        //         duration: 500,
-        //         opacity: [1, 0],
-        //         easing: 'linear'
-        //     });
+                const bb = e.target.getBoundingClientRect();
+                const tt = vh*0.23;
+                const th = vw*0.15;
+                const tw = bb.width*th/bb.height;
+                const tl = vw*0.2 + ((vw*0.3 - tw)/2);
 
-        //     const bb = e.target.getBoundingClientRect();
-        //     const tt = vh*0.23;
-        //     const th = vw*0.15;
-        //     const tw = bb.width*th/bb.height;
-        //     const tl = vw*0.2 + ((vw*0.3 - tw)/2);
+                document.body.appendChild(e.target);
+                e.target.style.position = 'absolute';
+                e.target.style.top = bb.top + 'px';
+                e.target.style.left = bb.left + 'px';
+                e.target.style.height = bb.height + 'px';
+                e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
+                e.target.style.zIndex = 3;
+                
+                document.querySelector('#rs-content').appendChild(e.target);
 
-        //     document.body.appendChild(e.target);
-        //     e.target.style.position = 'absolute';
-        //     e.target.style.top = bb.top + 'px';
-        //     e.target.style.left = bb.left + 'px';
-        //     e.target.style.height = bb.height + 'px';
-        //     e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
-        //     e.target.style.zIndex = 3;
-
-
-        //     anime({
-        //         targets: e.target,
-        //         translateX: tl - bb.left,
-        //         translateY: tt - bb.top,
-        //         height: th,
-        //         width: tw,
-        //         duration: 1000,
-        //         easing: 'easeInOutQuad'
-        //     }).finished.then(() => {
-        //         m.render(document.getElementById('rs-content'), m(someFunc2, {remove: e.target}));
-        //         document.querySelector('#rs-content').appendChild(e.target);
-        //         anime({
-        //             targets: e.target,
-        //             opacity: [1, 0],
-        //             duration: 3000,
-        //             delay: 1000
-        //         }).finished.then(() => {
-        //             e.target.remove();
-        //         });
-        //     });
-
-        //     frame.navigate('offset');
-        //     myMap.map.flyTo([56.124940,12.315705], 8, {duration: 1});
-        //     setTimeout(() => {myMap.map.panBy([-myMap.map.getSize().x*0.2, myMap.map.getSize().x*0.05], {duration: 1})}, 1500);
-        //     m.render(document.getElementById('rs-footer'), m(someFunc3));
-        // })
+                m.mount(document.getElementById('rs-content'), {
+                    view: () => m(Stein, {  'id': id, 
+                                            'map':ctrl.attrs.map, 
+                                            'frame':ctrl.attrs.frame,
+                                            'zoomTo': 'offset',
+                                            'remove': e.target
+                    })}
+                );
+                
+                anime({
+                    targets: e.target,
+                    translateX: tl - bb.left,
+                    translateY: tt - bb.top,
+                    height: th,
+                    width: tw,
+                    duration: 1000,
+                    easing: 'easeInOutQuad'
+                }).finished.then(() => {
+                    anime({
+                        targets: e.target,
+                        opacity: [1, 0],
+                        duration: 3000,
+                        delay: 4000
+                    }).finished.then(() => {
+                        e.target.remove();
+                    });
+                });
+            });
+        });
     }
+
     view () {
         return(
             <div class="rs-reisesteine">
 
                 { this.imgs ? this.imgs.map((val, idx) => (
                     <div key={"img"+idx} style="cursor: pointer; background-color: rgba(0,0,0,0)!important;">
-                        <img class="rs-1a" src={'/static/img/steine/' + val[1]}></img>
+                        <img class="rs-stein" data-id={val[0]} src={'/static/img/steine/' + val[1]}></img>
                     </div>
                 )) : "" }
 
