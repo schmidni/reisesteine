@@ -3,7 +3,7 @@ html {
     font-size: 16px;
 }
 
-body {
+body.rs-frontend {
     height:100vh;
     width:100vw;
     margin: 0;
@@ -11,7 +11,7 @@ body {
     overflow: hidden;
 }
 
-div {
+ div {
     margin: 0;
     padding: 0;
 }
@@ -212,7 +212,7 @@ h4.active {
 }
 
 .rs-reisesteine>div {
-    margin: 150px;
+    margin: 100px;
     height: 300px;
     width: 300px;
     background-color: white;
@@ -222,4 +222,10 @@ h4.active {
     max-height: 100%;
     max-width: 100%;
     filter: drop-shadow(5px 5px 5px #222);
+}
+
+/************************** BACKEND ******************************************/
+.form-group img {
+    height: 150px;
+    margin-top: 20px;
 }

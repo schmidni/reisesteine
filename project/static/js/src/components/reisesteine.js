@@ -28,8 +28,8 @@ export default class Reisesteine {
         let len = target.children.length;
 
         let len_w = Math.round(Math.sqrt(len*ratio))
-        let width =  len_w * 600 + 100;
-        let height = Math.ceil(len / len_w) * 600 + 100;
+        let width =  len_w * 500 + 100;
+        let height = Math.ceil(len / len_w) * 500 + 100;
 
         target.style.width = width + 'px';
 

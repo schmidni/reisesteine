@@ -9,12 +9,12 @@
         <title>Reisesteine</title>
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"></script>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></script>
 
-	    <script type="text/javascript" src="{{ url_for('static', filename='js/ext/bootstrap.min.js') }}"></script>	
-
+        <!-- <script type="text/javascript" src="{{ url_for('static', filename='js/ext/bootstrap.min.js') }}"></script>	 -->
     </head>
 
-    <body> 
+    <body class="rs-backend"> 
         {% block body %}{% endblock %}
     </body>
 </html>

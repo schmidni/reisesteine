@@ -4,6 +4,7 @@ from project import db
 from project.models import Gestein, Stein, Person
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_wtf.file import FileRequired
 
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
@@ -87,42 +88,55 @@ def editStein(id):
         gestein = Gestein.get_or_create(id = form.gestein_id.data)
         gestein.name = form.gestein.data
 
-        fn_stein, fn_her = "", ""
-        f_stein = form.bild_stein.data
-        if f_stein:
-            fn_stein = unique_filename('img/steine', secure_filename(f_stein.filename))
-            f_stein.save(os.path.join(current_app.static_folder, 'img/steine', fn_stein))
-
-        f_her = form.bild_herkunft.data
-        if f_her:
-            fn_her = unique_filename('img/steine', secure_filename(f_her.filename))
-            f_her.save(os.path.join(current_app.static_folder, 'img/steine', fn_her))
-
-        with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
-            width, height = img.size
-        optimize_image(os.path.join('img/steine', fn_stein), min(width, 1000))
-        with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
-            width, height = img.size
-        optimize_image(os.path.join('img/steine', fn_her), min(width, 1980))
-
         # get or create stein
         stein = Stein.get_or_create(id=form.stein_id.data)
 
         # assign
         stein.populate(form)
-        stein.bild_stein = fn_stein
-        stein.bild_herkunft = fn_her
         stein.absender = absender
         stein.gesteinsart = gestein
 
+        # process stein bild
+        if (form.bild_stein.data):
+            fn_stein= ''
+            f_stein = form.bild_stein.data
+            if f_stein:
+                fn_stein = unique_filename('img/steine', secure_filename(f_stein.filename))
+                f_stein.save(os.path.join(current_app.static_folder, 'img/steine', fn_stein))
+            with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
+                width, height = img.size
+            optimize_image(os.path.join('img/steine', fn_stein), min(width, 1000))
+            stein.bild_stein = fn_stein
+
+        # process herkunft bild
+        if (form.bild_stein.data):
+            fn_her = ''
+            f_her = form.bild_herkunft.data
+            if f_her:
+                fn_her = unique_filename('img/steine', secure_filename(f_her.filename))
+                f_her.save(os.path.join(current_app.static_folder, 'img/steine', fn_her))
+            with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_her)) as img:
+                width, height = img.size
+            optimize_image(os.path.join('img/steine', fn_her), min(width, 1980))
+            stein.bild_herkunft = fn_her
+
+        # save and redirect back to list
         db.session.add(stein)
         db.session.commit()
         return redirect(url_for('reisesteine.listSteine'))
+
+    bild_stein = None
+    bild_herkunft = None
 
     # edit an existing rock
     if id is not None:
         curr_stein = Stein.query.get(id)
         form.populate(curr_stein)
+        bild_stein = curr_stein.bild_stein
+        bild_herkunft = curr_stein.bild_herkunft
+    else:
+        form.bild_herkunft.validators.append(FileRequired())
+        form.bild_stein.validators.append(FileRequired())
 
     # new rock, fill in Absender
     if request.args.get('email'):
@@ -141,7 +155,7 @@ def editStein(id):
         else:
             form.gestein.data = request.args.get('gestein')
 
-    return render_template('reisesteine/backend/editStein.html', form=form)
+    return render_template('reisesteine/backend/editStein.html', form=form, stein=bild_stein, herkunft=bild_herkunft)
 
 def unique_filename(folder, filename):
     output_filename, file_extension = os.path.splitext(filename)
@@ -191,5 +205,4 @@ def images_all():
 @reisesteine.route('/steine/<int:id>', methods=['GET'])
 def get_stein(id):
     ste = Stein.query.get(id)
-    print(ste.to_dict())
     return jsonify(ste.to_dict())

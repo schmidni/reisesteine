@@ -4,6 +4,8 @@ from wtforms import StringField, BooleanField, SubmitField, DecimalField, TextAr
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional
 from wtforms.fields.html5 import EmailField
 from project.models import Gestein, Stein, Person
+from werkzeug.datastructures import FileStorage
+from flask import current_app
 
 class editSteinForm(FlaskForm):
     stein_id =          IntegerField('Stein ID', validators=[Optional()])
@@ -26,8 +28,6 @@ class editSteinForm(FlaskForm):
     titel =             StringField('Titel')
     pers_geschichte =   TextAreaField('Persönliche Geschichte')
     geo_geschichte =    TextAreaField('Geologische Einschätzung', validators=[DataRequired()])
-    # bild_stein =        FileField('Bild Stein', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
-    # bild_herkunft =     FileField('Bild Fundort', validators=[FileRequired(), FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
     bild_stein =        FileField('Bild Stein', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
     bild_herkunft =     FileField('Bild Fundort', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
 
@@ -55,6 +55,7 @@ class editSteinForm(FlaskForm):
             raise ValidationError('Diese Email gibt es bereits. Wert zurückgesetzt.')
 
     def populate(self, curr_stein):
+
         self.user_id.data = curr_stein.absender.id
         self.vorname.data = curr_stein.absender.vorname
         self.nachname.data = curr_stein.absender.nachname
@@ -74,8 +75,6 @@ class editSteinForm(FlaskForm):
         self.titel.data = curr_stein.titel
         self.pers_geschichte.data = curr_stein.pers_geschichte
         self.geo_geschichte.data = curr_stein.geo_geschichte
-        self.bild_stein.data = curr_stein.bild_stein
-        self.bild_herkunft.data = curr_stein.bild_herkunft
 
     def populate_absender(self, absender):
         self.user_id.data = absender.id
