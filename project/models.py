@@ -13,7 +13,7 @@ class Person(db.Model):
     steine = db.relationship('Stein', backref='absender', lazy='dynamic')
 
     def __repr__(self):
-        return '<{}, {}>'.format(self.vorname, self.nachname) 
+        return '{}, {}'.format(self.vorname, self.nachname) 
 
     @classmethod
     def get_or_create(cls, id = None):
@@ -35,7 +35,7 @@ class Gestein(db.Model):
     steine = db.relationship('Stein', backref='gesteinsart', lazy='dynamic')
 
     def __repr__(self):
-        return '<{}>'.format(self.name) 
+        return '{}'.format(self.name) 
 
     @classmethod
     def get_or_create(cls, id = None):
@@ -63,7 +63,7 @@ class Stein(db.Model):
     published = db.Column(db.Boolean)
 
     def __repr__(self):
-        return '<{}, {}, {}>'.format(self.gestein, self.herkunft, self.bild_stein)
+        return '{}, {}, {}'.format(self.gestein, self.herkunft, self.bild_stein)
 
     @classmethod
     def get_or_create(cls, id = None):

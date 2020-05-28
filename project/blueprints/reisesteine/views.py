@@ -3,12 +3,20 @@ from project.blueprints.reisesteine.forms import editSteinForm
 from project import db
 from project.models import Gestein, Stein, Person
 from werkzeug.utils import secure_filename
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from flask_httpauth import HTTPBasicAuth
+auth = HTTPBasicAuth()
 
 from PIL import Image
 
 import requests
 import urllib.request
 import os
+
+users = {
+    'admin': generate_password_hash("reisesteine2020")
+}
 
 reisesteine = Blueprint('reisesteine', __name__, template_folder='templates', url_prefix='/<lang_code>/')
 
@@ -23,27 +31,34 @@ def pull_lang_code(endpoint, values):
 
 @reisesteine.before_request
 def before_request():
-    dfl = request.url_rule.defaults
-    if 'lang_code' in dfl:
-        if dfl['lang_code'] != request.full_path.split('/')[1]:
-            abort(404)
+    if g.lang_code not in current_app.config['LANGUAGES']:
+        abort(404)
+
+@auth.verify_password
+def verify_password(username, password):
+    if username in users and \
+            check_password_hash(users.get(username), password):
+        return username
 
 @reisesteine.route('/')
 def index():
     return render_template('reisesteine/home.html')
 
 @reisesteine.route('/listSteine')
+@auth.login_required
 def listSteine():
     steine = Stein.query.all()
     return render_template('reisesteine/backend/listSteine.html', steine=steine)
 
 @reisesteine.route('/deleteStein/<id>')
+@auth.login_required
 def deleteStein(id):
     Stein.query.filter_by(id=id).delete()
     db.session.commit()
     return redirect(url_for('reisesteine.listSteine'))
 
 @reisesteine.route('/newStein', methods=['POST'])
+@auth.login_required
 def newStein():
     f_email = request.form.get('email')
     f_gestein = request.form.get('gestein')
@@ -58,6 +73,7 @@ def newStein():
 
 @reisesteine.route('/editStein/<id>', methods=['GET', 'POST'])
 @reisesteine.route('/editStein', defaults={'id': None}, methods=['GET', 'POST'])
+@auth.login_required
 def editStein(id):
     form = editSteinForm()
 
