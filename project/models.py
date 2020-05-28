@@ -82,3 +82,18 @@ class Stein(db.Model):
         self.pers_geschichte = form.pers_geschichte.data
         self.geo_geschichte = form.geo_geschichte.data
         self.published = False
+
+    def to_dict(self):
+        data = {
+            'id': self.id,
+            'gestein': self.gesteinsart.name,
+            'herkunft': self.herkunft,
+            'longitude': self.longitude,
+            'latitude': self.latitude,
+            'titel': self.titel,
+            'pers_geschichte': self.pers_geschichte,
+            'geo_geschichte': self.geo_geschichte,
+            'bild_stein': self.bild_stein,
+            'bild_herkunft': self.bild_herkunft
+        }
+        return data
