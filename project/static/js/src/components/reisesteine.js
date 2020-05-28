@@ -18,7 +18,6 @@ export default class Reisesteine {
     }
 
     onupdate (ctrl) {
-        console.log('update');
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
         const ratio = vw / vh;
@@ -120,7 +119,7 @@ export default class Reisesteine {
 
                 { this.imgs ? this.imgs.map((val, idx) => (
                     <div key={"img"+idx} style="cursor: pointer; background-color: rgba(0,0,0,0)!important;">
-                        <img class="rs-1a" src={'/static/img/steine/' + val}></img>
+                        <img class="rs-1a" src={'/static/img/steine/' + val[1]}></img>
                     </div>
                 )) : "" }
 

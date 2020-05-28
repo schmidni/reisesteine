@@ -1,8 +1,10 @@
 import m from 'mithril';
-
+import L from 'leaflet';
 export default class worldMap {
-    constructor(el) {
+    constructor(el, func, frame) {
         this.map = this.init(el);
+        this.frame = frame;
+        this.onMarkerClick = func;
         this.popup = L.popup();
         this.coordinates = [];
         this.marker = [];
@@ -15,11 +17,8 @@ export default class worldMap {
             shadowSize: [41, 41]
         });
 
-        this.coordinates = this.loadCoordinates(); 
+        this.coordinates = this.loadCoordinates()
         this.mapCoordinates();
-
-
-        this.initEvents();
     }
 
     loadCoordinates = async () => {
@@ -30,8 +29,11 @@ export default class worldMap {
     mapCoordinates = async () => {
         let coords = await this.coordinates;
         coords.forEach(el => {
-        this.marker.push(L.marker(el, {icon: this.redIcon})
-                        .addTo(this.map));
+            let el_coord = [el[1], el[2]];
+            this.marker.push(L.marker(el_coord, {icon: this.redIcon})
+                            .addTo(this.map)
+                            .on('click', () => this.onMarkerClick(el_coord, this.map, this.frame, el[0]))
+                            );
         });
     }
 
@@ -51,23 +53,5 @@ export default class worldMap {
             zoomOffset: -1,
             accessToken: 'pk.eyJ1Ijoic2NobWlkbmkiLCJhIjoiY2thODNqaWZhMDk1cTMycXdpbTdtMXMwZSJ9.kWgF03PRqN68LpUFC7UAdw'
         }).addTo(mymap);
-    }
-
-    onMapClick = (e) => {
-        this.popup
-            .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
-            .openOn(this.map);
-    }
-
-    initEvents = () => {
-        // this.marker.on('mouseover',function(ev) {
-        //     ev.target.openPopup();
-        //   });
-        // this.marker.on('mouseout',function(ev) {
-        //     ev.target.closePopup();
-        //   });
-
-        // this.map.on('click', this.onMapClick);
     }
 }

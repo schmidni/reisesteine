@@ -164,10 +164,16 @@ def optimize_image(filename, width):
 
 @reisesteine.route('/steine/coordinates/all', methods=['GET'])
 def coordinates_all():
-    c = Stein.query.with_entities(Stein.longitude, Stein.latitude).all()
-    return jsonify(c)
+    coord = Stein.query.with_entities(Stein.id, Stein.longitude, Stein.latitude).all()
+    return jsonify(coord)
 
 @reisesteine.route('/steine/images/all', methods=['GET'])
 def images_all():
-    c = [x for (x,) in Stein.query.with_entities(Stein.bild_stein).all()]
-    return jsonify(c)
+    img = Stein.query.with_entities(Stein.id, Stein.bild_stein).all()
+    return jsonify(img)
+
+@reisesteine.route('/steine/<int:id>', methods=['GET'])
+def get_stein(id):
+    ste = Stein.query.get(id)
+    print(ste.to_dict())
+    return jsonify(ste.to_dict())
