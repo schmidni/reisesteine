@@ -7,23 +7,29 @@
         <div class="row">
             <div class="col-6">
                 <div class="card">
-                    <h5 class="card-header">Absender</h5>
+                    <div class="card-header d-flex">
+                        <h5>Absender</h5>
+                        {% if form.user_id.data %}
+                            <button type="button" id="user_edit" class="btn btn-primary btn-sm ml-auto">edit</button>
+                        {% endif %}
+                    </div>
                     <div class="card-body">
+                        {% set user = true if form.user_id.data else false %}
                         <div class="form-group">
                             {{ form.user_id.label }}
-                            {{ form.user_id(class_="form-control", readonly=true) }}
+                            {{ form.user_id(class_="form-control rs-person-id", readonly=true) }}
                         </div>
                         <div class="form-group">
                             {{ form.vorname.label }}
-                            {{ form.vorname(class_="form-control") }}
+                            {{ form.vorname(class_="form-control rs-person", readonly=user) }}
                         </div>
                         <div class="form-group">
                             {{ form.nachname.label }}
-                            {{ form.nachname(class_="form-control") }}
+                            {{ form.nachname(class_="form-control rs-person", readonly=user) }}
                         </div>
                         <div class="form-group">
                             {{ form.email.label }}
-                            {{ form.email(class_="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                            {{ form.email(class_="form-control rs-person" + (" is-invalid" if form.email.errors else ""), readonly=user) }}
                             {% for error in form.email.errors %}
                             <div class="invalid-feedback">
                                 {{error}}
@@ -32,19 +38,19 @@
                         </div>
                         <div class="form-group">
                             {{ form.telefon.label }}
-                            {{ form.telefon(class_="form-control") }}
+                            {{ form.telefon(class_="form-control rs-person", readonly=user) }}
                         </div>
                         <div class="form-group">
                             {{ form.instagram.label }}
-                            {{ form.instagram(class_="form-control") }}
+                            {{ form.instagram(class_="form-control rs-person", readonly=user) }}
                         </div>
                         <div class="form-group">
                             {{ form.twitter.label }}
-                            {{ form.twitter(class_="form-control") }}
+                            {{ form.twitter(class_="form-control rs-person", readonly=user) }}
                         </div>
                         <div class="form-group">
                             {{ form.facebook.label }}
-                            {{ form.facebook(class_="form-control") }}
+                            {{ form.facebook(class_="form-control rs-person", readonly=user) }}
                         </div>
                     </div>
                 </div>
@@ -52,18 +58,24 @@
             <div class="col-6">
 
                 <div class="card">
-                    <h5 class="card-header">Gestein</h5>
+                    <div class="card-header d-flex">
+                        <h5>Gestein</h5>
+                        {% set gestein = true if form.gestein_id.data else false%}
+                        {% if gestein %}
+                            <button type="button" id="gestein_edit" class="btn btn-primary btn-sm ml-auto">edit</button>
+                        {% endif %}
+                    </div>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 {{ form.gestein_id.label }}
-                                {{ form.gestein_id(class_="form-control", readonly=true) }}
+                                {{ form.gestein_id(class_="form-control rs-gestein-id", readonly=true) }}
                             </div>
 
                             <div class="form-group col-md-6">
                                 {{ form.gestein.label }}
 
-                                {{ form.gestein(class_="form-control" + (" is-invalid" if form.gestein.errors else "")) }}
+                                {{ form.gestein(class_="form-control  rs-gestein" + (" is-invalid" if form.gestein.errors else ""), readonly=gestein) }}
                                 {% for error in form.gestein.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
@@ -138,6 +150,20 @@
                                     else
                                         document.getElementById('img_herkunft').style.display = 'block';
                                 });
+                                {% if user %}
+                                document.getElementById('user_edit').addEventListener('click', function() {
+                                    let pers = document.getElementsByClassName('rs-person');
+                                    for( let i = 0; i<pers.length; i++){
+                                        pers[i].readOnly = false;
+                                    }
+                                });
+                                {% endif %}
+
+                                {% if gestein %}
+                                document.getElementById('gestein_edit').addEventListener('click', function() {
+                                    document.getElementsByClassName('rs-gestein')[0].readOnly = false
+                                });
+                                {% endif %}
                             </script>
                         </div>
                     </div>

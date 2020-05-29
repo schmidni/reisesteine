@@ -24,7 +24,7 @@ class editSteinForm(FlaskForm):
     
     herkunft =          StringField('Herkunft', validators=[DataRequired()])
     longitude =         DecimalField('Longitude', places=15, validators=[DataRequired()])
-    latitude =          DecimalField('Longitude', places=15, validators=[DataRequired()])
+    latitude =          DecimalField('Latitude', places=15, validators=[DataRequired()])
     titel =             StringField('Titel')
     pers_geschichte =   TextAreaField('Persönliche Geschichte')
     geo_geschichte =    TextAreaField('Geologische Einschätzung', validators=[DataRequired()])
