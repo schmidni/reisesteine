@@ -49,7 +49,7 @@ export default class svgFrame {
         const rInitialOuter = r;
         const rInitialInner = r;
         const rFinalOuter = r;
-        const rFinalInner = this.rect.width*0.075;
+        const rFinalInner = this.rect.width*0.1;
         let p = '';
 
         if (path === 'initial')
@@ -57,7 +57,7 @@ export default class svgFrame {
         else if(path === 'zoom')
             p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
         else if(path === 'offset')
-            p = `M ${this.rect.width/2+this.rect.width*0.2}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
+            p = `M ${this.rect.width*0.7}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
         else if (path === 'full')
             p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-0.001} a ${0.001} ${0.001} 0 1 1 -1 0 Z`;
         else if (path==='rect')

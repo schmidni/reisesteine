@@ -1,5 +1,6 @@
 import m from 'mithril';
 import anime from 'animejs';
+import interact from 'interactjs';
 
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -8,7 +9,7 @@ function sleep(ms) {
 export default class Stein {
 
     constructor(ctrl) {
-        this.map = ctrl.attrs.map;
+        this.myMap = ctrl.attrs.map;
         this.frame = ctrl.attrs.frame;
         this.show = "";
         this.info = {};
@@ -26,11 +27,8 @@ export default class Stein {
         if(this.info == {})
             return;
 
-        this.map.flyTo([this.info.longitude, this.info.latitude], 8, {duration: 1});
-        if (ctrl.attrs.zoomTo)
-            this.frame.navigate(ctrl.attrs.zoomTo)
-        else
-            this.frame.navigate('zoom');
+        this.myMap.flyToOffset([this.info.longitude, this.info.latitude]);
+        this.frame.navigate('offset');
 
         m.render(ctrl.dom.querySelector('#rs-coordinates'), m(coordinates, {'animateIn': this.animateCoords, 
                                                                             'info': this.info
@@ -42,25 +40,14 @@ export default class Stein {
             targets: target.children,
             opacity: [0,1],
             translateX: [40,0],
-            translateY: this.map.getSize().x*0.015,
+            translateY: this.myMap.map.getSize().x*0.015,
             duration: 1000,
             easing: "easeInOutQuad",
-            delay: anime.stagger(200, {start: 600})
-        });
-        animatein.finished.then( () => sleep(500).then(() => {
-            let offset = this.map.getSize().x*0.2;
-            this.map.panBy([-offset, this.map.getSize().x*0.05], {duration: 1});
-            this.frame.navigate('offset');
-            anime({
-                targets: target,
-                translateX: offset,
-                translateY: -this.map.getSize().x*0.05,
-                duration: 1000,
-                easing: "easeOutQuad"
-            }).finished.then(() => {
+            delay: anime.stagger(200, {start: 600}),
+            complete: () => {
                 m.render(document.getElementById('rs-info'), m(content, {fadeIn: true, info: this.info}));
-            }); 
-        }));
+            }
+        });
     }
 
     onremove(ctrl) {
@@ -102,15 +89,15 @@ var content = function() {
         oncreate: (ctrl) => {
 
             m.render(document.getElementById('rs-rocknav'), m(rocknav, {
-                'stein': ctrl.dom.querySelector('.slide1'),
-                'fundort': ctrl.dom.querySelector('.slide2'),
-                'geschichte': ctrl.dom.querySelector('.slide3'),
-                'geologie': ctrl.dom.querySelector('.slide4') 
+                'stein': ctrl.dom.querySelector('.rs-bild'),
+                'fundort': ctrl.dom.querySelector('.rs-fundort'),
+                'geschichte': ctrl.dom.querySelector('.rs-geschichte'),
+                'geologie': ctrl.dom.querySelector('.rs-geologie') 
             }));
 
             if (ctrl.attrs.fadeIn){
                 anime({
-                    targets: ctrl.dom.querySelector('.slide1'),
+                    targets: ctrl.dom.querySelector('.rs-bild'),
                     opacity: [0, 1],
                     duration: 2000,
                     easing: "easeInOutQuad"
@@ -120,17 +107,15 @@ var content = function() {
         view(ctrl) {
             return (
             <div class="rs-content">
-                <div class="slide1">
-                    <img class="rs-rock" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
+                <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
+                <div class="rs-fundort">
+                    <img class="rs-fundort-img" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
                 </div>
-                <div class="slide2">
-                    <img src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
-                </div>
-                <div class="slide3">
+                <div class="rs-geschichte">
                     <h1>{ctrl.attrs.info.titel}</h1>
                     <p>{ctrl.attrs.info.pers_geschichte}</p>
                 </div>
-                <div class="slide4">
+                <div class="rs-geologie">
                 <h1>{ctrl.attrs.info.gestein}</h1>
                 <h3>{ctrl.attrs.info.herkunft}</h3>
                 <p>{ctrl.attrs.info.geo_geschichte}</p>
@@ -141,6 +126,43 @@ var content = function() {
     }
 }
 
+var setUpImage = function() {
+    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+        
+    let slide = document.querySelector('.rs-fundort-img');
+    slide.style.width = vw*1.1 + "px";
+    slide.style.zIndex = 100;
+    let slide_rect = slide.getBoundingClientRect();
+
+    const position = { x: -(slide_rect.width - vw) / 2, y: -(slide_rect.height - vh) / 2 }
+    const startPosition = {... position};
+
+    slide.style.transform = `translate(${position.x}px, ${position.y}px)`;
+    
+    var current = null;
+    
+    interact('.rs-fundort-img').draggable({
+        listeners: {
+            move (event) {
+            position.x += event.dx
+            position.y += event.dy
+
+            event.target.style.transform =
+                `translate(${position.x}px, ${position.y}px)`;
+
+            }
+        },
+        inertia: {
+            resistance: 5,
+            minSpeed: 10,
+            smoothEndDuration: 400
+        },
+        cursorChecker () {
+            return null
+        }
+    })
+}
 
 var rocknav = function () {
     var active = {};
@@ -161,6 +183,7 @@ var rocknav = function () {
             })
         });
         active = target_in;
+        setUpImage();
     };
 
     return{

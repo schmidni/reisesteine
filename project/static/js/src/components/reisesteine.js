@@ -82,6 +82,9 @@ export default class Reisesteine {
                     easing: 'linear'
                 });
 
+                ctrl.attrs.frame.paths.current = 'full';
+                document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
+
                 const bb = e.target.getBoundingClientRect();
                 const tt = vh*0.23;
                 const th = vw*0.15;
@@ -102,7 +105,6 @@ export default class Reisesteine {
                     view: () => m(Stein, {  'id': id, 
                                             'map':ctrl.attrs.map, 
                                             'frame':ctrl.attrs.frame,
-                                            'zoomTo': 'offset',
                                             'remove': e.target
                     })}
                 );
@@ -127,10 +129,6 @@ export default class Reisesteine {
                 });
             });
         });
-    }
-
-    onbeforeremove (ctrl) {
-        document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
     }
 
     view () {
