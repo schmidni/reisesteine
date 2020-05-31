@@ -33,8 +33,6 @@ var removeall = () => {
 
 document.getElementById('rs-reisesteine').addEventListener('click', () => {
     m.render(document.getElementById('rs-content'), null);
-    document.getElementById('rs-navigation').classList.add('active');
     document.querySelector('.rs-close').style.display = "block";
-    frame.navigate('full');
     m.mount(document.getElementById('rs-content'), {view: () => m(reisesteine, {'map': myMap.map, 'frame':frame})});
 });

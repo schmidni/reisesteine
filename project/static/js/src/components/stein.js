@@ -121,18 +121,17 @@ var content = function() {
             return (
             <div class="rs-content">
                 <div class="slide1">
-                    <img src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
-                    <h1>Schwarzes Glitzern</h1>
+                    <img class="rs-rock" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
                 </div>
                 <div class="slide2">
                     <img src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
                 </div>
                 <div class="slide3">
-                    <h2>{ctrl.attrs.info.titel}</h2>
+                    <h1>{ctrl.attrs.info.titel}</h1>
                     <p>{ctrl.attrs.info.pers_geschichte}</p>
                 </div>
                 <div class="slide4">
-                <h2>{ctrl.attrs.info.gestein}</h2>
+                <h1>{ctrl.attrs.info.gestein}</h1>
                 <h3>{ctrl.attrs.info.herkunft}</h3>
                 <p>{ctrl.attrs.info.geo_geschichte}</p>
                 </div>
@@ -166,12 +165,6 @@ var rocknav = function () {
 
     return{
         oncreate: (ctrl) => {
-            anime({
-                targets: ctrl.dom.querySelector('.rs-path'),
-                duration: 2000,
-                easing: 'easeInQuad',
-                d: 'M0 5 l2000 0'
-            });
             active = ctrl.attrs.stein;
             ctrl.dom.querySelector('.rs-menu-stein').addEventListener('click', (e) => switchIt(ctrl.attrs.stein, e));
             ctrl.dom.querySelector('.rs-menu-fundort').addEventListener('click', (e) => switchIt(ctrl.attrs.fundort, e));
@@ -181,20 +174,15 @@ var rocknav = function () {
         view() {
             return(
                 <div class="rs-footer">
-                    <div> 
-                       <svg width="60%" height="10" viewbox="0 0 2000 10" preserveAspectRatio="none">
-                           <path class="rs-path" width="100%" height="100%" stroke="#000" stroke-width="2" d="m 0 5 L0 0" />
-                       </svg>
-                       
-                       &nbsp;&nbsp;&nbsp;&nbsp;
-
-                    </div> 
-
                     <div>
-
-                        <h4 class="active rs-menu-stein">Stein</h4> <h4 class="rs-menu-fundort">Fundort</h4> 
-                        <h4 class="rs-menu-geschichte">Geschichte</h4> <h4 class="rs-menu-geologie">Geologie</h4>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" preserveAspectRatio="none">
+                            <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/>
+                        </svg>
                     </div>
+                    <h4 class="active rs-menu-stein">Stein</h4> 
+                    <h4 class="rs-menu-fundort">Fundort</h4> 
+                    <h4 class="rs-menu-geschichte">Geschichte</h4> 
+                    <h4 class="rs-menu-geologie">Geologie</h4>
                 </div>
             )
         }

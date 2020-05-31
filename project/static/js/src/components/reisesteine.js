@@ -9,6 +9,12 @@ export default class Reisesteine {
     }
 
     oncreate (ctrl) {
+
+        ctrl.attrs.frame.navigate('full')
+        .then(() => {
+            document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('rect'));
+        });
+
         m.request({
             method: "GET",
             url: "steine/images/all",
@@ -121,6 +127,10 @@ export default class Reisesteine {
                 });
             });
         });
+    }
+
+    onbeforeremove (ctrl) {
+        document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
     }
 
     view () {

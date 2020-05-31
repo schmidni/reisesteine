@@ -9,6 +9,10 @@ body.rs-frontend {
     margin: 0;
     padding: 0;
     overflow: hidden;
+    font-family: 'Sen', sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    color: rgb(20,80,30);
 }
 
  div {
@@ -26,34 +30,39 @@ body.rs-frontend {
 
 /************************** CAPTIONS ******************************************/
 h1 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 600;
-    font-size: 4rem;
-    margin: 0 0 -1rem 0;
+    font-family: 'Passion One', cursive;
+    font-weight: 400;
+    font-size: 3.4rem;
+    margin: 0 0 -0.5rem 0;
+    color: rgb(20,80,30);
 }
 
 h2 {
-    font-family: 'Libre Baskerville', serif;
+    font-family: 'Passion One', cursive;
     font-weight: 400;
-    font-size: 2.3rem;
+    font-size: 2.8rem;
     margin: 15px 0 0 0;
+    color: rgb(20,80,30);
 }
 
 h3 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 200;
-    font-size: 2.2rem;
+    font-family: 'Sen', sans-serif;
+    font-weight: 400;
+    font-size: 1.6rem;
     margin: 0 0 -5px 0;
+    color: rgb(20,80,30);
 }
 
 h4 {
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 200;
-    font-size: 2rem;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.7rem;
+    color: rgb(180, 30, 30);
+    margin: 2px auto 2px auto;
 }
 
 h4.active {
-    font-weight: 900;
+    font-weight: 700;
 }
 
 /************************** CONTENT ******************************************/
@@ -73,8 +82,6 @@ h4.active {
     left: 20vw;
     z-index: 3;
     text-align: center;
-    /* opacity: 0; */
-    /* display: none; */
     width: 30vw;
 }
 
@@ -87,40 +94,38 @@ h4.active {
     opacity: 0;
 }
 
-.rs-content img {
-    height: 15vw;
-    margin-bottom: 100px;
+.rs-content .rs-rock {
+    height: 40vh;
     filter: drop-shadow(5px 5px 5px #222);
 }
 
+
+/************************** NAVIGATION ROCK ******************************************/
+
 .rs-footer {
     position: absolute;
-    bottom: 5vh;
-    left: 0;
-    width: 100vw;
+    bottom: 40vh;
+    right: 30px;
+    width:15vw;
+    height: 15vh;
     z-index: 3;
     display: flex;
-}
-
-.rs-footer div {
-    display: flex;
-    margin: auto;
-    text-align: center;
-}
-
-.rs-footer div:first-child {
-    width: 50vw;
-    justify-content: flex-end;
-}
-
-.rs-footer div:last-child {
-    width: 35vw;
-    padding-right: 10vw;
-    justify-content: space-evenly;
+    flex-direction: column;
 }
 
 .rs-footer h4 {
     cursor: pointer;
+}
+
+.rs-footer div {
+    margin: auto auto 5px auto;
+}
+
+.rs-footer svg {
+    z-index: 3;
+    height: 30px;
+    width: 30px;
+    fill: rgb(180, 30, 30);
 }
 
 /************************** SVG OVERLAY ******************************************/
@@ -144,54 +149,43 @@ h4.active {
 /************************** NAVIGATION ******************************************/
 #rs-navigation {
     position: absolute;
-    top: 0;
-    left: 0;
-    height: 120px;
-    width: 100vw;
-    background-color: white;
+    top: 30px;
+    left: 20px;
+    background-color: rgba(256, 256, 256, 0.75);
     z-index: 4;
     display: flex;
-    flex-wrap: nowrap;
-    justify-content: space-between;
+    flex-direction: column;
+}
+
+#rs-navigation.circle{
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    padding: 30px;
 }
 
 #rs-navigation img {
     height: 50px;
-    margin-left: 50px;
-    visibility: hidden;
 }
 
 #rs-navigation span {
-    margin: auto;
+    margin: 6px auto 6px auto;
     text-align: center;
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 200;
-    font-size: 1.8rem;
-}
-
-#rs-navigation div {
-    margin:auto;
-    text-align: center;
-}
-
-#rs-navigation>div:first-child {
-    display:flex;
-    margin-left: 50px;
-    width: 30%;
-}
-
-#rs-navigation>div:last-child {
-    margin-right: 50px;
-    width: 30%;
-    display: flex;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.7rem;
+    color: rgb(180, 30, 30)
 }
 
 #rs-navigation.active {
     background-color: transparent!important;
 }
 
-#rs-navigation.active img {
-    visibility: visible;
+.rs-close {
+    position: absolute;
+    z-index: 4;
+    top: 50px;
+    right: 50px;
 }
 
 /************************** REISESTEINE DRAGGABLE ******************************************/
