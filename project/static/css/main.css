@@ -76,36 +76,38 @@ h4.active {
     text-align:center;
 }
 
-.rs-content {
-    z-index: 3;
-    text-align: center;
-    width: 30vw;
-}
-
-.rs-content>div {
-    width: 100%;
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 200;
+.rs-content .rs-text {
+    font-family: 'Sen', sans-serif;
+    font-weight: 400;
     font-size: 1.4rem;
+    width: 35%;
+    position: absolute;
+    left: 20%;
+    top: 25%;
     opacity: 0;
-    z-index: 3;
 }
 
 .rs-content .rs-bild {
     height: 40vh;
+    z-index: 3;
     position: absolute;
     top: 23vh;
     left: 25vw;
-    z-index: 3;
     filter: drop-shadow(5px 5px 5px #222);
 }
 
-.rs-fundort-img {
+.rs-content .rs-fundort {
     position: absolute;
     top: 0;
     left: 0;
     touch-action: none;
     user-select: none;
+    cursor: grab;
+    opacity: 0;
+}
+
+.rs-content .rs-fundort:active {
+    cursor: grabbing;
 }
 
 
@@ -131,7 +133,7 @@ h4.active {
 }
 
 .rs-footer svg {
-    z-index: 3;
+    z-index: 4;
     height: 30px;
     width: 30px;
     fill: rgb(180, 30, 30);
@@ -208,6 +210,7 @@ h4.active {
     touch-action: none;
     user-select: none;
     cursor: grab;
+    padding: 200px;
 }
 
 .rs-reisesteine:active {

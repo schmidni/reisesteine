@@ -27,32 +27,32 @@ export default class Reisesteine {
     onupdate (ctrl) {
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        const ratio = vw / vh;
-
         let target = document.querySelector('.rs-reisesteine');
         
+        // amount of rocks to display
         let len = target.children.length;
 
-        let len_w = Math.round(Math.sqrt(len*ratio))
-        let width =  len_w * 500 + 100;
-        let height = Math.ceil(len / len_w) * 500 + 100;
+        // amount of rocks on one row so the aspect ratio of the viewport is kept
+        let len_w = Math.round(Math.sqrt(len*(vw / vh)))
 
+        // height and width of the container: x * width of one element + safety
+        let width =  len_w * 500 + 400;
+        let height = Math.ceil(len / len_w) * 500 + 400;
         target.style.width = width + 'px';
 
+        // center start position of screen
         const position = { x: -(width-vw) / 2, y: -(height-vh) / 2 }
-
         target.style.transform = `translate(${position.x}px, ${position.y}px)`;
 
         interact('.rs-reisesteine').draggable({
             listeners: {
                 move (event) {
-
-                if ((position.x + event.dx) < 200 && (position.x + event.dx) > -(width - vw + 200)){
                     position.x += event.dx
-                }
-                if ((position.y + event.dy) < 200 && (position.y + event.dy) > -(height - vh + 200)){
                     position.y += event.dy
-                }
+
+                    // clamp position
+                    position.x = Math.min(Math.max(position.x, vw - width), 0);
+                    position.y = Math.min(Math.max(position.y, vh - height), 0);
 
                 event.target.style.transform =
                     `translate(${position.x}px, ${position.y}px)`
@@ -72,9 +72,11 @@ export default class Reisesteine {
         
         ctrl.dom.querySelectorAll('.rs-stein').forEach(item => {
             item.addEventListener('click', (e) => {
-
-                const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
+                // rock id
                 const id = e.target.getAttribute('data-id');
+
+                // hide all other rocks
+                const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
                 anime({
                     targets: siblings,
                     duration: 500,
@@ -82,26 +84,28 @@ export default class Reisesteine {
                     easing: 'linear'
                 });
 
+                // replace overlay
                 ctrl.attrs.frame.paths.current = 'full';
                 document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
 
-                const bb = e.target.getBoundingClientRect();
-                const tt = vh*0.23;
-                const th = vw*0.15;
-                const tw = bb.width*th/bb.height;
-                const tl = vw*0.2 + ((vw*0.3 - tw)/2);
+                // current and target measurements
+                const bb = e.target.getBoundingClientRect();    // bounding box current rock
+                const tt = vh*0.23;                             // target top
+                const th = vh*0.40;                             // target height
+                const tw = bb.width*th/bb.height;               // target width
+                const tl = vw*0.25;                             // target left
 
-                document.body.appendChild(e.target);
+                // reparent current image so it doesnt get unmounted, reassign necessary styles
+                document.getElementById('rs-body').appendChild(e.target);
                 e.target.style.position = 'absolute';
                 e.target.style.top = bb.top + 'px';
                 e.target.style.left = bb.left + 'px';
                 e.target.style.height = bb.height + 'px';
                 e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
                 e.target.style.zIndex = 3;
-                
-                document.querySelector('#rs-content').appendChild(e.target);
 
-                m.mount(document.getElementById('rs-content'), {
+                // load Stein component
+                m.mount(document.getElementById('rs-body'), {
                     view: () => m(Stein, {  'id': id, 
                                             'map':ctrl.attrs.map, 
                                             'frame':ctrl.attrs.frame,
@@ -109,6 +113,7 @@ export default class Reisesteine {
                     })}
                 );
                 
+                // move image to new position
                 anime({
                     targets: e.target,
                     translateX: tl - bb.left,
@@ -118,6 +123,7 @@ export default class Reisesteine {
                     duration: 1000,
                     easing: 'easeInOutQuad'
                 }).finished.then(() => {
+                    // wait and then fade out after new image has loaded
                     anime({
                         targets: e.target,
                         opacity: [1, 0],

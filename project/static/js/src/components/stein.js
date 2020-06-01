@@ -102,20 +102,18 @@ var content = function() {
                     duration: 2000,
                     easing: "easeInOutQuad"
                 });
-            }
+            };
         },
         view(ctrl) {
             return (
             <div class="rs-content">
                 <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
-                <div class="rs-fundort">
-                    <img class="rs-fundort-img" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
-                </div>
-                <div class="rs-geschichte">
+                <img class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
+                <div class="rs-geschichte rs-text">
                     <h1>{ctrl.attrs.info.titel}</h1>
                     <p>{ctrl.attrs.info.pers_geschichte}</p>
                 </div>
-                <div class="rs-geologie">
+                <div class="rs-geologie rs-text">
                 <h1>{ctrl.attrs.info.gestein}</h1>
                 <h3>{ctrl.attrs.info.herkunft}</h3>
                 <p>{ctrl.attrs.info.geo_geschichte}</p>
@@ -130,26 +128,26 @@ var setUpImage = function() {
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
         
-    let slide = document.querySelector('.rs-fundort-img');
-    slide.style.width = vw*1.1 + "px";
-    slide.style.zIndex = 100;
+    let slide = document.querySelector('.rs-fundort');
+    slide.style.width = vw*1.05 + "px";
     let slide_rect = slide.getBoundingClientRect();
 
     const position = { x: -(slide_rect.width - vw) / 2, y: -(slide_rect.height - vh) / 2 }
-    const startPosition = {... position};
 
     slide.style.transform = `translate(${position.x}px, ${position.y}px)`;
-    
-    var current = null;
-    
-    interact('.rs-fundort-img').draggable({
+
+    interact('.rs-fundort').draggable({
         listeners: {
             move (event) {
-            position.x += event.dx
-            position.y += event.dy
+                position.x += event.dx
+                position.y += event.dy
 
-            event.target.style.transform =
-                `translate(${position.x}px, ${position.y}px)`;
+                // clamp position
+                position.x = Math.min(Math.max(position.x, vw-slide_rect.width), 0);
+                position.y = Math.min(Math.max(position.y, vh-slide_rect.height), 0);
+
+                event.target.style.transform =
+                    `translate(${position.x}px, ${position.y}px)`;
 
             }
         },
@@ -166,45 +164,71 @@ var setUpImage = function() {
 
 var rocknav = function () {
     var active = {};
+    var fundortSetup = false;
+    var menu = [];
+    var slides = [];
+
     var switchIt = (target_in, e) => {
         e.target.parentNode.querySelector('.active').classList.remove('active');
-        e.target.classList.add('active')
+        e.target.classList.add('active');
         anime({
             targets: active,
             duration: 500,
             opacity: [1, 0],
-            easing: 'easeOutQuad'
-        }).finished.then(() => {
-            anime({
-                targets: target_in,
-                duration: 500,
-                opacity: [0, 1],
-                easing: 'easeInQuad'
-            })
+            easing: 'easeOutQuad',
+            complete: (el) => {
+                el.animatables[0].target.style.zIndex = -1;
+                anime({
+                    targets: target_in,
+                    duration: 500,
+                    opacity: [0, 1],
+                    easing: 'easeInQuad',
+                    begin: (el) => {
+                        el.animatables[0].target.style.zIndex = 3;
+                    }
+                });
+            }
         });
         active = target_in;
-        setUpImage();
     };
 
     return{
         oncreate: (ctrl) => {
+
+            menu = [        this.dom.querySelector('.rs-menu-stein'),
+                            this.dom.querySelector('.rs-menu-geschichte'),
+                            this.dom.querySelector('.rs-menu-fundort'),
+                            this.dom.querySelector('.rs-menu-geologie')];
+            slides = [      this.attrs.stein,
+                            this.attrs.geschichte,
+                            this.attrs.fundort,
+                            this.attrs.geologie];
+
             active = ctrl.attrs.stein;
-            ctrl.dom.querySelector('.rs-menu-stein').addEventListener('click', (e) => switchIt(ctrl.attrs.stein, e));
-            ctrl.dom.querySelector('.rs-menu-fundort').addEventListener('click', (e) => switchIt(ctrl.attrs.fundort, e));
-            ctrl.dom.querySelector('.rs-menu-geschichte').addEventListener('click', (e) => switchIt(ctrl.attrs.geschichte, e));
-            ctrl.dom.querySelector('.rs-menu-geologie').addEventListener('click', (e) => switchIt(ctrl.attrs.geologie, e));
+            
+            menu.forEach((item, idx) => {
+                item.addEventListener('click', (e) => {
+                    switchIt(slides[idx], e);
+                })
+            })
+
+            menu[2].addEventListener('click', (e) => {
+                fundortSetup ?  null : setUpImage();
+                fundortSetup = true;
+            });
+
         },
         view() {
             return(
                 <div class="rs-footer">
-                    <div>
+                    <div class="rs-menu-next" style="cursor: pointer">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" preserveAspectRatio="none">
                             <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/>
                         </svg>
                     </div>
                     <h4 class="active rs-menu-stein">Stein</h4> 
-                    <h4 class="rs-menu-fundort">Fundort</h4> 
                     <h4 class="rs-menu-geschichte">Geschichte</h4> 
+                    <h4 class="rs-menu-fundort">Fundort</h4> 
                     <h4 class="rs-menu-geologie">Geologie</h4>
                 </div>
             )

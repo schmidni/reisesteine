@@ -11,7 +11,7 @@ var myMap = new worldMap(document.querySelector('#map'), onMarker, frame);
 function onMarker(coords, map, frame, id) {
     document.getElementById('rs-navigation').classList.add('active');
     document.querySelector('.rs-close').style.display = "block";
-    m.mount(document.getElementById('rs-content'), {view: () => m(Stein, {'id': id, 'map':map, 'frame':frame})});
+    m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': id, 'map':map, 'frame':frame})});
 }
 
 
@@ -19,7 +19,7 @@ function onMarker(coords, map, frame, id) {
 
 document.querySelector('.rs-close').addEventListener('click', () => {
     frame.navigate('initial');
-    m.render(document.getElementById('rs-content'), null);
+    m.render(document.getElementById('rs-body'), null);
     document.getElementById('rs-navigation').classList.remove('active');
     document.querySelector('.rs-close').style.display = "none";
 })
@@ -32,7 +32,7 @@ var removeall = () => {
 }
 
 document.getElementById('rs-reisesteine').addEventListener('click', () => {
-    m.render(document.getElementById('rs-content'), null);
+    m.render(document.getElementById('rs-body'), null);
     document.querySelector('.rs-close').style.display = "block";
-    m.mount(document.getElementById('rs-content'), {view: () => m(reisesteine, {'map': myMap, 'frame':frame})});
+    m.mount(document.getElementById('rs-body'), {view: () => m(reisesteine, {'map': myMap, 'frame':frame})});
 });
