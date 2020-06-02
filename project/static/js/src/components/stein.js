@@ -15,13 +15,16 @@ export default class Stein {
         this.info = {};
         this.media = window.matchMedia("(max-width: 960px)")
 
+        // get rock info
         m.request({
             method: "GET",
-            url: `steine/`+ctrl.attrs.id,
+            url: "/de/steine/"+ctrl.attrs.id,
         })
         .then(result => {
             this.info = result;
         });
+
+        // keep from navigating away while loading
         document.getElementById('rs-navigation').style.pointerEvents = 'none';
     }
 
@@ -29,7 +32,9 @@ export default class Stein {
         if(this.info == {})
             return;
 
+        history.pushState(this.info.id, this.info.gestein + ' - Reisesteine', '/en/stein/'+this.info.id);
 
+        // zoom in on location
         if( this.media.matches) {
             this.frame.navigate('mobile');
             this.myMap.flyToOffset([this.info.longitude, this.info.latitude], [0, -this.myMap.map.getSize().y*0.275]);
@@ -38,7 +43,7 @@ export default class Stein {
             this.myMap.flyToOffset([this.info.longitude, this.info.latitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.05]);
         }
 
-
+        // instantiate coordinates
         m.render(ctrl.dom.querySelector('#rs-coordinates'), m(coordinates, {'animateIn': this.animateCoords, 
                                                                             'info': this.info
                                                                         }));          
@@ -54,6 +59,7 @@ export default class Stein {
             easing: "easeInOutQuad",
             delay: anime.stagger(200, {start: 600}),
             complete: () => {
+                // instantiate content, display close icon and unlock navigation to navigate away
                 m.render(document.getElementById('rs-info'), m(content, {fadeIn: true, info: this.info}));
                 document.querySelector('.rs-close').style.display = "block";
                 document.getElementById('rs-navigation').style.pointerEvents = 'auto';
@@ -69,7 +75,6 @@ export default class Stein {
 
     view() {
         return (
-
             <div>
                 <div id="rs-coordinates"></div>
                 <div id="rs-info"></div>
@@ -97,22 +102,27 @@ var coordinates = function() {
 }
 
 var content = function() {
+
+    var media = window.matchMedia("(max-width: 960px)")
+
     return {   
         oncreate: (ctrl) => {
-            if (ctrl.attrs.fadeIn){
-                anime({
-                    targets: ctrl.dom.querySelector('.rs-bild'),
-                    opacity: [0, 1],
-                    duration: 2000,
-                    easing: "easeInOutQuad"
-                });
-            };
-            m.render(document.getElementById('rs-rocknav'), m(rocknav, {
-                'stein': ctrl.dom.querySelector('.rs-bild'),
-                'fundort': ctrl.dom.querySelector('.rs-fundort'),
-                'geschichte': ctrl.dom.querySelector('.rs-geschichte'),
-                'geologie': ctrl.dom.querySelector('.rs-geologie') 
-            }));
+            if (!media.matches) {
+                if (ctrl.attrs.fadeIn){
+                    anime({
+                        targets: ctrl.dom.querySelector('.rs-bild'),
+                        opacity: [0, 1],
+                        duration: 2000,
+                        easing: "easeInOutQuad"
+                    });
+                };
+                m.render(document.getElementById('rs-rocknav'), m(rocknav, {
+                    'stein': ctrl.dom.querySelector('.rs-bild'),
+                    'fundort': ctrl.dom.querySelector('.rs-fundort'),
+                    'geschichte': ctrl.dom.querySelector('.rs-geschichte'),
+                    'geologie': ctrl.dom.querySelector('.rs-geologie') 
+                }));
+            }
         },
         view(ctrl) {
             return (

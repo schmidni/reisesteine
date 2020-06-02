@@ -35,16 +35,41 @@ def before_request():
     if g.lang_code not in current_app.config['LANGUAGES']:
         abort(404)
 
+# Verification ************************************
 @auth.verify_password
 def verify_password(username, password):
     if username in users and \
             check_password_hash(users.get(username), password):
         return username
 
+
+# Frontend Routes ************************************
 @reisesteine.route('/')
 def index():
     return render_template('reisesteine/home.html')
 
+@reisesteine.route('/stein/<id>', defaults={'lang_code': 'de'})
+@reisesteine.route('/stone/<id>', defaults={'lang_code': 'en'})
+def stein(id):
+    return render_template('reisesteine/home.html', id=id)
+
+@reisesteine.route('/steine/coordinates/all', methods=['GET'])
+def coordinates_all():
+    coord = Stein.query.with_entities(Stein.id, Stein.longitude, Stein.latitude).all()
+    return jsonify(coord)
+
+@reisesteine.route('/steine/images/all', methods=['GET'])
+def images_all():
+    img = Stein.query.with_entities(Stein.id, Stein.bild_stein).all()
+    return jsonify(img)
+
+@reisesteine.route('/steine/<int:id>', methods=['GET'])
+def get_stein(id):
+    ste = Stein.query.get(id)
+    return jsonify(ste.to_dict())
+
+
+# Backend Routes *************************************
 @reisesteine.route('/listSteine')
 @auth.login_required
 def listSteine():
@@ -157,6 +182,8 @@ def editStein(id):
 
     return render_template('reisesteine/backend/editStein.html', form=form, stein=bild_stein, herkunft=bild_herkunft)
 
+
+# Helper Functions *************************************
 def unique_filename(folder, filename):
     output_filename, file_extension = os.path.splitext(filename)
     n = ''
@@ -190,19 +217,3 @@ def optimize_image(filename, width):
     #     print(response.json().get('message'))
 
     return 'success'
-
-
-@reisesteine.route('/steine/coordinates/all', methods=['GET'])
-def coordinates_all():
-    coord = Stein.query.with_entities(Stein.id, Stein.longitude, Stein.latitude).all()
-    return jsonify(coord)
-
-@reisesteine.route('/steine/images/all', methods=['GET'])
-def images_all():
-    img = Stein.query.with_entities(Stein.id, Stein.bild_stein).all()
-    return jsonify(img)
-
-@reisesteine.route('/steine/<int:id>', methods=['GET'])
-def get_stein(id):
-    ste = Stein.query.get(id)
-    return jsonify(ste.to_dict())

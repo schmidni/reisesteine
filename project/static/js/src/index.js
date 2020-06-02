@@ -1,37 +1,38 @@
 import m from 'mithril';
-import anime from 'animejs';
 import svgFrame from './components/SVGFrame.js';
 import worldMap from './components/WorldMap.js';
 import reisesteine from './components/reisesteine.js';
 import Stein from './components/stein.js';
 
-// init frame and map
+// SVG Frame and Map init
 var frame = new svgFrame(document.querySelector('#map'));
 var myMap = new worldMap(document.querySelector('#map'), onMarker, frame);
 
-// load stein
+// Stein info
 function onMarker(coords, map, frame, id) {
     document.getElementById('rs-navigation').classList.add('active');
     m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': id, 'map':map, 'frame':frame})});
 }
 
-// close all
+window.addEventListener('popstate', function(e) {
+    closeAll();
+    if ( e.state != null ) {
+        m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': e.state, 'map':myMap, 'frame':frame})});
+    }
+});
+
+// Close icon
 document.querySelector('.rs-close').addEventListener('click', () => {
-    m.render(document.getElementById('rs-body'), null);
-    frame.navigate('initial');
-    document.getElementById('rs-navigation').classList.remove('active');
-    document.querySelector('.rs-close').style.display = "none";
-    document.getElementById('rs-reisesteine').style.pointerEvents = 'auto';
-    document.getElementById('rs-navigation').style.pointerEvents = 'auto';
+    closeAll();
+    history.pushState(null, 'Reisesteine', '/');
 })
 
-// load reisesteine
+// Reisesteine navigation
 document.getElementById('rs-reisesteine').addEventListener('click', () => {
     document.getElementById('rs-navigation').classList.remove('active');
     m.render(document.getElementById('rs-body'), null);
     m.mount(document.getElementById('rs-body'), {view: () => m(reisesteine, {'map': myMap, 'frame':frame})});
 });
-
 
 // reload on resize at breakpoint since possibly state is broken
 var breakpoint = 960;
@@ -43,3 +44,12 @@ window.addEventListener('resize', function () {
     }
     lastSize = newSize;
 });
+
+var closeAll = () => {
+    m.render(document.getElementById('rs-body'), null);
+    frame.navigate('initial');
+    document.getElementById('rs-navigation').classList.remove('active');
+    document.querySelector('.rs-close').style.display = "none";
+    document.getElementById('rs-reisesteine').style.pointerEvents = 'auto';
+    document.getElementById('rs-navigation').style.pointerEvents = 'auto';
+}

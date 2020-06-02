@@ -22,7 +22,7 @@ export default class worldMap {
     }
 
     loadCoordinates = async () => {
-        const result = await fetch(`steine/coordinates/all`);
+        const result = await fetch(`/de/steine/coordinates/all`);
         return result.json();
     }
 
