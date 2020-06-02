@@ -37,8 +37,8 @@ export default class worldMap {
         });
     }
 
-    flyToOffset = (coords) => {
-        var targetPoint = this.map.project(coords, 8).subtract([this.map.getSize().x*0.2, -this.map.getSize().x*0.05]);
+    flyToOffset = (coords, pos) => {
+        var targetPoint = this.map.project(coords, 8).subtract(pos);
         var targetLatLng = this.map.unproject(targetPoint, 8);
         this.map.flyTo(targetLatLng, 8), {duration: 1};
     }

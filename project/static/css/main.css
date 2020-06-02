@@ -20,9 +20,26 @@ body.rs-frontend {
     padding: 0;
 }
 
+@media only screen and (max-width: 960px) {
+    #rs-body {
+        position: absolute;
+        top: 0px;
+        left:0px;
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: scroll;
+    }
+    .leaflet-control-attribution {
+        font-size: 8px!important;
+    }
+}
 
 /************************** MAP ******************************************/
 #map {
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
     width: 100%;
     z-index: 1;
@@ -76,6 +93,18 @@ h4.active {
     text-align:center;
 }
 
+
+@media only screen and (max-width: 960px) {
+    .rs-coordinates {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 40vh;
+    }
+}
+
 .rs-content .rs-text {
     font-family: 'Sen', sans-serif;
     font-weight: 400;
@@ -104,12 +133,52 @@ h4.active {
     user-select: none;
     cursor: grab;
     opacity: 0;
+    width: 100px;
 }
 
 .rs-content .rs-fundort:active {
     cursor: grabbing;
 }
 
+@media only screen and (max-width: 960px) {
+    .rs-content {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        z-Index: 3;
+        padding-bottom: 50px;
+    }
+
+    .rs-content .rs-bild {
+        position: static;
+        top: auto;
+        left: auto;
+        height: 200px;
+        margin: 50px auto 0 auto;
+    }
+
+    .rs-content .rs-fundort {
+        position: static;
+        top: auto;
+        left: auto;
+        opacity: 1;
+        width: 80%;
+        margin: 50px auto 0 auto;
+        filter: drop-shadow(5px 5px 5px #222);
+        touch-action: auto;
+        user-select: auto;
+    }
+    
+    .rs-content .rs-text {
+        position: static;
+        top: auto;
+        left: auto;
+        opacity: 1;
+        width: 90%;
+        margin: 50px auto 0 auto;
+        font-size: 1rem;
+    }
+}
 
 /************************** NAVIGATION ROCK ******************************************/
 
@@ -137,6 +206,13 @@ h4.active {
     height: 30px;
     width: 30px;
     fill: rgb(180, 30, 30);
+}
+
+
+@media only screen and (max-width: 960px) {
+    .rs-footer {
+        display: none;
+    }
 }
 
 /************************** SVG OVERLAY ******************************************/
@@ -197,6 +273,35 @@ h4.active {
     z-index: 4;
     top: 50px;
     right: 50px;
+}
+
+@media only screen and (max-width: 960px) {
+    #rs-navigation {
+        position: relative;
+        top: 0;
+        left: 0;
+        margin: 10px auto 10px auto;
+    }
+     
+    #rs-navigation.circle{
+        width:170px;
+        height:170px;
+        border-radius:50%;
+        padding: 20px;
+    }
+    
+    #rs-navigation img {
+        height: 40px;
+    }
+    
+    #rs-navigation span {
+        margin: 4px auto 4px auto;
+        font-size: 1.4rem;
+    }
+
+    #rs-navigation.active {
+        display: none;
+    }
 }
 
 /************************** REISESTEINE DRAGGABLE ******************************************/

@@ -13,6 +13,7 @@ export default class Stein {
         this.frame = ctrl.attrs.frame;
         this.show = "";
         this.info = {};
+        this.media = window.matchMedia("(max-width: 960px)")
 
         m.request({
             method: "GET",
@@ -27,8 +28,15 @@ export default class Stein {
         if(this.info == {})
             return;
 
-        this.myMap.flyToOffset([this.info.longitude, this.info.latitude]);
-        this.frame.navigate('offset');
+
+        if( this.media.matches) {
+            this.frame.navigate('mobile');
+            this.myMap.flyToOffset([this.info.longitude, this.info.latitude], [0, -this.myMap.map.getSize().y*0.275]);
+        } else {
+            this.frame.navigate('offset');
+            this.myMap.flyToOffset([this.info.longitude, this.info.latitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.05]);
+        }
+
 
         m.render(ctrl.dom.querySelector('#rs-coordinates'), m(coordinates, {'animateIn': this.animateCoords, 
                                                                             'info': this.info
@@ -123,18 +131,24 @@ var content = function() {
     }
 }
 
+// helper function to make fundort image cover fullscreen
 var setUpImage = function() {
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        
+    
+    // make the image fill the whole viewport
     let slide = document.querySelector('.rs-fundort');
     slide.style.width = vw*1.05 + "px";
     let slide_rect = slide.getBoundingClientRect();
+    if(slide_rect.height < vh){
+        slide.style.width = 'auto';
+        slide.style.height = vh*1.05 + "px";
+        slide_rect = slide.getBoundingClientRect();
+    }
 
+    // set up draggable
     const position = { x: -(slide_rect.width - vw) / 2, y: -(slide_rect.height - vh) / 2 }
-
     slide.style.transform = `translate(${position.x}px, ${position.y}px)`;
-
     interact('.rs-fundort').draggable({
         listeners: {
             move (event) {

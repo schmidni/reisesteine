@@ -6,6 +6,7 @@ import Stein from './stein.js';
 export default class Reisesteine {
     constructor () {
         this.imgs = [];
+        this.media = window.matchMedia("(max-width: 960px)")
     }
 
     oncreate (ctrl) {
@@ -82,6 +83,9 @@ export default class Reisesteine {
                 // rock id
                 const id = e.target.getAttribute('data-id');
 
+                document.getElementById('rs-navigation').classList.add('active');
+                document.querySelector('.rs-close').style.display = "none";
+
                 // hide all other rocks
                 const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
                 anime({
@@ -95,22 +99,6 @@ export default class Reisesteine {
                 ctrl.attrs.frame.paths.current = 'full';
                 document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
 
-                // current and target measurements
-                const bb = e.target.getBoundingClientRect();    // bounding box current rock
-                const tt = vh*0.23;                             // target top
-                const th = vh*0.40;                             // target height
-                const tw = bb.width*th/bb.height;               // target width
-                const tl = vw*0.25;                             // target left
-
-                // reparent current image so it doesnt get unmounted, reassign necessary styles
-                document.getElementById('rs-body').appendChild(e.target);
-                e.target.style.position = 'absolute';
-                e.target.style.top = bb.top + 'px';
-                e.target.style.left = bb.left + 'px';
-                e.target.style.height = bb.height + 'px';
-                e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
-                e.target.style.zIndex = 3;
-
                 // load Stein component
                 m.mount(document.getElementById('rs-body'), {
                     view: () => m(Stein, {  'id': id, 
@@ -119,27 +107,45 @@ export default class Reisesteine {
                                             'remove': e.target
                     })}
                 );
-                
-                // move image to new position
-                anime({
-                    targets: e.target,
-                    translateX: tl - bb.left,
-                    translateY: tt - bb.top,
-                    height: th,
-                    width: tw,
-                    duration: 1000,
-                    easing: 'easeInOutQuad'
-                }).finished.then(() => {
-                    // wait and then fade out after new image has loaded
+
+                if( !this.media.matches) {
+                    // current and target measurements
+                    const bb = e.target.getBoundingClientRect();    // bounding box current rock
+                    const tt = vh*0.23;                             // target top
+                    const th = vh*0.40;                             // target height
+                    const tw = bb.width*th/bb.height;               // target width
+                    const tl = vw*0.25;                             // target left
+
+                    // reparent current image so it doesnt get unmounted, reassign necessary styles
+                    document.getElementById('rs-body').appendChild(e.target);
+                    e.target.style.position = 'absolute';
+                    e.target.style.top = bb.top + 'px';
+                    e.target.style.left = bb.left + 'px';
+                    e.target.style.height = bb.height + 'px';
+                    e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
+                    e.target.style.zIndex = 3;
+
+                    // move image to new position
                     anime({
                         targets: e.target,
-                        opacity: [1, 0],
-                        duration: 3000,
-                        delay: 4000
+                        translateX: tl - bb.left,
+                        translateY: tt - bb.top,
+                        height: th,
+                        width: tw,
+                        duration: 1000,
+                        easing: 'easeInOutQuad'
                     }).finished.then(() => {
-                        e.target.remove();
+                        // wait and then fade out after new image has loaded
+                        anime({
+                            targets: e.target,
+                            opacity: [1, 0],
+                            duration: 3000,
+                            delay: 4000
+                        }).finished.then(() => {
+                            e.target.remove();
+                        });
                     });
-                });
+                };
             });
         });
     }

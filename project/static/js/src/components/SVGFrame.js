@@ -50,12 +50,13 @@ export default class svgFrame {
         const rInitialInner = r;
         const rFinalOuter = r;
         const rFinalInner = this.rect.width*0.1;
+        const rFinalInnerMobile = this.rect.height*0.15;
         let p = '';
 
         if (path === 'initial')
             p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rInitialOuter} a ${rInitialOuter} ${rInitialOuter} 0 1 0 1 0 z m -1 ${rInitialOuter-rInitialInner} a ${rInitialInner} ${rInitialInner} 0 1 1 -1 0 Z`;
-        else if(path === 'zoom')
-            p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
+        else if(path === 'mobile')
+            p = `M ${this.rect.width/2}, ${this.rect.height*0.2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInnerMobile} a ${rFinalInnerMobile} ${rFinalInnerMobile} 0 1 1 -1 0 Z`;
         else if(path === 'offset')
             p = `M ${this.rect.width*0.7}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
         else if (path === 'full')
@@ -65,22 +66,22 @@ export default class svgFrame {
         return p;        
     }
 
-    navigate(dir = 'zoom') {
+    navigate(dir = 'initial') {
 
         if ( this.isAnimating ) return false;
         this.isAnimating = true;
         this.DOM.svg.style.display = 'block';
         let animateShape = null;
 
-        if (dir === 'zoom') {
+        if (dir === 'mobile') {
             animateShape = anime({
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.in,
-                d: this.calculatePath('zoom')
+                d: this.calculatePath('mobile')
             }).finished.then( () => {
                 this.isAnimating = false
-                this.paths.current = 'zoom';
+                this.paths.current = 'mobile';
             });
         }
         else if (dir === 'offset') {
