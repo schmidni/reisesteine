@@ -87,14 +87,6 @@ var coordinates = function() {
 var content = function() {
     return {   
         oncreate: (ctrl) => {
-
-            m.render(document.getElementById('rs-rocknav'), m(rocknav, {
-                'stein': ctrl.dom.querySelector('.rs-bild'),
-                'fundort': ctrl.dom.querySelector('.rs-fundort'),
-                'geschichte': ctrl.dom.querySelector('.rs-geschichte'),
-                'geologie': ctrl.dom.querySelector('.rs-geologie') 
-            }));
-
             if (ctrl.attrs.fadeIn){
                 anime({
                     targets: ctrl.dom.querySelector('.rs-bild'),
@@ -103,6 +95,12 @@ var content = function() {
                     easing: "easeInOutQuad"
                 });
             };
+            m.render(document.getElementById('rs-rocknav'), m(rocknav, {
+                'stein': ctrl.dom.querySelector('.rs-bild'),
+                'fundort': ctrl.dom.querySelector('.rs-fundort'),
+                'geschichte': ctrl.dom.querySelector('.rs-geschichte'),
+                'geologie': ctrl.dom.querySelector('.rs-geologie') 
+            }));
         },
         view(ctrl) {
             return (
@@ -163,23 +161,24 @@ var setUpImage = function() {
 }
 
 var rocknav = function () {
-    var active = {};
+    var active = 0;
     var fundortSetup = false;
     var menu = [];
     var slides = [];
 
     var switchIt = (target_in, e) => {
-        e.target.parentNode.querySelector('.active').classList.remove('active');
-        e.target.classList.add('active');
+        menu[active].classList.remove('active');
+        menu[target_in].classList.add('active');
+
         anime({
-            targets: active,
+            targets: slides[active],
             duration: 500,
             opacity: [1, 0],
             easing: 'easeOutQuad',
             complete: (el) => {
                 el.animatables[0].target.style.zIndex = -1;
                 anime({
-                    targets: target_in,
+                    targets: slides[target_in],
                     duration: 500,
                     opacity: [0, 1],
                     easing: 'easeInQuad',
@@ -193,7 +192,7 @@ var rocknav = function () {
     };
 
     return{
-        oncreate: (ctrl) => {
+        oncreate: () => {
 
             menu = [        this.dom.querySelector('.rs-menu-stein'),
                             this.dom.querySelector('.rs-menu-geschichte'),
@@ -204,11 +203,9 @@ var rocknav = function () {
                             this.attrs.fundort,
                             this.attrs.geologie];
 
-            active = ctrl.attrs.stein;
-            
             menu.forEach((item, idx) => {
                 item.addEventListener('click', (e) => {
-                    switchIt(slides[idx], e);
+                    switchIt(idx, e);
                 })
             })
 
@@ -217,6 +214,10 @@ var rocknav = function () {
                 fundortSetup = true;
             });
 
+            this.dom.querySelector('.rs-menu-next').addEventListener('click', (e) => {
+                let next = active + 1 < menu.length ? active + 1 : 0;
+                switchIt(next, e); 
+            });
         },
         view() {
             return(
