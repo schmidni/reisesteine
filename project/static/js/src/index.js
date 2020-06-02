@@ -21,6 +21,8 @@ document.querySelector('.rs-close').addEventListener('click', () => {
     frame.navigate('initial');
     document.getElementById('rs-navigation').classList.remove('active');
     document.querySelector('.rs-close').style.display = "none";
+    document.getElementById('rs-reisesteine').style.pointerEvents = 'auto';
+    document.getElementById('rs-navigation').style.pointerEvents = 'auto';
 })
 
 // load reisesteine

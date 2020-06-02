@@ -22,6 +22,7 @@ export default class Stein {
         .then(result => {
             this.info = result;
         });
+        document.getElementById('rs-navigation').style.pointerEvents = 'none';
     }
 
     onupdate (ctrl) {
@@ -55,6 +56,7 @@ export default class Stein {
             complete: () => {
                 m.render(document.getElementById('rs-info'), m(content, {fadeIn: true, info: this.info}));
                 document.querySelector('.rs-close').style.display = "block";
+                document.getElementById('rs-navigation').style.pointerEvents = 'auto';
             }
         });
     }
@@ -62,6 +64,7 @@ export default class Stein {
     onremove(ctrl) {
         if(ctrl.attrs.remove)
             ctrl.attrs.remove.remove();
+        document.getElementById('rs-navigation').style.pointerEvents = 'auto';
     }
 
     view() {
@@ -173,6 +176,7 @@ var setUpImage = function() {
             return null
         }
     })
+    return true;
 }
 
 var rocknav = function () {
@@ -184,6 +188,9 @@ var rocknav = function () {
     var switchIt = (target_in, e) => {
         menu[active].classList.remove('active');
         menu[target_in].classList.add('active');
+
+        if(fundortSetup == false && target_in == 2)
+            fundortSetup = setUpImage();
 
         anime({
             targets: slides[active],
@@ -223,11 +230,6 @@ var rocknav = function () {
                     switchIt(idx, e);
                 })
             })
-
-            menu[2].addEventListener('click', (e) => {
-                fundortSetup ?  null : setUpImage();
-                fundortSetup = true;
-            });
 
             this.dom.querySelector('.rs-menu-next').addEventListener('click', (e) => {
                 let next = active + 1 < menu.length ? active + 1 : 0;

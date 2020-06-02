@@ -7,6 +7,7 @@ export default class Reisesteine {
     constructor () {
         this.imgs = [];
         this.media = window.matchMedia("(max-width: 960px)")
+        document.getElementById('rs-reisesteine').style.pointerEvents = 'none';
     }
 
     oncreate (ctrl) {
@@ -82,6 +83,7 @@ export default class Reisesteine {
             item.addEventListener('click', (e) => {
                 // rock id
                 const id = e.target.getAttribute('data-id');
+                document.getElementById('rs-reisesteine').style.removeProperty('pointer-events');
 
                 document.getElementById('rs-navigation').classList.add('active');
                 document.querySelector('.rs-close').style.display = "none";
@@ -99,15 +101,6 @@ export default class Reisesteine {
                 ctrl.attrs.frame.paths.current = 'full';
                 document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
 
-                // load Stein component
-                m.mount(document.getElementById('rs-body'), {
-                    view: () => m(Stein, {  'id': id, 
-                                            'map':ctrl.attrs.map, 
-                                            'frame':ctrl.attrs.frame,
-                                            'remove': e.target
-                    })}
-                );
-
                 if( !this.media.matches) {
                     // current and target measurements
                     const bb = e.target.getBoundingClientRect();    // bounding box current rock
@@ -124,6 +117,15 @@ export default class Reisesteine {
                     e.target.style.height = bb.height + 'px';
                     e.target.style.filter = 'drop-shadow(5px 5px 5px #222)';
                     e.target.style.zIndex = 3;
+
+                    // load Stein component
+                    m.mount(document.getElementById('rs-body'), {
+                        view: () => m(Stein, {  'id': id, 
+                                                'map':ctrl.attrs.map, 
+                                                'frame':ctrl.attrs.frame,
+                                                'remove': e.target
+                        })}
+                    );
 
                     // move image to new position
                     anime({
