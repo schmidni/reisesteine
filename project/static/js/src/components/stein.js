@@ -46,6 +46,7 @@ export default class Stein {
             delay: anime.stagger(200, {start: 600}),
             complete: () => {
                 m.render(document.getElementById('rs-info'), m(content, {fadeIn: true, info: this.info}));
+                document.querySelector('.rs-close').style.display = "block";
             }
         });
     }

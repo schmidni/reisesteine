@@ -13,6 +13,7 @@ export default class Reisesteine {
         ctrl.attrs.frame.navigate('full')
         .then(() => {
             document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('rect'));
+            document.querySelector('.rs-close').style.display = "block";
         });
 
         m.request({
@@ -22,6 +23,12 @@ export default class Reisesteine {
         .then(result => {
             this.imgs = result;
         });
+    }
+
+    onremove (ctrl) {
+        // replace overlay
+        ctrl.attrs.frame.paths.current = 'full';
+        document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
     }
 
     onupdate (ctrl) {
