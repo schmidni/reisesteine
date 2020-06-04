@@ -15,6 +15,11 @@ export default class svgFrame {
             frameFill: 'rgba(256, 256, 256, 0.7)'
         }
         this.init();
+        this.animateShape = () => {
+            return new Promise( (res, rej) => {
+                return res();
+            });
+        }
     }
 
     init = () => {
@@ -69,12 +74,17 @@ export default class svgFrame {
     navigate(dir = 'initial') {
 
         if ( this.isAnimating ) return false;
+            
+        if ( this.paths.current == dir)
+            return new Promise( (res, rej) => {
+                return res();
+            });
+
         this.isAnimating = true;
         this.DOM.svg.style.display = 'block';
-        let animateShape = null;
 
         if (dir === 'mobile') {
-            animateShape = anime({
+            this.animateShape = anime({
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.in,
@@ -85,7 +95,7 @@ export default class svgFrame {
             });
         }
         else if (dir === 'offset') {
-            animateShape = anime({
+            this.animateShape = anime({
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
@@ -96,7 +106,7 @@ export default class svgFrame {
             });
         }
         else if (dir === 'full') {
-            animateShape = anime({
+            this.animateShape = anime({
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
@@ -107,7 +117,7 @@ export default class svgFrame {
             });
         }
         else if (dir === 'initial'){
-            animateShape = anime({
+            this.animateShape = anime({
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
@@ -119,6 +129,6 @@ export default class svgFrame {
             });
         }
 
-        return animateShape;
+        return this.animateShape;
     }
 };

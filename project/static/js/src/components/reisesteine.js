@@ -4,10 +4,14 @@ import anime from 'animejs';
 import Stein from './stein.js';
 
 export default class Reisesteine {
-    constructor () {
+    constructor (ctrl) {
         this.imgs = [];
         this.media = window.matchMedia("(max-width: 960px)")
         document.getElementById('rs-reisesteine').style.pointerEvents = 'none';
+
+        if(ctrl.attrs.pushState)
+            history.pushState('steine', 'Steine - Reisesteine', `/${document.documentElement.lang}/steine`);
+
     }
 
     oncreate (ctrl) {
@@ -20,7 +24,7 @@ export default class Reisesteine {
 
         m.request({
             method: "GET",
-            url: "steine/images/all",
+            url: `/${document.documentElement.lang}/steine/images/all`,
         })
         .then(result => {
             this.imgs = result;
@@ -123,7 +127,8 @@ export default class Reisesteine {
                         view: () => m(Stein, {  'id': id, 
                                                 'map':ctrl.attrs.map, 
                                                 'frame':ctrl.attrs.frame,
-                                                'remove': e.target
+                                                'remove': e.target,
+                                                'pushState': true
                         })}
                     );
 

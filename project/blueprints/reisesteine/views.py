@@ -1,10 +1,11 @@
-from flask import jsonify, render_template, Blueprint, g, redirect, request, current_app, abort, url_for
+from flask import jsonify, render_template, Blueprint, g, redirect, request, current_app, abort, url_for, make_response
 from project.blueprints.reisesteine.forms import editSteinForm
 from project import db
 from project.models import Gestein, Stein, Person
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf.file import FileRequired
+from sqlalchemy.sql import exists
 
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
@@ -51,7 +52,14 @@ def index():
 @reisesteine.route('/stein/<id>', defaults={'lang_code': 'de'})
 @reisesteine.route('/stone/<id>', defaults={'lang_code': 'en'})
 def stein(id):
+    if not db.session.query(exists().where(Stein.id == id)).scalar():
+        return redirect(url_for('reisesteine.index'))
     return render_template('reisesteine/home.html', id=id)
+
+@reisesteine.route('/steine', defaults={'lang_code': 'de'})
+@reisesteine.route('/stones', defaults={'lang_code': 'en'})
+def steine():
+    return render_template('reisesteine/home.html', id='steine')
 
 @reisesteine.route('/steine/coordinates/all', methods=['GET'])
 def coordinates_all():
@@ -66,8 +74,10 @@ def images_all():
 @reisesteine.route('/steine/<int:id>', methods=['GET'])
 def get_stein(id):
     ste = Stein.query.get(id)
-    return jsonify(ste.to_dict())
-
+    if ste:
+        return jsonify(ste.to_dict())
+    else:
+        return make_response('Not Found', 404)
 
 # Backend Routes *************************************
 @reisesteine.route('/listSteine')

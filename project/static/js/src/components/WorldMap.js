@@ -32,7 +32,7 @@ export default class worldMap {
             let el_coord = [el[1], el[2]];
             this.marker.push(L.marker(el_coord, {icon: this.redIcon})
                             .addTo(this.map)
-                            .on('click', () => this.onMarkerClick(el_coord, this, this.frame, el[0]))
+                            .on('click', () => this.onMarkerClick(this, this.frame, el[0]))
                             );
         });
     }

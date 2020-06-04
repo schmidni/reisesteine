@@ -3,35 +3,31 @@ import svgFrame from './components/SVGFrame.js';
 import worldMap from './components/WorldMap.js';
 import reisesteine from './components/reisesteine.js';
 import Stein from './components/stein.js';
+import debounce from './util/debounce.js';
 
 // SVG Frame and Map init
 var frame = new svgFrame(document.querySelector('#map'));
 var myMap = new worldMap(document.querySelector('#map'), onMarker, frame);
+var id = document.getElementById('rs-body').getAttribute('data-stein');
 
-// Stein info
-function onMarker(coords, map, frame, id) {
-    document.getElementById('rs-navigation').classList.add('active');
-    m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': id, 'map':map, 'frame':frame})});
-}
-
-window.addEventListener('popstate', function(e) {
-    closeAll();
-    if ( e.state != null ) {
-        m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': e.state, 'map':myMap, 'frame':frame})});
-    }
-});
+// check if stone should be rendered
+if (id)
+    if (id == 'steine')
+        m.mount(document.getElementById('rs-body'), {view: () => m(reisesteine, {'map': myMap, 'frame':frame, 'pushState': false})});
+    else
+        m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': id, 'map':myMap, 'frame':frame, 'pushState': false})});
 
 // Close icon
 document.querySelector('.rs-close').addEventListener('click', () => {
     closeAll();
-    history.pushState(null, 'Reisesteine', '/');
+    history.pushState('home', 'Reisesteine', '/'+document.documentElement.lang);
 })
 
 // Reisesteine navigation
 document.getElementById('rs-reisesteine').addEventListener('click', () => {
     document.getElementById('rs-navigation').classList.remove('active');
     m.render(document.getElementById('rs-body'), null);
-    m.mount(document.getElementById('rs-body'), {view: () => m(reisesteine, {'map': myMap, 'frame':frame})});
+    m.mount(document.getElementById('rs-body'), {view: () => m(reisesteine, {'map': myMap, 'frame':frame, 'pushState': true})});
 });
 
 // reload on resize at breakpoint since possibly state is broken
@@ -45,11 +41,44 @@ window.addEventListener('resize', function () {
     lastSize = newSize;
 });
 
+// navigation event listener
+window.addEventListener('popstate', debounce((e) => {
+    try {
+        navBack(e);
+    } catch {
+        setTimeout(() => navBack(e), 1000);
+    }
+}, 1000));
+
 var closeAll = () => {
     m.render(document.getElementById('rs-body'), null);
-    frame.navigate('initial');
+    let frameDone = frame.navigate('initial');
     document.getElementById('rs-navigation').classList.remove('active');
     document.querySelector('.rs-close').style.display = "none";
     document.getElementById('rs-reisesteine').style.pointerEvents = 'auto';
     document.getElementById('rs-navigation').style.pointerEvents = 'auto';
+    document.title = 'Home - Reisesteine';
+    return frameDone;
+}
+
+// Stein info
+function onMarker(map, frame, id) {
+    document.getElementById('rs-navigation').classList.add('active');
+    m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': id, 'map':map, 'frame':frame, 'pushState': true})});
+}
+
+function navBack(e) {
+    closeAll().then(() => {
+        // site was home
+        if (e.state == 'home')
+            return;
+        else if ( e.state == 'steine' || id == 'steine')
+            m.mount(document.getElementById('rs-body'), {view: () => m(reisesteine, {'map': myMap, 'frame':frame, 'pushState': false})});
+        // render rock state there is any
+        else if ( e.state != null )
+           m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': e.state, 'map':myMap, 'frame':frame, 'pushState': false})});
+        // check id on body node
+        else if (id)
+            m.mount(document.getElementById('rs-body'), {view: () => m(Stein, {'id': id, 'map':myMap, 'frame':frame, 'pushState': false})});
+    });
 }

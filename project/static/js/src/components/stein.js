@@ -18,7 +18,7 @@ export default class Stein {
         // get rock info
         m.request({
             method: "GET",
-            url: "/de/steine/"+ctrl.attrs.id,
+            url: `/${document.documentElement.lang}/steine/${ctrl.attrs.id}`,
         })
         .then(result => {
             this.info = result;
@@ -32,8 +32,10 @@ export default class Stein {
         if(this.info == {})
             return;
 
-        history.pushState(this.info.id, this.info.gestein + ' - Reisesteine', '/en/stein/'+this.info.id);
+        if(ctrl.attrs.pushState)
+            history.pushState(this.info.id, this.info.gestein + ' - Reisesteine', `/${document.documentElement.lang}/stein/${this.info.id}`);
 
+        document.title = this.info.gestein + ' - Reisesteine';
         // zoom in on location
         if( this.media.matches) {
             this.frame.navigate('mobile');
@@ -43,10 +45,15 @@ export default class Stein {
             this.myMap.flyToOffset([this.info.longitude, this.info.latitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.05]);
         }
 
+        try {
         // instantiate coordinates
         m.render(ctrl.dom.querySelector('#rs-coordinates'), m(coordinates, {'animateIn': this.animateCoords, 
                                                                             'info': this.info
-                                                                        }));          
+                                                                        }));   
+        }
+        catch {
+            console.log('Aborted component coords');
+        }
     }
 
     animateCoords = (target) => {
@@ -59,10 +66,14 @@ export default class Stein {
             easing: "easeInOutQuad",
             delay: anime.stagger(200, {start: 600}),
             complete: () => {
+                try {
                 // instantiate content, display close icon and unlock navigation to navigate away
                 m.render(document.getElementById('rs-info'), m(content, {fadeIn: true, info: this.info}));
                 document.querySelector('.rs-close').style.display = "block";
                 document.getElementById('rs-navigation').style.pointerEvents = 'auto';
+                } catch {
+                    console.log('Aborted component info');
+                }
             }
         });
     }
