@@ -74,17 +74,22 @@ export default class Reisesteine {
             inertia: {
                 resistance: 5,
                 minSpeed: 10,
-                smoothEndDuration: 400
+                smoothEndDuration: 500
             },
             allowFrom: '.rs-reisesteine',
-            ignoreFrom: '.rs-reisesteine>div>img',
             cursorChecker () {
                 return null
             }
-        })
+        });
+
+        interact('.rs-stein-link').on('tap', (e) => {
+
+            console.log('tap');
+
         
-        ctrl.dom.querySelectorAll('.rs-stein').forEach(item => {
-            item.addEventListener('click', (e) => {
+        // ctrl.dom.querySelectorAll('.rs-stein-link').forEach(item => {
+            // item.addEventListener('click', (e) => {
+                e.preventDefault();
                 // rock id
                 const id = e.target.getAttribute('data-id');
                 document.getElementById('rs-reisesteine').style.removeProperty('pointer-events');
@@ -93,7 +98,7 @@ export default class Reisesteine {
                 document.querySelector('.rs-close').style.display = "none";
 
                 // hide all other rocks
-                const siblings = [...e.target.parentNode.parentNode.children].filter(child => child !== e.target.parentNode);
+                const siblings = [...e.target.parentNode.parentNode.parentNode.children].filter(child => child !== e.target.parentNode.parentNode);
                 anime({
                     targets: siblings,
                     duration: 500,
@@ -153,7 +158,8 @@ export default class Reisesteine {
                         });
                     });
                 };
-            });
+            // });
+        // });
         });
     }
 
@@ -163,7 +169,7 @@ export default class Reisesteine {
 
                 { this.imgs ? this.imgs.map((val, idx) => (
                     <div key={"img"+idx} style="cursor: pointer; background-color: rgba(0,0,0,0)!important;">
-                        <img class="rs-stein" data-id={val[0]} src={'/static/img/steine/' + val[1]}></img>
+                        <a class="rs-stein-link"><img class="rs-stein" data-id={val[0]} src={'/static/img/steine/' + val[1]}></img></a>
                     </div>
                 )) : "" }
 

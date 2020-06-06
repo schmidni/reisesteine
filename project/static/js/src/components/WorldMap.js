@@ -9,7 +9,7 @@ export default class worldMap {
         this.coordinates = [];
         this.marker = [];
         this.redIcon = new L.Icon({
-            iconUrl: 'https://cdn.rawgit.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+            iconUrl: '/static/img/marker.png',
             shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
             iconSize: [25, 41],
             iconAnchor: [12, 41],
@@ -44,7 +44,7 @@ export default class worldMap {
     }
 
     init = (el) => {
-        var mymap = L.map(el).setView([30,0], 3);
+        var mymap = L.map(el).setView([30,0], 3).setMaxBounds([[-90, -180],[90, 180]]);
         this.initMap(mymap);
         return mymap;
     }
@@ -53,10 +53,14 @@ export default class worldMap {
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
-            minZoom: 3,
+            minZoom: 2,
             id: 'schmidni/ckambjp2k3d9t1il6ylrcbgor',
             tileSize: 512,
             zoomOffset: -1,
+            bounds: [
+                [-90, -220],
+                [90, 220]
+            ],
             accessToken: 'pk.eyJ1Ijoic2NobWlkbmkiLCJhIjoiY2thODNqaWZhMDk1cTMycXdpbTdtMXMwZSJ9.kWgF03PRqN68LpUFC7UAdw'
         }).addTo(mymap);
     }
