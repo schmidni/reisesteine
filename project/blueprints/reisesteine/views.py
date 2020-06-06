@@ -89,6 +89,8 @@ def listSteine():
 @reisesteine.route('/deleteStein/<id>')
 @auth.login_required
 def deleteStein(id):
+    os.remove(os.path.join(current_app.static_folder, 'img/steine', Stein.query.get(id).bild_stein))
+    os.remove(os.path.join(current_app.static_folder, 'img/steine', Stein.query.get(id).bild_herkunft))
     Stein.query.filter_by(id=id).delete()
     db.session.commit()
     return redirect(url_for('reisesteine.listSteine'))
@@ -141,6 +143,8 @@ def editStein(id):
             with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
                 width, height = img.size
             optimize_image(os.path.join('img/steine', fn_stein), min(width, 1000))
+            if stein.bild_stein:
+                os.remove(os.path.join(current_app.static_folder, 'img/steine', stein.bild_stein))
             stein.bild_stein = fn_stein
 
         # process herkunft bild
@@ -153,6 +157,8 @@ def editStein(id):
             with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_her)) as img:
                 width, height = img.size
             optimize_image(os.path.join('img/steine', fn_her), min(width, 1980))
+            if stein.bild_herkunft:
+                os.remove(os.path.join(current_app.static_folder, 'img/steine', stein.bild_herkunft))
             stein.bild_herkunft = fn_her
 
         # save and redirect back to list

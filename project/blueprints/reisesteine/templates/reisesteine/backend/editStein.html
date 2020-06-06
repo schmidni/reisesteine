@@ -129,7 +129,7 @@
                         <div class="form-group">
                             {{ form.bild_stein.label }}
                             {{ form.bild_stein(class_="form-control" + (" is-invalid" if form.bild_stein.errors else "")) }}
-                            <small id="steinHelp" class="form-text text-muted">max. 750KB</small>
+                            <small id="steinHelp" class="form-text text-muted">max. 1MB</small>
                             {% for error in form.bild_stein.errors %}
                             <div class="invalid-feedback">
                                 {{error}}
