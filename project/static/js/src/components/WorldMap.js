@@ -2,6 +2,9 @@ import m from 'mithril';
 import L from 'leaflet';
 export default class worldMap {
     constructor(el, func, frame) {
+        this.style = 'schmidni/ckambjp2k3d9t1il6ylrcbgor';
+        if (document.documentElement.lang == 'en')
+            this.style = 'schmidni/ckb3jm18c0nuu1iqshgkbocey';
         this.map = this.init(el);
         this.frame = frame;
         this.onMarkerClick = func;
@@ -16,7 +19,6 @@ export default class worldMap {
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
-
         this.coordinates = this.loadCoordinates()
         this.mapCoordinates();
     }
@@ -44,7 +46,7 @@ export default class worldMap {
     }
 
     init = (el) => {
-        var mymap = L.map(el).setView([30,0], 3).setMaxBounds([[-90, -180],[90, 180]]);
+        var mymap = L.map(el, {zoomSnap: 0.1}).setView([30,0], 3).setMaxBounds([[-90, -180],[90, 180]]);
         this.initMap(mymap);
         return mymap;
     }
@@ -53,8 +55,8 @@ export default class worldMap {
         L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
             attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
-            minZoom: 2,
-            id: 'schmidni/ckambjp2k3d9t1il6ylrcbgor',
+            minZoom: 3,
+            id: this.style,
             tileSize: 512,
             zoomOffset: -1,
             bounds: [

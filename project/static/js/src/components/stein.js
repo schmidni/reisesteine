@@ -6,6 +6,31 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function toDegreesMinutesAndSeconds(coordinate) {
+    var absolute = Math.abs(coordinate);
+    var degrees = Math.floor(absolute);
+    var minutesNotTruncated = (absolute - degrees) * 60;
+    var minutes = Math.floor(minutesNotTruncated);
+    var seconds = Math.round((minutesNotTruncated - minutes)*10 * 60)/10;
+
+    return degrees + "°" + minutes + "'" + seconds + "\"";
+}
+
+function convertDMS(lat, lng) {
+    let dms = '';
+    let dmsCardinal = '';
+    if (lat){
+        dms = toDegreesMinutesAndSeconds(lat);
+        dmsCardinal = lat >= 0 ? "N" : "S";
+    }
+    if (lng){
+        dms = toDegreesMinutesAndSeconds(lng);
+        dmsCardinal = lng >= 0 ? "E" : "W";
+    }
+
+    return dms + " " + dmsCardinal;
+}
+
 export default class Stein {
 
     constructor(ctrl) {
@@ -39,10 +64,10 @@ export default class Stein {
         // zoom in on location
         if( this.media.matches) {
             this.frame.navigate('mobile');
-            this.myMap.flyToOffset([this.info.longitude, this.info.latitude], [0, -this.myMap.map.getSize().y*0.275]);
+            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
         } else {
             this.frame.navigate('offset');
-            this.myMap.flyToOffset([this.info.longitude, this.info.latitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.05]);
+            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.05]);
         }
 
         try {
@@ -51,7 +76,7 @@ export default class Stein {
                                                                             'info': this.info
                                                                         }));   
         }
-        catch {
+        catch(err) {
             console.log('Aborted component coords');
         }
     }
@@ -103,8 +128,8 @@ var coordinates = function() {
         view(ctrl) {
             return (
                 <div class="rs-coordinates">
-                    <h3>{ctrl.attrs.info.longitude}</h3>
-                    <h3>{ctrl.attrs.info.latitude}</h3>
+                    <h3>{convertDMS(ctrl.attrs.info.latitude, null)}</h3>
+                    <h3>{convertDMS(null, ctrl.attrs.info.longitude)}</h3>
                     <h2>{ctrl.attrs.info.herkunft}</h2>
                 </div>
             );

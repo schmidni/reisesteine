@@ -102,18 +102,20 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                {{ form.longitude.label }}
-                                {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
-                                {% for error in form.longitude.errors %}
+                                {{ form.latitude.label }}
+                                {{ form.latitude(class_="form-control" + (" is-invalid" if form.latitude.errors else "")) }}
+                                <small id="latitudeHelp" class="form-text text-muted">Koordinaten oder Dezimalzahl</small>
+                                {% for error in form.latitude.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
                                 </div>
                                 {% endfor %}
                             </div>
                             <div class="form-group col-md-6">
-                                {{ form.latitude.label }}
-                                {{ form.latitude(class_="form-control" + (" is-invalid" if form.latitude.errors else "")) }}
-                                {% for error in form.latitude.errors %}
+                                {{ form.longitude.label }}
+                                {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
+                                <small id="longitudeHelp" class="form-text text-muted">Koordinaten oder Dezimalzahl</small>
+                                {% for error in form.longitude.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
                                 </div>
@@ -127,6 +129,7 @@
                         <div class="form-group">
                             {{ form.bild_stein.label }}
                             {{ form.bild_stein(class_="form-control" + (" is-invalid" if form.bild_stein.errors else "")) }}
+                            <small id="steinHelp" class="form-text text-muted">max. 750KB</small>
                             {% for error in form.bild_stein.errors %}
                             <div class="invalid-feedback">
                                 {{error}}
@@ -139,6 +142,7 @@
                         <div class="form-group">
                             {{ form.bild_herkunft.label }}
                             {{ form.bild_herkunft(class_="form-control" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
+                            <small id="herkunftHelp" class="form-text text-muted">max. 2MB</small>
                             {% for error in form.bild_herkunft.errors %}
                             <div class="invalid-feedback">
                                 {{error}}

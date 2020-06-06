@@ -63,7 +63,7 @@ def steine():
 
 @reisesteine.route('/steine/coordinates/all', methods=['GET'])
 def coordinates_all():
-    coord = Stein.query.with_entities(Stein.id, Stein.longitude, Stein.latitude).all()
+    coord = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude).all()
     return jsonify(coord)
 
 @reisesteine.route('/steine/images/all', methods=['GET'])
@@ -144,7 +144,7 @@ def editStein(id):
             stein.bild_stein = fn_stein
 
         # process herkunft bild
-        if (form.bild_stein.data):
+        if (form.bild_herkunft.data):
             fn_her = ''
             f_her = form.bild_herkunft.data
             if f_her:
@@ -169,9 +169,6 @@ def editStein(id):
         form.populate(curr_stein)
         bild_stein = curr_stein.bild_stein
         bild_herkunft = curr_stein.bild_herkunft
-    else:
-        form.bild_herkunft.validators.append(FileRequired())
-        form.bild_stein.validators.append(FileRequired())
 
     # new rock, fill in Absender
     if request.args.get('email'):
