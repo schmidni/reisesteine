@@ -18,7 +18,7 @@ export default class Reisesteine {
         this.position = {}
     }
 
-    mousemovemethod (e) {
+    mousemovemethod = (e) => {
         this.position.x += (e.pageX-this.oldx)*0.05;
         this.position.y += (e.pageY-this.oldy)*0.05;
         
@@ -45,13 +45,14 @@ export default class Reisesteine {
             this.imgs = result;
         });
 
-        document.addEventListener('mousemove', (e) => this.mousemovemethod(e), 100);
+        document.addEventListener('mousemove', this.mousemovemethod);
     }
 
     onremove (ctrl) {
         // replace overlay
         ctrl.attrs.frame.paths.current = 'full';
         document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('full'));
+        document.removeEventListener('mousemove', this.mousemovemethod);
     }
 
     outerSize (el, dim) {

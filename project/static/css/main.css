@@ -116,6 +116,37 @@ h4.active {
     opacity: 0;
 }
 
+.rs-content-svg {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+    z-Index: 3;
+    opacity: 0;
+}
+
+.rs-path{
+    fill:none;
+    stroke-width:5px;
+    stroke: #966e28;
+}
+
+.rs-path.rs-path-blue {
+    stroke:#145064;
+    stroke-dasharray:30 10;
+}
+
+.rs-path.rs-path-red {
+    stroke:#b41e1e;
+    stroke-dasharray:30 10;
+}
+
+.rs-path.rs-path-green {
+    stroke:#145064;
+    stroke-dasharray:30 10;
+}
+
 .rs-content .rs-bild {
     height: 40vh;
     z-index: 3;

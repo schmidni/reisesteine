@@ -35,6 +35,7 @@ export default class worldMap {
             this.marker.push(L.marker(el_coord, {icon: this.redIcon})
                             .addTo(this.map)
                             .on('click', () => this.onMarkerClick(this, this.frame, el[0]))
+                            .bindTooltip("This is the Transamerica Pyramid", {direction:'top', offset:[0,-40]})
                             );
         });
     }

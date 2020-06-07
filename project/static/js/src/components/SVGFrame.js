@@ -50,7 +50,7 @@ export default class svgFrame {
         this.DOM.shape.setAttribute('d', this.calculatePath(this.paths.current));
     }
     calculatePath = (path = 'initial') => {
-        const r = Math.sqrt(Math.pow(this.rect.height,2) + Math.pow(this.rect.width,2));
+        const r = Math.sqrt(Math.pow(this.rect.height,2) + Math.pow(this.rect.width,2))+this.rect.width*0.1;
         const rInitialOuter = r;
         const rInitialInner = r;
         const rFinalOuter = r;
@@ -66,8 +66,12 @@ export default class svgFrame {
             p = `M ${this.rect.width*0.7}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
         else if (path === 'full')
             p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-0.001} a ${0.001} ${0.001} 0 1 1 -1 0 Z`;
-        else if (path==='rect')
+        else if (path ==='rect')
             p = `M 0 0 H ${this.rect.width} V ${this.rect.height} H 0 Z`;
+        else if (path === 'leftout')
+            p = `M ${-rFinalInner}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
+        else if (path === 'rightout')
+            p = `M ${this.rect.width + rFinalInner}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
         return p;        
     }
 
@@ -114,6 +118,29 @@ export default class svgFrame {
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'full';
+            });
+        }
+        else if (dir === 'leftout') {
+            this.animateShape = anime({
+                targets: this.DOM.shape,
+                duration: this.settings.animation.shape.duration,
+                easing: this.settings.animation.shape.easing.out,
+                d: this.calculatePath('leftout')
+            }).finished.then( () => {
+                this.isAnimating = false
+                this.paths.current = 'leftout';
+            });
+        }
+        else if (dir === 'rightin') {
+            this.DOM.shape.setAttribute('d', this.calculatePath('rightout'));
+            this.animateShape = anime({
+                targets: this.DOM.shape,
+                duration: this.settings.animation.shape.duration,
+                easing: this.settings.animation.shape.easing.out,
+                d: this.calculatePath('offset')
+            }).finished.then( () => {
+                this.isAnimating = false
+                this.paths.current = 'offset';
             });
         }
         else if (dir === 'initial'){
