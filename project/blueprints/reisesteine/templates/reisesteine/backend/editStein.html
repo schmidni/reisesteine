@@ -28,6 +28,10 @@
                             {{ form.nachname(class_="form-control rs-person", readonly=user) }}
                         </div>
                         <div class="form-group">
+                            {{ form.wohnort.label }}
+                            {{ form.wohnort(class_="form-control rs-person", readonly=user) }}
+                        </div>
+                        <div class="form-group">
                             {{ form.email.label }}
                             {{ form.email(class_="form-control rs-person" + (" is-invalid" if form.email.errors else ""), readonly=user) }}
                             {% for error in form.email.errors %}

@@ -16,6 +16,7 @@ class editSteinForm(FlaskForm):
 
     vorname =           StringField('Vorname*', validators=[DataRequired()])
     nachname =          StringField('Nachname')
+    wohnort =           StringField('Wohnort *', validators=[DataRequired()])
     email =             EmailField('Email *', validators=[DataRequired(), Email()])
     telefon =           StringField('Telefonnummer')
     instagram =         StringField('Instagram')
@@ -113,6 +114,7 @@ class editSteinForm(FlaskForm):
         self.user_id.data = curr_stein.absender.id
         self.vorname.data = curr_stein.absender.vorname
         self.nachname.data = curr_stein.absender.nachname
+        self.wohnort.data = curr_stein.absender.wohnort
         self.email.data = curr_stein.absender.email
         self.telefon.data = curr_stein.absender.telefon
         self.instagram.data = curr_stein.absender.instagram
@@ -134,6 +136,7 @@ class editSteinForm(FlaskForm):
         self.user_id.data = absender.id
         self.vorname.data = absender.vorname
         self.nachname.data = absender.nachname
+        self.wohnort.data = absender.wohnort
         self.email.data = absender.email
         self.telefon.data = absender.telefon
         self.instagram.data = absender.instagram

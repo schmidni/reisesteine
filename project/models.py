@@ -5,6 +5,7 @@ class Person(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     vorname = db.Column(db.String(32))
     nachname = db.Column(db.String(32))
+    wohnort = db.Column(db.String(32))
     email = db.Column(db.String(32), unique=True)
     telefon = db.Column(db.String(32))
     instagram = db.Column(db.String(32))
