@@ -186,11 +186,13 @@
             <div class="col-12 mt-4">
                 <div class="form-group">
                     {{ form.pers_geschichte.label }}
-                    {{ form.pers_geschichte(class_="form-control", rows=10) }}
+                    {{ form.pers_geschichte(class_="form-control", rows=10, maxlength="600") }}
+                    <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 600</small>
                 </div>
                 <div class="form-group">
                     {{ form.geo_geschichte.label }}
-                    {{ form.geo_geschichte(class_="form-control", rows=10) }}
+                    {{ form.geo_geschichte(class_="form-control", rows=10, maxlength="600") }}
+                    <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 600</small>
                 </div>
             </div>
             <div class="col-12">
@@ -201,5 +203,16 @@
     </form>
     <br><br><br>
 </div>
+
+<script>
+    document.getElementById('current_geschichte').innerHTML = document.getElementById('pers_geschichte').value.length;
+    document.getElementById('pers_geschichte').addEventListener('keyup', function(e){
+        document.getElementById('current_geschichte').innerHTML = this.value.length;
+    });
+    document.getElementById('current_geologie').innerHTML = document.getElementById('geo_geschichte').value.length;
+    document.getElementById('geo_geschichte').addEventListener('keyup', function(e){
+        document.getElementById('current_geologie').innerHTML = this.value.length;
+    });
+</script>
 
 {% endblock %}
