@@ -1,10 +1,9 @@
 import m from 'mithril';
 import interact from 'interactjs';
 import anime from 'animejs';
-import Stein from './stein.js';
+import SteinMain from './SteinMain.js';
 
-
-export default class Reisesteine {
+export default class SteinIndex {
     constructor (ctrl) {
         this.imgs = [];
         this.media = window.matchMedia("(max-width: 960px)")
@@ -164,7 +163,7 @@ export default class Reisesteine {
 
                 // load Stein component
                 m.mount(document.getElementById('rs-body'), {
-                    view: () => m(Stein, {  'id': id, 
+                    view: () => m(SteinMain, {  'id': id, 
                                             'map':ctrl.attrs.map, 
                                             'frame':ctrl.attrs.frame,
                                             'remove': e.target,
