@@ -1,21 +1,16 @@
-import interact from 'interactjs';
 import m from 'mithril';
 import anime from 'animejs';
 
 export class SteinNavigation {
     constructor() {
         this.active = 0;
-        this.fundortSetup = false;
         this.menu = [];
-        this.slides = [];    
+        this.slides = [];
     }
 
-    switchIt = (target_in, e) => {
+    switchIt = (target_in) => {
         this.menu[this.active].classList.remove('active');
         this.menu[target_in].classList.add('active');
-
-        if(this.fundortSetup == false && target_in == 2)
-            this.fundortSetup = setUpImage();
 
         anime({
             targets: this.slides[this.active],
@@ -39,7 +34,6 @@ export class SteinNavigation {
     };
 
     oncreate(ctrl) {
-
         this.menu = [   ctrl.dom.querySelector('.rs-menu-stein'),
                         ctrl.dom.querySelector('.rs-menu-geschichte'),
                         ctrl.dom.querySelector('.rs-menu-fundort'),
@@ -50,14 +44,14 @@ export class SteinNavigation {
                         ctrl.attrs.geologie];
 
         this.menu.forEach((item, idx) => {
-            item.addEventListener('click', (e) => {
-                this.switchIt(idx, e);
+            item.addEventListener('click', () => {
+                this.switchIt(idx);
             })
         })
 
-        ctrl.dom.querySelector('.rs-menu-next').addEventListener('click', (e) => {
+        ctrl.dom.querySelector('.rs-menu-next').addEventListener('click', () => {
             let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
-            this.switchIt(next, e); 
+            this.switchIt(next); 
         });
     };
 
@@ -80,47 +74,3 @@ export class SteinNavigation {
 
 
 
-// ********** helper function to make fundort image cover fullscreen ************************
-var setUpImage = function() {
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-
-    // make the image fill the whole viewport
-    let slide = document.querySelector('.rs-fundort');
-    slide.style.width = vw*1.05 + "px";
-    let slide_rect = slide.getBoundingClientRect();
-    if(slide_rect.height < vh){
-        slide.style.width = 'auto';
-        slide.style.height = vh*1.05 + "px";
-        slide_rect = slide.getBoundingClientRect();
-    }
-
-    // set up draggable
-    const position = { x: -(slide_rect.width - vw) / 2, y: -(slide_rect.height - vh) / 2 }
-    slide.style.transform = `translate(${position.x}px, ${position.y}px)`;
-    interact('.rs-fundort').draggable({
-        listeners: {
-            move (event) {
-                position.x += event.dx
-                position.y += event.dy
-
-                // clamp position
-                position.x = Math.min(Math.max(position.x, vw-slide_rect.width), 0);
-                position.y = Math.min(Math.max(position.y, vh-slide_rect.height), 0);
-
-                event.target.style.transform =
-                    `translate(${position.x}px, ${position.y}px)`;
-
-            }
-        },
-        inertia: {
-            resistance: 5,
-            minSpeed: 10,
-            smoothEndDuration: 400
-        },
-        cursorChecker () {
-            return null
-        }
-    })
-    return true;
-}

@@ -2,6 +2,8 @@ import anime from 'animejs';
 import m from 'mithril';
 import {convertDMS} from '../util/convertCoords.js';
 import {SteinNavigation} from './SteinNavigation.js';
+import {setUpImage} from '../util/draggableImage.js'
+import imagesLoaded from 'imagesloaded';
 
 export class SteinView {
     constructor () {
@@ -25,28 +27,27 @@ export class SteinView {
                 target.setAttribute('stroke-dasharray', dashArray)
             },
             complete: function() {
-                frame.navigate('rightin');
+                // frame.navigate('rightin');
                 // frame.navigate('leftout');
             }
           });
     }
 
     oncreate(ctrl) {
+        this.bild = ctrl.dom.querySelector('.rs-bild')
+        this.fundort = ctrl.dom.querySelector('.rs-fundort')
+        this.geschichte = ctrl.dom.querySelector('.rs-geschichte')
+        this.geologie = ctrl.dom.querySelector('.rs-geologie')
+
         if (!this.media.matches) {
-            if (ctrl.attrs.fadeIn){
-                anime({
-                    targets: ctrl.dom.querySelector('.rs-bild'),
-                    opacity: [0, 1],
-                    duration: 2000,
-                    easing: "easeInOutQuad"
-                });
-            };
             m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, {
-                'stein': ctrl.dom.querySelector('.rs-bild'),
-                'fundort': ctrl.dom.querySelector('.rs-fundort'),
-                'geschichte': ctrl.dom.querySelector('.rs-geschichte'),
-                'geologie': ctrl.dom.querySelector('.rs-geologie') 
+                'stein': this.bild,
+                'fundort': this.fundort,
+                'geschichte': this.geschichte,
+                'geologie': this.geologie,
             }));
+            imagesLoaded(this.fundort, () => setUpImage(this.fundort));
+
             this.drawDashedLine(ctrl.dom.querySelector('.rs-geschichte-path'), ctrl.attrs.frame);
         }
     }
