@@ -6,42 +6,25 @@ export class SteinNavigation {
         this.active = 0;
         this.menu = [];
         this.slides = [];
+        this.SteinLine = null;
     }
 
     switchIt = (target_in) => {
         this.menu[this.active].classList.remove('active');
         this.menu[target_in].classList.add('active');
 
-        anime({
-            targets: this.slides[this.active],
-            duration: 500,
-            opacity: [1, 0],
-            easing: 'easeOutQuad',
-            complete: (el) => {
-                el.animatables[0].target.style.zIndex = -1;
-                anime({
-                    targets: this.slides[target_in],
-                    duration: 500,
-                    opacity: [0, 1],
-                    easing: 'easeInQuad',
-                    begin: (el) => {
-                        el.animatables[0].target.style.zIndex = 3;
-                    }
-                });
-            }
-        });
+        this.SteinLine.goTo(this.stop[target_in]);
+
         this.active = target_in;
     };
 
     oncreate(ctrl) {
+        this.SteinLine = ctrl.attrs.SteinLine;
         this.menu = [   ctrl.dom.querySelector('.rs-menu-stein'),
                         ctrl.dom.querySelector('.rs-menu-geschichte'),
                         ctrl.dom.querySelector('.rs-menu-fundort'),
                         ctrl.dom.querySelector('.rs-menu-geologie')];
-        this.slides = [ ctrl.attrs.stein,
-                        ctrl.attrs.geschichte,
-                        ctrl.attrs.fundort,
-                        ctrl.attrs.geologie];
+        this.stop = [ 'stein', 'geschichte', 'fundort', 'geologie'];
 
         this.menu.forEach((item, idx) => {
             item.addEventListener('click', () => {
@@ -53,6 +36,8 @@ export class SteinNavigation {
             let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
             this.switchIt(next); 
         });
+        console.log(this.SteinLine);
+        // this.SteinLine.goTo('geologie');
     };
 
     view() {

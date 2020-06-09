@@ -6,7 +6,7 @@ import SteinMain from './components/SteinMain.js';
 import debounce from './util/debounce.js';
 
 
-// SVG Frame and Map init ******************************************************************************
+// SVG Frame and Map init ************************************************************************************************************
 var frame = new svgFrame(document.querySelector('#map'));
 var myMap = new worldMap(document.querySelector('#map'), onMarker, frame);
 
@@ -17,10 +17,10 @@ function onMarker(map, frame, id) {
 
 
 // NAVIGATION *************************************************************************************************************************
-// close
+// Close Icon
 document.querySelector('.rs-close').addEventListener('click', () => {
     closeAll();
-    history.pushState('home', 'Reisesteine', '/'+document.documentElement.lang);
+    history.pushState('home', 'Reisesteine', '/' + document.documentElement.lang);
 });
 
 // Stein Index
@@ -31,7 +31,7 @@ document.getElementById('rs-reisesteine').addEventListener('click', () => {
 });
 
 
-// HISTORY ******************************************************************************************************************************
+// HISTORY ***************************************************************************************************************************
 var id = document.getElementById('rs-body').getAttribute('data-stein');
 
 // check if stone should be rendered
@@ -60,7 +60,7 @@ function navBack(e) {
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
         // render rock state there is any
         else if ( e.state != null )
-           m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': e.state, 'map':myMap, 'frame':frame, 'pushState': false})});
+            m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': e.state, 'map':myMap, 'frame':frame, 'pushState': false})});
         // check id on body node
         else if (id)
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':myMap, 'frame':frame, 'pushState': false})});
@@ -68,7 +68,7 @@ function navBack(e) {
 }
 
 
-// RESPONSIVE ***************************************************************************************************************************************
+// RESPONSIVE ***************************************************************************************************************************
 var breakpoint = 960; // reload site at breakpoint
 var lastSize = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 window.addEventListener('resize', debounce(() => { 
@@ -80,7 +80,7 @@ window.addEventListener('resize', debounce(() => {
 },100));
 
 
-// UTILITY *******************************************************************************************
+// UTILITY ******************************************************************************************************************************
 var closeAll = () => {
     m.render(document.getElementById('rs-body'), null);
     let frameDone = frame.navigate('initial');

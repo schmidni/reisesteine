@@ -4,8 +4,10 @@ import {convertDMS} from '../util/convertCoords.js';
 import {SteinNavigation} from './SteinNavigation.js';
 import {setUpImage} from '../util/draggableImage.js'
 import imagesLoaded from 'imagesloaded';
+import SteinTimeLine from '../util/SteinTimeLine';
 
-export class SteinView {
+
+export default class SteinView {
     constructor () {
         this.media = window.matchMedia("(max-width: 960px)")
     }
@@ -34,18 +36,16 @@ export class SteinView {
     }
 
     oncreate(ctrl) {
-        this.bild = ctrl.dom.querySelector('.rs-bild')
-        this.fundort = ctrl.dom.querySelector('.rs-fundort')
-        this.geschichte = ctrl.dom.querySelector('.rs-geschichte')
-        this.geologie = ctrl.dom.querySelector('.rs-geologie')
+        this.bild = ctrl.dom.querySelector('.rs-bild');
+        this.fundort = ctrl.dom.querySelector('.rs-fundort');
+        this.geschichte = ctrl.dom.querySelector('.rs-geschichte');
+        this.geologie = ctrl.dom.querySelector('.rs-geologie');
+        this.coordinates = ctrl.dom.querySelector('.rs-coordinates');
 
         if (!this.media.matches) {
-            m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, {
-                'stein': this.bild,
-                'fundort': this.fundort,
-                'geschichte': this.geschichte,
-                'geologie': this.geologie,
-            }));
+            this.SteinLine = new SteinTimeLine(this.coordinates, this.bild, this.geschichte, this.fundort, this.geologie);
+
+            m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine}));
             imagesLoaded(this.fundort, () => setUpImage(this.fundort));
 
             this.drawDashedLine(ctrl.dom.querySelector('.rs-geschichte-path'), ctrl.attrs.frame);
@@ -55,6 +55,11 @@ export class SteinView {
     view(ctrl) {
         return (
         <div class="rs-content">
+            <div class="rs-coordinates">
+                <h3>{convertDMS(ctrl.attrs.info.latitude, null)}</h3>
+                <h3>{convertDMS(null, ctrl.attrs.info.longitude)}</h3>
+                <h2>{ctrl.attrs.info.herkunft}</h2>
+            </div>
             <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
             <img class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
             <div class="rs-geschichte rs-text">
@@ -88,22 +93,4 @@ export class SteinView {
         </div>
         )
     }
-
-}
-
-export var Coordinates = function() {
-    return {        
-        oncreate: (ctrl) => {
-            ctrl.attrs.animateIn(ctrl.dom);
-        },
-        view(ctrl) {
-            return (
-                <div class="rs-coordinates">
-                    <h3>{convertDMS(ctrl.attrs.info.latitude, null)}</h3>
-                    <h3>{convertDMS(null, ctrl.attrs.info.longitude)}</h3>
-                    <h2>{ctrl.attrs.info.herkunft}</h2>
-                </div>
-            );
-        }
-    };
 }
