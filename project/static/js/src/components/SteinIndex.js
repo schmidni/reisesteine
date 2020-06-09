@@ -33,7 +33,7 @@ export default class SteinIndex {
         });
     }
 
-    onremove (ctrl) {
+    onremove () {
         // replace overlay
         this.frame.paths.current = 'full';
         document.getElementById('svg-path').setAttribute('d', this.frame.calculatePath('full'));
