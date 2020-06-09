@@ -4,7 +4,7 @@ import {convertDMS} from '../util/convertCoords.js';
 import {SteinNavigation} from './SteinNavigation.js';
 import {setUpImage} from '../util/draggableImage.js'
 import imagesLoaded from 'imagesloaded';
-import SteinTimeLine from '../util/SteinTimeLine';
+import SteinTimeLine from './SteinTimeLine';
 
 
 export default class SteinView {

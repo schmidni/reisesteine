@@ -1,5 +1,4 @@
 import m from 'mithril';
-import anime from 'animejs';
 import SteinView from './SteinView.js';
 
 export default class SteinMain {
@@ -7,7 +6,7 @@ export default class SteinMain {
     constructor(ctrl) {
         this.myMap = ctrl.attrs.map;
         this.frame = ctrl.attrs.frame;
-        this.info = {};
+        this.info = null;
         this.media = window.matchMedia("(max-width: 960px)")
 
         // API: Rock Info
@@ -24,7 +23,7 @@ export default class SteinMain {
     }
 
     onupdate (ctrl) {
-        if(this.info == {})
+        if(!this.info)
             return;
 
         // PUSHSTATE
