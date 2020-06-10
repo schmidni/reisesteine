@@ -48,6 +48,7 @@ export default class worldMap {
 
     init = (el) => {
         var mymap = L.map(el, {zoomSnap: 0.1}).setView([30,0], 3).setMaxBounds([[-90, -180],[90, 180]]);
+        mymap.zoomControl.setPosition('bottomleft');
         this.initMap(mymap);
         return mymap;
     }

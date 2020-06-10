@@ -17,9 +17,6 @@ export default class SteinMain {
         .then(result => {
             this.info = result;
         });
-
-        // Disable Navigation while Loading
-        document.getElementById('rs-navigation').style.pointerEvents = 'none';
     }
 
     onupdate (ctrl) {
@@ -48,15 +45,13 @@ export default class SteinMain {
 
         // enable CLOSE and NAVIGATION
         frameDone.then(() => {
-            document.querySelector('.rs-close').style.display = "block";
-            document.getElementById('rs-navigation').style.pointerEvents = 'auto';    
+            document.querySelector('.rs-close').style.display = "block";  
         });
     }
 
     onremove(ctrl) {
         if(ctrl.attrs.remove)
             ctrl.attrs.remove.remove();
-        document.getElementById('rs-navigation').style.pointerEvents = 'auto';
     }
 
     view() {

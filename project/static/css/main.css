@@ -263,38 +263,46 @@ h4.active {
     user-select: none;
 }
 
-/************************** NAVIGATION ******************************************/
-#rs-navigation {
-    position: absolute;
-    top: 30px;
-    left: 20px;
-    background-color: rgba(256, 256, 256, 0.75);
-    z-index: 4;
+/************************** SMALL NAVIGATION ******************************************/
+#rs-small-navigation {
     display: flex;
     flex-direction: column;
 }
 
-#rs-navigation.circle{
-    width:230px;
-    height:230px;
-    border-radius:50%;
-    padding: 30px;
+#rs-small-navigation img {
+    height: 40px;
 }
 
-#rs-navigation img {
-    height: 50px;
+#rs-small-navigation svg {
+    height: 40px;
+    fill: rgb(180, 30, 30);
 }
 
-#rs-navigation span {
-    margin: 6px auto 6px auto;
+#rs-small-navigation a {
+    margin: 3px auto 3px auto;
     text-align: center;
+    padding-left: 50px;
+}
+
+#rs-small-navigation span {
+    text-align: center;
+    padding-left: 50px;
+}
+
+#rs-small-navigation span a {
     font-family: 'Josefin Sans', sans-serif;
     font-weight: 300;
-    font-size: 1.7rem;
-    color: rgb(180, 30, 30)
+    font-size: 1.4rem;
+    color: rgb(180, 30, 30);
+    padding-left: 0;
+    text-decoration: none;
 }
 
-#rs-navigation.active {
+#rs-small-navigation a:first-child {
+    margin-top: 90px;
+}
+
+#rs-small-navigation.active {
     background-color: transparent!important;
 }
 
@@ -306,32 +314,94 @@ h4.active {
 }
 
 @media only screen and (max-width: 960px) {
-    #rs-navigation {
-        position: relative;
-        top: 0;
-        left: 0;
-        margin: 10px auto 10px auto;
-    }
-     
-    #rs-navigation.circle{
-        width:170px;
-        height:170px;
-        border-radius:50%;
-        padding: 20px;
-    }
-    
-    #rs-navigation img {
-        height: 40px;
-    }
-    
-    #rs-navigation span {
-        margin: 4px auto 4px auto;
-        font-size: 1.4rem;
-    }
 
-    #rs-navigation.active {
-        display: none;
-    }
+}
+
+/************************** NAVIGATION ******************************************/
+#rs-nav-background{
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    z-index: 4;
+    background-color: rgba(256, 256, 256, 0.75);
+}
+
+#rs-nav-background.circle {
+    width:230px;
+    height:230px;
+    border-radius: 0 50% 50% 50%;
+    padding: 30px;
+}
+
+#rs-nav {
+    position: absolute;
+    left: -500px;
+    top: 0;
+    height: 100vh;
+    width: 450px;
+    padding: 25vh 0 0 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+#rs-nav div {
+    display:flex;
+    flex-direction: column;
+    font-family: 'Josefin Sans', sans-serif;
+    text-transform: uppercase;
+}
+
+#rs-nav .rs-logo img{
+    height: 50px;
+}
+#rs-nav .rs-title {
+    font-family: 'Passion One', cursive;
+    font-weight: 700;
+    font-size: 3.5rem;
+    text-transform: uppercase;
+    color: rgb(180, 30, 30);
+    margin-top: 25px;
+}
+
+#rs-nav .rs-nav-indexpages a{
+    color: rgb(180, 30, 30);
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-top: 5px;
+}
+
+#rs-nav .rs-nav-impressum a {
+    color: rgb(180, 30, 30);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 300;
+    margin-top: 5px;
+}
+
+#rs-nav .rs-nav-controls a, span {
+    color: rgb(180, 30, 30);
+    text-decoration: none;
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-top: 5px;
+    text-transform: none;
+}
+
+#rs-nav .rs-nav-controls svg{
+    fill: rgb(180, 30, 30);
+    cursor: pointer;
+}
+
+.rs-nav-indexpages a:hover::before, .rs-nav-impressum a:hover::before {
+    content:"\A";
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background: rgb(180, 30, 30);
+    display:inline-block;
+    margin:0 10px 5px 5px;
 }
 
 /************************** REISESTEINE DRAGGABLE ******************************************/

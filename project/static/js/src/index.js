@@ -4,14 +4,14 @@ import worldMap from './components/WorldMap.js';
 import SteinIndex from './components/SteinIndex.js';
 import SteinMain from './components/SteinMain.js';
 import debounce from './util/debounce.js';
-
+import Menu from './components/menu.js';
 
 // SVG Frame and Map init ************************************************************************************************************
 var frame = new svgFrame(document.querySelector('#map'));
 var myMap = new worldMap(document.querySelector('#map'), onMarker, frame);
+var menu = new Menu();
 
 function onMarker(map, frame, id) {
-    document.getElementById('rs-navigation').classList.add('active');
     m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':map, 'frame':frame, 'pushState': true})});
 }
 
@@ -24,11 +24,11 @@ document.querySelector('.rs-close').addEventListener('click', () => {
 });
 
 // Stein Index
-document.getElementById('rs-reisesteine').addEventListener('click', () => {
-    document.getElementById('rs-navigation').classList.remove('active');
-    m.render(document.getElementById('rs-body'), null);
-    m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': myMap, 'frame':frame, 'pushState': true})});
-});
+// document.getElementById('rs-reisesteine').addEventListener('click', () => {
+//     document.getElementById('rs-navigation').classList.remove('active');
+//     m.render(document.getElementById('rs-body'), null);
+//     m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': myMap, 'frame':frame, 'pushState': true})});
+// });
 
 
 // HISTORY ***************************************************************************************************************************
@@ -84,10 +84,7 @@ window.addEventListener('resize', debounce(() => {
 var closeAll = () => {
     m.render(document.getElementById('rs-body'), null);
     let frameDone = frame.navigate('initial');
-    document.getElementById('rs-navigation').classList.remove('active');
     document.querySelector('.rs-close').style.display = "none";
-    document.getElementById('rs-reisesteine').style.pointerEvents = 'auto';
-    document.getElementById('rs-navigation').style.pointerEvents = 'auto';
     document.title = 'Home - Reisesteine';
     return frameDone;
 }

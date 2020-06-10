@@ -36,8 +36,6 @@ export class SteinNavigation {
             let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
             this.switchIt(next); 
         });
-        console.log(this.SteinLine);
-        // this.SteinLine.goTo('geologie');
     };
 
     view() {

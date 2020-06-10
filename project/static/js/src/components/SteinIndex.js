@@ -11,7 +11,6 @@ export default class SteinIndex {
 
         this.imgs = [];
         this.media = window.matchMedia("(max-width: 960px)")
-        document.getElementById('rs-reisesteine').style.pointerEvents = 'none';
 
         if(ctrl.attrs.pushState)
             history.pushState('steine', 'Steine - Reisesteine', `/${document.documentElement.lang}/steine`);
@@ -79,8 +78,6 @@ export default class SteinIndex {
         const id = e.target.getAttribute('data-id');
 
         // stop navigation
-        document.getElementById('rs-reisesteine').style.removeProperty('pointer-events');
-        document.getElementById('rs-navigation').classList.add('active');
         document.querySelector('.rs-close').style.display = "none";
 
         // hide all other rocks
