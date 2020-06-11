@@ -67,6 +67,8 @@ export default class SteinIndex {
         document.head.appendChild(styleSheet)
 
         this.IndexView = new IndexView('.rs-reisesteine', {x: width, y: height}, '.rs-stein-link', this.onRockClick)
+
+        console.log('test');
     }
 
 

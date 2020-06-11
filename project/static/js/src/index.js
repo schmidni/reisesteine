@@ -6,10 +6,14 @@ import SteinMain from './components/SteinMain.js';
 import debounce from './util/debounce.js';
 import Menu from './components/menu.js';
 
+console.log()
+console.log(data_stein)
+
 // SVG Frame and Map init ************************************************************************************************************
 var frame = new svgFrame(document.querySelector('#map'));
-var myMap = new worldMap(document.querySelector('#map'), onMarker, frame);
-var menu = new Menu();
+var myMap = new worldMap(document.querySelector('#map'), onMarker, frame, data_index);
+
+var menu = new Menu(myMap, frame);
 
 function onMarker(map, frame, id) {
     m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':map, 'frame':frame, 'pushState': true})});
@@ -22,13 +26,6 @@ document.querySelector('.rs-close').addEventListener('click', () => {
     closeAll();
     history.pushState('home', 'Reisesteine', '/' + document.documentElement.lang);
 });
-
-// Stein Index
-// document.getElementById('rs-reisesteine').addEventListener('click', () => {
-//     document.getElementById('rs-navigation').classList.remove('active');
-//     m.render(document.getElementById('rs-body'), null);
-//     m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': myMap, 'frame':frame, 'pushState': true})});
-// });
 
 
 // HISTORY ***************************************************************************************************************************

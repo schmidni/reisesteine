@@ -1,4 +1,4 @@
-from flask import jsonify, render_template, Blueprint, g, redirect, request, current_app, abort, url_for, make_response
+from flask import jsonify, json, render_template, Blueprint, g, redirect, request, current_app, abort, url_for, make_response
 from project.blueprints.reisesteine.forms import editSteinForm
 from project import db
 from project.models import Gestein, Stein, Person
@@ -47,14 +47,20 @@ def verify_password(username, password):
 # Frontend Routes ************************************
 @reisesteine.route('/')
 def index():
-    return render_template('reisesteine/home.html')
+    steine = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude, Stein.gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/home.html', steine=steine, ste=None)
 
 @reisesteine.route('/stein/<id>', defaults={'lang_code': 'de'})
 @reisesteine.route('/stone/<id>', defaults={'lang_code': 'en'})
-def stein(id):
-    if not db.session.query(exists().where(Stein.id == id)).scalar():
+def stein(id):        
+    ste = Stein.query.get(id)
+    if not ste:
         return redirect(url_for('reisesteine.index'))
-    return render_template('reisesteine/home.html', id=id)
+    steine = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude, Stein.gestein.name, Stein.titel, Stein.herkunft).all()
+
+    ste = ste.to_dict()
+
+    return render_template('reisesteine/home.html', id=id, steine=steine, ste=ste)
 
 @reisesteine.route('/steine', defaults={'lang_code': 'de'})
 @reisesteine.route('/stones', defaults={'lang_code': 'en'})

@@ -1,7 +1,12 @@
 import anime from 'animejs';
+import m from 'mithril';
+import SteinIndex from './SteinIndex.js';
 
 export default class Menu {
-    constructor() {
+    constructor(map, frame) {
+        this.map = map;
+        this.frame = frame;
+
         this.menuButton = document.getElementById("rs-small-menu");
         this.steine = document.getElementById("rs-nav-steine");
         this.geschichten = document.getElementById("rs-nav-geschichten");
@@ -11,6 +16,7 @@ export default class Menu {
         this.smallNav = document.getElementById("rs-small-navigation");
         this.nav = document.getElementById("rs-nav");
         this.navBackground = document.getElementById("rs-nav-background");
+
         this.initListeners();
     }
 
@@ -47,7 +53,6 @@ export default class Menu {
     }
 
     closeMenu = (e) => {
-        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
         e.preventDefault();
         anime({
             targets: this.navBackground,
@@ -74,5 +79,14 @@ export default class Menu {
     initListeners() {
         this.menuButton.addEventListener('click', this.openMenu);
         this.menuClose.addEventListener('click', this.closeMenu);
+
+        
+        // Stein Index
+        this.steine.addEventListener('click', (e) => {
+            e.preventDefault();
+            m.render(document.getElementById('rs-body'), null);
+            m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
+            this.closeMenu()
+        });
     }
 }

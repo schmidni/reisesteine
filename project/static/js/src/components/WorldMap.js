@@ -1,7 +1,8 @@
 import m from 'mithril';
 import L from 'leaflet';
 export default class worldMap {
-    constructor(el, func, frame) {
+    constructor(el, func, frame, data) {
+        this.data = data;
         this.style = 'schmidni/ckambjp2k3d9t1il6ylrcbgor';
         if (document.documentElement.lang == 'en')
             this.style = 'schmidni/ckb3jm18c0nuu1iqshgkbocey';

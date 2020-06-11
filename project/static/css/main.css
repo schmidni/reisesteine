@@ -8,7 +8,7 @@ body.rs-frontend {
     width:100vw;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    /* overflow: hidden; */
     font-family: 'Sen', sans-serif;
     font-weight: 400;
     font-size: 1rem;
@@ -42,7 +42,7 @@ body.rs-frontend {
     left: 0;
     height: 100%;
     width: 100%;
-    z-index: 1;
+    z-index: -1;
 }
 
 /************************** CAPTIONS ******************************************/
@@ -311,7 +311,12 @@ h4.active {
     z-index: 4;
     top: 50px;
     right: 50px;
+    width: 55px;
+    height: 55px;
+    display: none;
+    fill: rgb(180, 30, 30);
 }
+
 
 @media only screen and (max-width: 960px) {
 

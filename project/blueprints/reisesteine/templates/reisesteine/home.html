@@ -1,17 +1,48 @@
 {% extends "layouts/base_app.html" %}
 
 {% block body %}
-
 <div id="map"></div>
+
 <svg id="svg" class="overlay" width="100%" height="100%">
-    <defs>
-        <radialGradient id="gradientDefinition" >
-            <stop stop-color="white" offset="0%" stop-opacity="1" />
-            <stop stop-color="transparent" offset="100%" stop-opacity="0" />
-        </radialGradient>
-    </defs>
     <path id="svg-path" />
 </svg>
+
 <div id="rs-body" data-stein="{{id}}"></div>
+
+<div id="rs-site-content" style="margin-left: 150px;">
+    <div id="rs-stein-site-content">
+        {% if ste %}
+        <ul>
+            <li>Gestein: {{ste['gestein'] }} </li>
+            <li>Herkunft: {{ ste['herkunft'] }} </li>
+            <li>Latitude: {{ ste['latitude'] }} </li>
+            <li>Longitude: {{ ste['longitude'] }} </li>
+            <li>Titel: {{ ste['titel'] }} </li>
+            <li>Geschichte: {{ ste['pers_geschichte'] }} </li>
+            <li>Geologie: {{ ste['geo_geschichte'] }} </li>
+            <li>Bild Herkunft: <img height="100" src="{{ url_for('static', filename='img/steine/'+ste['bild_herkunft']) }}"/> </li>
+            <li>Bild Stein: <img height="100" src="{{ url_for('static', filename='img/steine/'+ste['bild_stein']) }}"/> </li>
+        </ul>
+        {% endif %}
+    </div>
+    <div id="rs-stein-site-index">
+        {% for stein in steine %}
+        <ul>
+            <li><a href="{{ '/{}/stein/{}'.format(g.lang_code, stein[0]) }}">{{stein[4]}} - {{stein[3]}} from {{stein[5]}} at latitude {{stein[2]}} and longitude {{stein[1]}}</a></li>
+        </ul>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    // if javascript isnt disabled, apply crucial styles, else fallback content is used
+    document.getElementById('map').style.zIndex = 1;
+    document.getElementById('map').style.backgroundColor = 'white';
+    document.body.style.overflow = 'hidden';
+
+    var data_index = {{ steine|tojson|safe }};
+    var data_stein = {{ {} if not ste else ste|tojson|safe }};
+
+</script>
 
 {% endblock %}
