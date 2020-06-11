@@ -8,15 +8,26 @@ export default class SteinMain {
         this.frame = ctrl.attrs.frame;
         this.info = null;
         this.media = window.matchMedia("(max-width: 960px)")
+        
+        // frontend navigate, request data
+        if (!ctrl.attrs.data){
+            // API: Rock Info
+            m.request({
+                method: "GET",
+                url: `/${document.documentElement.lang}/steine/${ctrl.attrs.id}`,
+            })
+            .then(result => {
+                this.info = result;
+            });
+        }
+    }
 
-        // API: Rock Info
-        m.request({
-            method: "GET",
-            url: `/${document.documentElement.lang}/steine/${ctrl.attrs.id}`,
-        })
-        .then(result => {
-            this.info = result;
-        });
+    oncreate (ctrl) {
+        // direct navigation, data is already in dom
+        if (ctrl.attrs.data) {
+            this.info = ctrl.attrs.data;
+            this.onupdate(ctrl);
+        }
     }
 
     onupdate (ctrl) {

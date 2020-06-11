@@ -1,14 +1,15 @@
 import m from 'mithril';
 import L from 'leaflet';
+import SteinMain from './SteinMain.js';
+
 export default class worldMap {
-    constructor(el, func, frame, data) {
+    constructor(el, frame, data) {
         this.data = data;
         this.style = 'schmidni/ckambjp2k3d9t1il6ylrcbgor';
         if (document.documentElement.lang == 'en')
             this.style = 'schmidni/ckb3jm18c0nuu1iqshgkbocey';
         this.map = this.init(el);
         this.frame = frame;
-        this.onMarkerClick = func;
         this.popup = L.popup();
         this.coordinates = [];
         this.marker = [];
@@ -20,22 +21,17 @@ export default class worldMap {
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
-        this.coordinates = this.loadCoordinates()
         this.mapCoordinates();
     }
 
-    loadCoordinates = async () => {
-        const result = await fetch(`/de/steine/coordinates/all`);
-        return result.json();
-    }
-
     mapCoordinates = async () => {
-        let coords = await this.coordinates;
-        coords.forEach(el => {
+        this.data.forEach(el => {
             let el_coord = [el[1], el[2]];
             this.marker.push(L.marker(el_coord, {icon: this.redIcon})
                             .addTo(this.map)
-                            .on('click', () => this.onMarkerClick(this, this.frame, el[0]))
+                            .on('click', () => m.mount(document.getElementById('rs-body'), {view: () => 
+                                m(SteinMain, {'id': el[0], 'map':this, 'frame':this.frame, 'pushState': true})
+                            }))
                             .bindTooltip("This is the Transamerica Pyramid", {direction:'top', offset:[0,-40]})
                             );
         });

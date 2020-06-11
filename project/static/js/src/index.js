@@ -6,18 +6,11 @@ import SteinMain from './components/SteinMain.js';
 import debounce from './util/debounce.js';
 import Menu from './components/menu.js';
 
-console.log()
-console.log(data_stein)
-
 // SVG Frame and Map init ************************************************************************************************************
 var frame = new svgFrame(document.querySelector('#map'));
-var myMap = new worldMap(document.querySelector('#map'), onMarker, frame, data_index);
+var myMap = new worldMap(document.querySelector('#map'), frame, data_index);
 
 var menu = new Menu(myMap, frame);
-
-function onMarker(map, frame, id) {
-    m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':map, 'frame':frame, 'pushState': true})});
-}
 
 
 // NAVIGATION *************************************************************************************************************************
@@ -36,7 +29,7 @@ if (id)
     if (id == 'steine')
         m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
     else
-        m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':myMap, 'frame':frame, 'pushState': false})});
+        m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':myMap, 'frame':frame, 'data': data_stein, 'pushState': false})});
 
 // POPSTATE: listener
 window.addEventListener('popstate', debounce((e) => {
