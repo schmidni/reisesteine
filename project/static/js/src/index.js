@@ -2,6 +2,9 @@ import m from 'mithril';
 import svgFrame from './components/SVGFrame.js';
 import worldMap from './components/WorldMap.js';
 import SteinIndex from './components/SteinIndex.js';
+import GeschichteIndex from './components/GeschichteIndex.js';
+import GeologieIndex from './components/GeologieIndex.js';
+import FundortIndex from './components/FundortIndex.js';
 import SteinMain from './components/SteinMain.js';
 import debounce from './util/debounce.js';
 import Menu from './components/menu.js';
@@ -28,6 +31,12 @@ var id = document.getElementById('rs-body').getAttribute('data-stein');
 if (id)
     if (id == 'steine')
         m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+    else if (id == 'geschichten')
+        m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+    else if (id == 'geologie')
+        m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+    else if (id == 'fundorte')
+        m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
     else
         m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':myMap, 'frame':frame, 'data': data_stein, 'pushState': false})});
 

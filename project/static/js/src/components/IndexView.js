@@ -15,26 +15,26 @@ export default class IndexView {
         this.position = {};
 
         this.init(linkMethod);
-        document.addEventListener('mousemove', this.mousemovemethod);
     }
 
     mousemovemethod = (e) => {
         this.position.x += (e.pageX-this.oldx)*0.05;
         this.position.y += (e.pageY-this.oldy)*0.05;
-        
-        this.oldx = e.pageX;
-        this.oldy = e.pageY;
 
         this.target.style.transform =
-        `translate(${this.position.x}px, ${this.position.y}px)`
+            `translate(${this.position.x}px, ${this.position.y}px)`
+
+        this.oldx = e.pageX;
+        this.oldy = e.pageY;
     }
 
     removeMouseMoveMethod() {
         document.removeEventListener('mousemove', this.mousemovemethod);
     }
 
-    removeTapListener() {
-        interact('.rs-stein-link').unset();
+    removeListeners() {
+        interact(this.linkSelector).unset();
+        interact(this.targetSelector).unset();
     }
 
     init (linkMethod) {
@@ -47,7 +47,8 @@ export default class IndexView {
             width = this.dimensions.x;
             height= this.dimensions.y;
         }
-        else {
+        else {        
+            document.addEventListener('mousemove', this.mousemovemethod);
             // amount of rocks to display
             let len = this.target.children.length;
 
@@ -62,7 +63,7 @@ export default class IndexView {
             // Add css for alternating rows
             var styles = `
                 ${this.targetSelector}>div:nth-Child(${len_w*2}n+1) { 
-                    margin-left: 350px
+                    margin-left: ${outerSize(this.target.children[1], 'width')/2}px
                 }
             `;
             var styleSheet = document.createElement("style");
@@ -70,37 +71,45 @@ export default class IndexView {
             styleSheet.innerText = styles;
             document.head.appendChild(styleSheet);
         }
-        // center start position of screen
-        this.position = { x: -(width-vw) / 2, y: -(height-vh) / 2 };
-        this.target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
-        let position = this.position;
+        
+        if (width < vw && height < vh){
+            console.log('yes')
+            this.target.style.paddingLeft = (vw-width) + 'px';
+            this.target.style.paddingTop =  (vh-height) + 'px';
+        } else {
+            console.log('no')
+            // center start position of screen
+            this.position = { x: -(width-vw) / 2, y: -(height-vh) / 2 };
+            this.target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
+            let position = this.position;
 
-        interact(this.targetSelector).draggable({
-            listeners: {
-                move (event) {
-                    position.x += event.dx;
-                    position.y += event.dy;
+            interact(this.targetSelector).draggable({
+                listeners: {
+                    move (event) {
+                        position.x += event.dx;
+                        position.y += event.dy;
 
-                    // clamp position
-                    position.x = Math.min(Math.max(position.x, vw - width), 0);
-                    position.y = Math.min(Math.max(position.y, vh - height), 0);
+                        // clamp position
+                        position.x = Math.min(Math.max(position.x, vw - width), 0);
+                        position.y = Math.min(Math.max(position.y, vh - height), 0);
 
-                event.target.style.transform =
-                    `translate(${position.x}px, ${position.y}px)`;
+                    event.target.style.transform =
+                        `translate(${position.x}px, ${position.y}px)`;
+                    }
+                },
+                inertia: {
+                    resistance: 5,
+                    minSpeed: 10,
+                    smoothEndDuration: 500
+                },
+                allowFrom: this.targetSelector,
+                cursorChecker () {
+                    return null
                 }
-            },
-            inertia: {
-                resistance: 5,
-                minSpeed: 10,
-                smoothEndDuration: 500
-            },
-            allowFrom: this.targetSelector,
-            cursorChecker () {
-                return null
-            }
-        });
-
-        interact('.rs-stein-link').on('tap', (e) => {
+            });
+        }
+        
+        interact(this.linkSelector).on('tap', (e) => {
             e.preventDefault();
             linkMethod(e);
         });

@@ -2,7 +2,6 @@ import m from 'mithril';
 import anime from 'animejs';
 import SteinMain from './SteinMain.js';
 import IndexView from './IndexView.js';
-import {outerSize} from '../util/outerSize.js';
 
 export default class SteinIndex {
     constructor (ctrl) {
@@ -38,12 +37,12 @@ export default class SteinIndex {
         document.getElementById('svg-path').setAttribute('d', this.frame.calculatePath('full'));
         // tidy up listeners
         this.IndexView.removeMouseMoveMethod();
-        this.IndexView.removeTapListener();
+        this.IndexView.removeListeners();
     }
 
     onupdate () {
         // init Index View with default measurements
-        this.IndexView = new IndexView('.rs-index-reisesteine', '.rs-stein-link', this.onRockClick)
+        this.IndexView = new IndexView('.rs-index', '.rs-stein-link', this.onRockClick)
     }
 
 
@@ -124,10 +123,10 @@ export default class SteinIndex {
 
     view () {
         return(
-            <div class="rs-index-reisesteine">
+            <div class="rs-index rs-index-reisesteine">
 
                 { this.imgs ? this.imgs.map((val, idx) => (
-                    <div key={"img"+idx} style="cursor: pointer; background-color: rgba(0,0,0,0)!important;">
+                    <div key={"img"+idx}>
                         <a class="rs-stein-link"><img class="rs-stein" data-id={val[0]} src={'/static/img/steine/' + val[1]}></img></a>
                     </div>
                 )) : "" }

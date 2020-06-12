@@ -1,8 +1,6 @@
 import m from 'mithril';
-import anime from 'animejs';
 import SteinMain from './SteinMain.js';
 import IndexView from './IndexView.js';
-import {outerSize} from '../util/outerSize.js';
 
 export default class GeschichteIndex {
     constructor (ctrl) {
@@ -29,25 +27,48 @@ export default class GeschichteIndex {
             this.titles = result;
         });
     }
+    
     onupdate() {
-        console.log(this.titles)
+        // init Index View with default measurements
+        this.IndexView = new IndexView('.rs-index', '.rs-geschichten-link', this.onStoryClick)
+        
     }
+
+    onStoryClick = (e) => {
+        const id = e.target.getAttribute('data-id');
+
+        document.querySelector('.rs-close').style.display = "none";
+
+        // replace overlay
+        this.frame.paths.current = 'full';
+        document.getElementById('svg-path').setAttribute('d', this.frame.calculatePath('full'));
+
+        // load Stein component
+        m.mount(document.getElementById('rs-body'), {
+            view: () => m(SteinMain, {  'id': id, 
+                                    'map':this.map, 
+                                    'frame':this.frame,
+                                    'pushState': true
+            })}
+        );
+
+    }
+
     onremove () {
         // replace overlay
         this.frame.paths.current = 'full';
         document.getElementById('svg-path').setAttribute('d', this.frame.calculatePath('full'));
         // tidy up listeners
-        // this.IndexView.removeMouseMoveMethod();
-        // this.IndexView.removeTapListener();
+        this.IndexView.removeMouseMoveMethod();
+        this.IndexView.removeListeners();
     }
 
     view () {
         return(
-            <div class="rs-index-geschichten">
-
+            <div class="rs-index rs-index-geschichten">
                 { this.titles ? this.titles.map((val, idx) => (
-                    <div key={"img"+idx} style="cursor: pointer; background-color: rgba(0,0,0,0)!important;">
-                    {val}
+                    <div key={"img"+idx}>
+                        <a data-id={val[0]} class="rs-geschichten-link">'{val[1]}'</a>
                     </div>
                 )) : "" }
 

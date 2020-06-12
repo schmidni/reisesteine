@@ -2,6 +2,8 @@ import anime from 'animejs';
 import m from 'mithril';
 import SteinIndex from './SteinIndex.js';
 import GeschichteIndex from './GeschichteIndex.js';
+import GeologieIndex from './GeologieIndex.js';
+import FundortIndex from './FundortIndex.js';
 
 export default class Menu {
     constructor(map, frame) {
@@ -90,11 +92,27 @@ export default class Menu {
             this.closeMenu(e)
         });
 
-        // Stein Index
+        // Geschichten Index
         this.geschichten.addEventListener('click', (e) => {
             e.preventDefault();
             m.render(document.getElementById('rs-body'), null);
             m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
+            this.closeMenu(e)
+        });
+
+        // Geologie Index
+        this.geologie.addEventListener('click', (e) => {
+            e.preventDefault();
+            m.render(document.getElementById('rs-body'), null);
+            m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
+            this.closeMenu(e)
+        });
+
+        // Geologie Index
+        this.fundorte.addEventListener('click', (e) => {
+            e.preventDefault();
+            m.render(document.getElementById('rs-body'), null);
+            m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
             this.closeMenu(e)
         });
     }

@@ -57,26 +57,8 @@ def stein(id):
     if not ste:
         return redirect(url_for('reisesteine.index'))
     steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
-
     ste = ste.to_dict()
-
     return render_template('reisesteine/home.html', id=id, steine=steine, ste=ste)
-
-@reisesteine.route('/steine', defaults={'lang_code': 'de'})
-@reisesteine.route('/stones', defaults={'lang_code': 'en'})
-def steine():
-    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
-    return render_template('reisesteine/home.html', id='steine', steine=steine, ste=None)
-
-@reisesteine.route('/steine/coordinates/all', methods=['GET'])
-def coordinates_all():
-    coord = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude).all()
-    return jsonify(coord)
-
-@reisesteine.route('/steine/images/all', methods=['GET'])
-def images_all():
-    img = Stein.query.with_entities(Stein.id, Stein.bild_stein).all()
-    return jsonify(img)
 
 @reisesteine.route('/steine/<int:id>', methods=['GET'])
 def get_stein(id):
@@ -86,10 +68,56 @@ def get_stein(id):
     else:
         return make_response('Not Found', 404)
 
+@reisesteine.route('/steine', defaults={'lang_code': 'de'})
+@reisesteine.route('/stones', defaults={'lang_code': 'en'})
+def steine():
+    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/home.html', id='steine', steine=steine, ste=None)
+
+@reisesteine.route('/geschichten', defaults={'lang_code': 'de'})
+@reisesteine.route('/stories', defaults={'lang_code': 'en'})
+def geschichten():
+    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/home.html', id='geschichten', steine=steine, ste=None)
+
+@reisesteine.route('/geologie', defaults={'lang_code': 'de'})
+@reisesteine.route('/geology', defaults={'lang_code': 'en'})
+def geologie():
+    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/home.html', id='geologie', steine=steine, ste=None)
+
+@reisesteine.route('/fundorte', defaults={'lang_code': 'de'})
+@reisesteine.route('/places', defaults={'lang_code': 'en'})
+def fundorte():
+    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/home.html', id='fundorte', steine=steine, ste=None)
+
+@reisesteine.route('/steine/coordinates/all', methods=['GET'])
+def coordinates_all():
+    coord = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude).all()
+    return jsonify(coord)
+
+@reisesteine.route('/steine/images/all', methods=['GET'])
+def steine_all():
+    img = Stein.query.with_entities(Stein.id, Stein.bild_stein).all()
+    return jsonify(img)
+
+@reisesteine.route('/fundorte/images/all', methods=['GET'])
+def fundorte_all():
+    img = Stein.query.with_entities(Stein.id, Stein.bild_herkunft).all()
+    return jsonify(img)
+
 @reisesteine.route('/geschichten/all', methods=['GET'])
 def geschichten_all():
     gesch = Stein.query.with_entities(Stein.id, Stein.titel).all()
     return jsonify(gesch)
+
+@reisesteine.route('/geologie/all', methods=['GET'])
+def geologie_all():
+    geo = Stein.query.join(Gestein.steine).with_entities(Stein.id, Gestein.name, Stein.herkunft).all()
+    return jsonify(geo)
+
+
 
 # Backend Routes *************************************
 @reisesteine.route('/listSteine')
