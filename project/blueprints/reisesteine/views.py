@@ -47,7 +47,7 @@ def verify_password(username, password):
 # Frontend Routes ************************************
 @reisesteine.route('/')
 def index():
-    steine = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude, Stein.gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', steine=steine, ste=None)
 
 @reisesteine.route('/stein/<id>', defaults={'lang_code': 'de'})
@@ -56,7 +56,7 @@ def stein(id):
     ste = Stein.query.get(id)
     if not ste:
         return redirect(url_for('reisesteine.index'))
-    steine = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude, Stein.gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
 
     ste = ste.to_dict()
 
@@ -65,7 +65,7 @@ def stein(id):
 @reisesteine.route('/steine', defaults={'lang_code': 'de'})
 @reisesteine.route('/stones', defaults={'lang_code': 'en'})
 def steine():
-    steine = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude, Stein.gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', id='steine', steine=steine, ste=None)
 
 @reisesteine.route('/steine/coordinates/all', methods=['GET'])

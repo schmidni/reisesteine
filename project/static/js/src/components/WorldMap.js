@@ -1,6 +1,7 @@
 import m from 'mithril';
 import L from 'leaflet';
 import SteinMain from './SteinMain.js';
+import {convertDMS} from '../util/convertCoords.js';
 
 export default class worldMap {
     constructor(el, frame, data) {
@@ -27,13 +28,21 @@ export default class worldMap {
     mapCoordinates = async () => {
         this.data.forEach(el => {
             let el_coord = [el[1], el[2]];
-            this.marker.push(L.marker(el_coord, {icon: this.redIcon})
+            let mark = L.marker(el_coord, {icon: this.redIcon})
                             .addTo(this.map)
                             .on('click', () => m.mount(document.getElementById('rs-body'), {view: () => 
                                 m(SteinMain, {'id': el[0], 'map':this, 'frame':this.frame, 'pushState': true})
                             }))
-                            .bindTooltip("This is the Transamerica Pyramid", {direction:'top', offset:[0,-40]})
-                            );
+                            .bindTooltip(
+                                `<div>
+                                ${convertDMS(el[1], null)} <br>
+                                 ${convertDMS(null, el[2])} <br>
+                                 ${el[3]} <br>
+                                 <span>'${el[4]}'<span>
+                                 </div>`
+                                , {direction:'top', offset:[0,-40], className:'rs-tooltip'});
+            console.log(mark.getTooltip());
+            this.marker.push(mark);
         });
     }
 

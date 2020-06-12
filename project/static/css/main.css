@@ -446,3 +446,34 @@ h4.active {
     height: 150px;
     margin-top: 20px;
 }
+
+/************************** TOOLTIP ******************************************/
+.leaflet-tooltip.rs-tooltip {
+    height: 160px;
+    width: 160px;
+    padding: 10px 10px;
+    border-radius: 50%;
+    background-color: rgba(256, 256, 256, 0.8);
+    white-space: normal;
+    font-family: 'Sen', sans-serif;
+    font-size: 1.2rem;
+    line-height: 1.5rem;
+    letter-spacing: -1px;
+    color: rgb(180, 30, 30);
+    text-align: center;
+}
+
+.leaflet-tooltip.rs-tooltip span {
+    font-family: 'Passion one', cursive;
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.leaflet-tooltip.rs-tooltip div{
+    margin: 20px 5px 0 5px;
+}
+
+
+.leaflet-tooltip.rs-tooltip:before {
+    border-top-color: rgba(256, 256, 256, 0.8);
+}
