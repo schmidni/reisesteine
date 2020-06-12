@@ -32,6 +32,10 @@ export default class IndexView {
         document.removeEventListener('mousemove', this.mousemovemethod);
     }
 
+    removeTapListener() {
+        interact('.rs-stein-link').unset();
+    }
+
     init (linkMethod) {
         const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);

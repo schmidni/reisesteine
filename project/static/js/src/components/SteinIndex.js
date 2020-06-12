@@ -36,7 +36,9 @@ export default class SteinIndex {
         // replace overlay
         this.frame.paths.current = 'full';
         document.getElementById('svg-path').setAttribute('d', this.frame.calculatePath('full'));
+        // tidy up listeners
         this.IndexView.removeMouseMoveMethod();
+        this.IndexView.removeTapListener();
     }
 
     onupdate () {
@@ -67,8 +69,6 @@ export default class SteinIndex {
         document.head.appendChild(styleSheet)
 
         this.IndexView = new IndexView('.rs-reisesteine', {x: width, y: height}, '.rs-stein-link', this.onRockClick)
-
-        console.log('test');
     }
 
 
@@ -81,9 +81,10 @@ export default class SteinIndex {
 
         // stop navigation
         document.querySelector('.rs-close').style.display = "none";
+        let parentContainer = document.querySelector('.rs-reisesteine');
 
         // hide all other rocks
-        const siblings = [...e.target.parentNode.parentNode.parentNode.children].filter(child => child !== e.target.parentNode.parentNode);
+        const siblings = [...parentContainer.children].filter(child => child !== e.target.parentNode.parentNode);
         anime({
             targets: siblings,
             duration: 500,

@@ -65,7 +65,8 @@ def stein(id):
 @reisesteine.route('/steine', defaults={'lang_code': 'de'})
 @reisesteine.route('/stones', defaults={'lang_code': 'en'})
 def steine():
-    return render_template('reisesteine/home.html', id='steine')
+    steine = Stein.query.with_entities(Stein.id, Stein.latitude, Stein.longitude, Stein.gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/home.html', id='steine', steine=steine, ste=None)
 
 @reisesteine.route('/steine/coordinates/all', methods=['GET'])
 def coordinates_all():

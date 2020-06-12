@@ -86,7 +86,7 @@ export default class Menu {
             e.preventDefault();
             m.render(document.getElementById('rs-body'), null);
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
-            this.closeMenu()
+            this.closeMenu(e)
         });
     }
 }
