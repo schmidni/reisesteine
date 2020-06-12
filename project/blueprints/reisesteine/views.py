@@ -86,6 +86,11 @@ def get_stein(id):
     else:
         return make_response('Not Found', 404)
 
+@reisesteine.route('/geschichten/all', methods=['GET'])
+def geschichten_all():
+    gesch = Stein.query.with_entities(Stein.id, Stein.titel).all()
+    return jsonify(gesch)
+
 # Backend Routes *************************************
 @reisesteine.route('/listSteine')
 @auth.login_required

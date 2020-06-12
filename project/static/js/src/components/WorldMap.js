@@ -28,7 +28,7 @@ export default class worldMap {
     mapCoordinates = async () => {
         this.data.forEach(el => {
             let el_coord = [el[1], el[2]];
-            let mark = L.marker(el_coord, {icon: this.redIcon})
+            let marker = L.marker(el_coord, {icon: this.redIcon})
                             .addTo(this.map)
                             .on('click', () => m.mount(document.getElementById('rs-body'), {view: () => 
                                 m(SteinMain, {'id': el[0], 'map':this, 'frame':this.frame, 'pushState': true})
@@ -41,8 +41,7 @@ export default class worldMap {
                                  <span>'${el[4]}'<span>
                                  </div>`
                                 , {direction:'top', offset:[0,-40], className:'rs-tooltip'});
-            console.log(mark.getTooltip());
-            this.marker.push(mark);
+            this.marker.push(marker);
         });
     }
 

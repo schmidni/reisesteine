@@ -42,33 +42,8 @@ export default class SteinIndex {
     }
 
     onupdate () {
-        const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-        const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        let target = document.querySelector('.rs-reisesteine');
-
-        // amount of rocks to display
-        let len = target.children.length;
-
-        // amount of rocks on one row so the aspect ratio of the viewport is kept
-        let len_w = Math.round(Math.sqrt(len*(vw / vh)))
-
-        // height and width of the container: x * width of one element + safety
-        let width =  len_w * outerSize(target.children[1], 'width') + outerSize(target.children[1], 'width') -100;
-        let height = Math.ceil(len / len_w) * outerSize(target.children[1], 'height') + outerSize(target.children[1], 'width') -100;
-        target.style.width = width + 'px';
-
-        // Add css for alternating rows
-        var styles = `
-            .rs-reisesteine>div:nth-Child(${len_w*2}n+1) { 
-                margin-left: 350px
-            }
-        `
-        var styleSheet = document.createElement("style")
-        styleSheet.type = "text/css"
-        styleSheet.innerText = styles
-        document.head.appendChild(styleSheet)
-
-        this.IndexView = new IndexView('.rs-reisesteine', {x: width, y: height}, '.rs-stein-link', this.onRockClick)
+        // init Index View with default measurements
+        this.IndexView = new IndexView('.rs-index-reisesteine', '.rs-stein-link', this.onRockClick)
     }
 
 
@@ -81,7 +56,7 @@ export default class SteinIndex {
 
         // stop navigation
         document.querySelector('.rs-close').style.display = "none";
-        let parentContainer = document.querySelector('.rs-reisesteine');
+        let parentContainer = document.querySelector('.rs-index-reisesteine');
 
         // hide all other rocks
         const siblings = [...parentContainer.children].filter(child => child !== e.target.parentNode.parentNode);
@@ -149,7 +124,7 @@ export default class SteinIndex {
 
     view () {
         return(
-            <div class="rs-reisesteine">
+            <div class="rs-index-reisesteine">
 
                 { this.imgs ? this.imgs.map((val, idx) => (
                     <div key={"img"+idx} style="cursor: pointer; background-color: rgba(0,0,0,0)!important;">

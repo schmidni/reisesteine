@@ -410,7 +410,7 @@ h4.active {
 }
 
 /************************** REISESTEINE DRAGGABLE ******************************************/
-.rs-reisesteine {
+.rs-index-reisesteine {
     display: flex;
     flex-wrap: wrap;
     z-index: 3;
@@ -423,18 +423,18 @@ h4.active {
     padding: 200px;
 }
 
-.rs-reisesteine:active {
+.rs-index-reisesteine:active {
     cursor: grabbing;
 }
 
-.rs-reisesteine>div {
+.rs-index-reisesteine>div {
     margin: 25px 100px;
     height: 300px;
     width: 300px;
     background-color: white;
 }
 
-.rs-reisesteine img {
+.rs-index-reisesteine img {
     max-height: 100%;
     max-width: 100%;
     filter: drop-shadow(5px 5px 5px #222);

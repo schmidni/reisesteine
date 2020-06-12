@@ -1,6 +1,7 @@
 import anime from 'animejs';
 import m from 'mithril';
 import SteinIndex from './SteinIndex.js';
+import GeschichteIndex from './GeschichteIndex.js';
 
 export default class Menu {
     constructor(map, frame) {
@@ -86,6 +87,14 @@ export default class Menu {
             e.preventDefault();
             m.render(document.getElementById('rs-body'), null);
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
+            this.closeMenu(e)
+        });
+
+        // Stein Index
+        this.geschichten.addEventListener('click', (e) => {
+            e.preventDefault();
+            m.render(document.getElementById('rs-body'), null);
+            m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
             this.closeMenu(e)
         });
     }
