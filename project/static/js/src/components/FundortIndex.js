@@ -1,6 +1,8 @@
 import m from 'mithril';
 import SteinMain from './SteinMain.js';
 import IndexView from './IndexView.js';
+import Masonry from 'masonry-layout';
+import imagesLoaded from 'imagesloaded';
 
 export default class FundortIndex {
     constructor (ctrl) {
@@ -30,8 +32,16 @@ export default class FundortIndex {
     
     onupdate() {
         // init Index View with default measurements
-        this.IndexView = new IndexView('.rs-index', '.rs-fundort-link', this.onPlaceClick)
-        
+        this.IndexView = new IndexView('.rs-index', '.rs-fundort-link', this.onPlaceClick, false)
+        let grid = document.querySelector('.rs-index-fundort');
+        this.msnry = new Masonry( grid, {
+            itemSelector: '.rs-fundort-grid',
+            gutter: 0
+        });
+        imagesLoaded('.rs-fundort-grid').on('progress', (imgLoad, img) => {
+            img.img.parentNode.parentNode.classList.remove('is-loading');
+            this.msnry.layout();
+        })
     }
 
     onPlaceClick = (e) => {
@@ -64,7 +74,7 @@ export default class FundortIndex {
         return(
             <div class="rs-index rs-index-fundort">
                 { this.titles ? this.titles.map((val, idx) => (
-                    <div key={"img"+idx}>
+                    <div class="rs-fundort-grid is-loading" key={"img"+idx}>
                         <a class="rs-fundort-link">
                             <img class="rs-fundort" data-id={val[0]} src={'/static/img/steine/' + val[1]}></img>
                         </a>

@@ -472,15 +472,25 @@ h4.active {
 }
 
 .rs-index-fundort>div {
-    margin: 20px 75px;
-    height: 300px;
     width: 300px;
+    margin-bottom: 15px;
+    margin-right: 15px;
 }
 
 .rs-index-fundort img {
-    max-height: 100%;
     max-width: 100%;
-    filter: drop-shadow(5px 5px 5px #222);
+}
+
+.rs-fundort-grid.is-loading {
+    min-height: 150px;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-color: black;
+    background-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/82/loading.gif');
+}
+
+.rs-fundort-grid.is-loading img{
+    opacity: 0;
 }
 
 /************************** BACKEND ******************************************/

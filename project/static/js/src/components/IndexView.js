@@ -2,11 +2,12 @@ import interact from 'interactjs';
 import {outerSize} from '../util/outerSize.js';
 
 export default class IndexView {
-    constructor(targetSelector, linkSelector, linkMethod, dimensions=null){
+    constructor(targetSelector, linkSelector, linkMethod, alternating=true, dimensions=null){
         this.targetSelector = targetSelector;
         this.dimensions = dimensions;
         this.linkSelector = linkSelector;
         this.linkMethod = linkMethod;
+        this.alternating = alternating;
 
         this.target = document.querySelector(this.targetSelector);
 
@@ -18,8 +19,8 @@ export default class IndexView {
     }
 
     mousemovemethod = (e) => {
-        this.position.x += (e.pageX-this.oldx)*0.05;
-        this.position.y += (e.pageY-this.oldy)*0.05;
+        this.position.x += (e.pageX-this.oldx)*0.005;
+        this.position.y += (e.pageY-this.oldy)*0.005;
 
         this.target.style.transform =
             `translate(${this.position.x}px, ${this.position.y}px)`
@@ -60,24 +61,24 @@ export default class IndexView {
             height = Math.ceil(len / len_w) * outerSize(this.target.children[1], 'height') + outerSize(this.target.children[1], 'width') -100;
             this.target.style.width = width + 'px';
 
-            // Add css for alternating rows
-            var styles = `
-                ${this.targetSelector}>div:nth-Child(${len_w*2}n+1) { 
-                    margin-left: ${outerSize(this.target.children[1], 'width')/2}px
-                }
-            `;
-            var styleSheet = document.createElement("style");
-            styleSheet.type = "text/css";
-            styleSheet.innerText = styles;
-            document.head.appendChild(styleSheet);
+            if (this.alternating) {
+                // Add css for alternating rows
+                var styles = `
+                    ${this.targetSelector}>div:nth-Child(${len_w*2}n+1) { 
+                        margin-left: ${outerSize(this.target.children[1], 'width')/2}px
+                    }
+                `;
+                var styleSheet = document.createElement("style");
+                styleSheet.type = "text/css";
+                styleSheet.innerText = styles;
+                document.head.appendChild(styleSheet);   
+            }
         }
         
         if (width < vw && height < vh){
-            console.log('yes')
             this.target.style.paddingLeft = (vw-width) + 'px';
             this.target.style.paddingTop =  (vh-height) + 'px';
         } else {
-            console.log('no')
             // center start position of screen
             this.position = { x: -(width-vw) / 2, y: -(height-vh) / 2 };
             this.target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
