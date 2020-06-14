@@ -21,6 +21,7 @@ export default class Menu {
         this.navBackground = document.getElementById("rs-nav-background");
 
         this.initListeners();
+        document.addEventListener('click', this.checkForClickTitle);
     }
 
     openMenu = (e) => {
@@ -51,12 +52,35 @@ export default class Menu {
                 translateX: [0, 850],
                 duration: 500,
                 easing: 'easeOutQuad'
+            }).finished.then(() => {
+                document.addEventListener('click', this.checkForClickMenu);
             });
         })
     }
 
+    checkForClickMenu = (e) => {
+        if(e.target.closest('#rs-nav') == null)
+            this.closeMenu(e);
+    }
+
+    checkForClickTitle = (e) => {
+        if(e.target.closest('#rs-title') == null){
+            anime({
+                targets: '#rs-title',
+                opacity: [1, 0],
+                duration: 1000,
+                easing: 'easeOutQuad'
+            }).finished.then( () => {
+                document.querySelector('#rs-title').style.display = 'none';
+            })
+        }
+            
+        document.removeEventListener('click', this.checkForClickTitle)
+    }
+
     closeMenu = (e) => {
         e.preventDefault();
+        document.removeEventListener('click', this.checkForClickMenu);
         anime({
             targets: this.navBackground,
             translateX: 0,

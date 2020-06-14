@@ -8,7 +8,7 @@ body.rs-frontend {
     width:100vw;
     margin: 0;
     padding: 0;
-    /* overflow: hidden; */
+    overflow: hidden;
     font-family: 'Sen', sans-serif;
     font-weight: 400;
     font-size: 1rem;
@@ -153,7 +153,7 @@ h4.active {
     position: absolute;
     top: 23vh;
     left: 25vw;
-    filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 75px #222);
 }
 
 .rs-content .rs-fundort {
@@ -302,7 +302,7 @@ h4.active {
     margin-top: 90px;
 }
 
-#rs-small-navigation.active {
+#rs-nav-background.active {
     background-color: transparent!important;
 }
 
@@ -427,10 +427,12 @@ h4.active {
 .rs-index:active {
     cursor: grabbing;
 }
+
 .rs-index>div {
     cursor: pointer;
     background-color: rgba(0,0,0,0);
 }
+
 .rs-index-reisesteine>div {
     margin: 20px 75px;
     height: 300px;
@@ -440,7 +442,7 @@ h4.active {
 .rs-index-reisesteine img {
     max-height: 100%;
     max-width: 100%;
-    filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 50px rgba(34, 35, 35, 0.6));
 }
 
 .rs-index-geschichten>div {
@@ -472,7 +474,7 @@ h4.active {
 }
 
 .rs-index-fundort>div {
-    width: 300px;
+    width: 400px;
     margin-bottom: 15px;
     margin-right: 15px;
 }
@@ -527,4 +529,33 @@ h4.active {
 
 .leaflet-tooltip.rs-tooltip:before {
     border-top-color: rgba(256, 256, 256, 0.8);
+}
+
+
+/************************** Title ******************************************/
+#rs-title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-Index: 4;
+    width: 30vw;
+    text-align: right;
+    margin-top: 25px;
+    margin-right: 50px;
+}
+
+#rs-title p{
+    margin: 0;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: 300;
+    font-size: 1.6rem;
+    color: white;
+}
+
+#rs-title p:first-child{
+    font-family: 'Passion One', cursive;
+    font-weight: 700;
+    font-size: 5rem;
+    text-transform: uppercase;
+    color: white;
 }

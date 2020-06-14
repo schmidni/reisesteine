@@ -31,17 +31,17 @@ export default class FundortIndex {
     }
     
     onupdate() {
+        this.IndexView = new IndexView('.rs-index', '.rs-fundort-link', this.onPlaceClick, false, this.msnry);
+
         // init Index View with default measurements
-        this.IndexView = new IndexView('.rs-index', '.rs-fundort-link', this.onPlaceClick, false)
-        let grid = document.querySelector('.rs-index-fundort');
-        this.msnry = new Masonry( grid, {
+        this.msnry = new Masonry( document.querySelector('.rs-index-fundort'), {
             itemSelector: '.rs-fundort-grid',
             gutter: 0
         });
         imagesLoaded('.rs-fundort-grid').on('progress', (imgLoad, img) => {
             img.img.parentNode.parentNode.classList.remove('is-loading');
             this.msnry.layout();
-        })
+        });
     }
 
     onPlaceClick = (e) => {

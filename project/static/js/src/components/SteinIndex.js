@@ -38,6 +38,7 @@ export default class SteinIndex {
         // tidy up listeners
         this.IndexView.removeMouseMoveMethod();
         this.IndexView.removeListeners();
+        this.IndexView.removeStyle();
     }
 
     onupdate () {

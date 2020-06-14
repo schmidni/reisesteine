@@ -1,6 +1,14 @@
 {% extends "layouts/base_app.html" %}
 
 {% block body %}
+<noscript>
+    <style>
+        body.rs-frontend {
+            overflow: visible!important;
+        }
+    </style>
+</noscript>
+
 <div id="map"></div>
 
 <svg id="svg" class="overlay" width="100%" height="100%">
@@ -38,11 +46,9 @@
     // if javascript isnt disabled, apply crucial styles, else fallback content is used
     document.getElementById('map').style.zIndex = 1;
     document.getElementById('map').style.backgroundColor = 'white';
-    document.body.style.overflow = 'hidden';
 
     var data_index = {{ steine|tojson|safe }};
     var data_stein = {{ {} if not ste else ste|tojson|safe }};
 
 </script>
-
 {% endblock %}

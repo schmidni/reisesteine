@@ -31,7 +31,6 @@ export default class GeschichteIndex {
     onupdate() {
         // init Index View with default measurements
         this.IndexView = new IndexView('.rs-index', '.rs-geschichten-link', this.onStoryClick)
-        
     }
 
     onStoryClick = (e) => {
@@ -61,6 +60,7 @@ export default class GeschichteIndex {
         // tidy up listeners
         this.IndexView.removeMouseMoveMethod();
         this.IndexView.removeListeners();
+        this.IndexView.removeStyle();
     }
 
     view () {

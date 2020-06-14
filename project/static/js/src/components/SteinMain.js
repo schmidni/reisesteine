@@ -20,6 +20,8 @@ export default class SteinMain {
                 this.info = result;
             });
         }
+
+        document.querySelector('#rs-nav-background').classList.add('active');
     }
 
     oncreate (ctrl) {
@@ -63,6 +65,8 @@ export default class SteinMain {
     onremove(ctrl) {
         if(ctrl.attrs.remove)
             ctrl.attrs.remove.remove();
+
+        document.querySelector('#rs-nav-background').classList.remove('active');
     }
 
     view() {

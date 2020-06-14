@@ -31,7 +31,6 @@ export default class GeologieIndex {
     onupdate() {
         // init Index View with default measurements
         this.IndexView = new IndexView('.rs-index', '.rs-geologie-link', this.onGeoClick)
-        
     }
 
     onGeoClick = (e) => {
@@ -58,6 +57,7 @@ export default class GeologieIndex {
         // tidy up listeners
         this.IndexView.removeMouseMoveMethod();
         this.IndexView.removeListeners();
+        this.IndexView.removeStyle();
     }
 
     view () {
@@ -65,7 +65,7 @@ export default class GeologieIndex {
             <div class="rs-index rs-index-geologie">
                 { this.titles ? this.titles.map((val, idx) => (
                     <div key={"img"+idx}>
-                        <a data-id={val[0]} class="rs-geologie-link">'{val[1]}, {val[2]}'</a>
+                        <a data-id={val[0]} class="rs-geologie-link">'{val[1]},<br/>{val[2]}'</a>
                     </div>
                 )) : "" }
 
