@@ -296,6 +296,7 @@ h4.active {
 #rs-small-navigation span {
     text-align: center;
     padding-left: 40px;
+    padding-top: 15px;
 }
 
 #rs-small-navigation span a {
@@ -416,7 +417,7 @@ h4.active {
     margin-top: 5px;
 }
 
-#rs-nav .rs-nav-controls a, span {
+#rs-nav .rs-nav-controls a, #rs-nav .rs-nav-controls span {
     color: rgb(180, 30, 30);
     text-decoration: none;
     font-size: 1.8rem;

@@ -26,6 +26,7 @@ class editSteinForm(FlaskForm):
     gestein =           StringField('Gestein*', validators=[DataRequired()])
     
     herkunft =          StringField('Herkunft *', validators=[DataRequired()])
+    land =              StringField('Land *', validators=[DataRequired()])
     longitude =         StringField('Longitude *', validators=[DataRequired()])
     latitude =          StringField('Latitude *', validators=[DataRequired()])
     titel =             StringField('Titel')
@@ -33,6 +34,7 @@ class editSteinForm(FlaskForm):
     geo_geschichte =    TextAreaField('Geologische Einschätzung *', validators=[DataRequired()])
     bild_stein =        FileField('Bild Stein *', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
     bild_herkunft =     FileField('Bild Fundort *', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
+    published =         BooleanField('Published', default=False)
 
     submit = SubmitField('Speichern')
 
@@ -126,11 +128,13 @@ class editSteinForm(FlaskForm):
 
         self.stein_id.data = curr_stein.id
         self.herkunft.data = curr_stein.herkunft
+        self.land.data = curr_stein.land
         self.longitude.data = curr_stein.longitude
         self.latitude.data = curr_stein.latitude
         self.titel.data = curr_stein.titel
         self.pers_geschichte.data = curr_stein.pers_geschichte
         self.geo_geschichte.data = curr_stein.geo_geschichte
+        self.published.data = curr_stein.published
 
     def populate_absender(self, absender):
         self.user_id.data = absender.id

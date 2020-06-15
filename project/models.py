@@ -51,7 +51,8 @@ class Gestein(db.Model):
 class Stein(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     gestein = db.Column(db.Integer, db.ForeignKey('gestein.id'))
-    herkunft = db.Column(db.String(32), index=True)
+    herkunft = db.Column(db.String(32))
+    land = db.Column(db.String(32))
     longitude = db.Column(db.Float)
     latitude = db.Column(db.Float)
     titel = db.Column(db.String(128))
@@ -61,7 +62,7 @@ class Stein(db.Model):
     bild_herkunft = db.Column(db.String(64))
     absender_id = db.Column(db.Integer, db.ForeignKey('person.id'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
-    published = db.Column(db.Boolean)
+    published = db.Column(db.Boolean, index=True)
 
     def __repr__(self):
         return '{}, {}, {}'.format(self.gestein, self.herkunft, self.bild_stein)
@@ -77,24 +78,27 @@ class Stein(db.Model):
 
     def populate(self, form):
         self.herkunft = form.herkunft.data
+        self.land = form.land.data
         self.longitude = form.longitude.data
         self.latitude = form.latitude.data
         self.titel = form.titel.data
         self.pers_geschichte = form.pers_geschichte.data
         self.geo_geschichte = form.geo_geschichte.data
-        self.published = False
+        self.published = form.published.data
 
     def to_dict(self):
         data = {
             'id': self.id,
             'gestein': self.gesteinsart.name,
             'herkunft': self.herkunft,
+            'land': self.land,
             'longitude': self.longitude,
             'latitude': self.latitude,
             'titel': self.titel,
             'pers_geschichte': self.pers_geschichte,
             'geo_geschichte': self.geo_geschichte,
             'bild_stein': self.bild_stein,
-            'bild_herkunft': self.bild_herkunft
+            'bild_herkunft': self.bild_herkunft,
+            'published': self.published
         }
         return data
