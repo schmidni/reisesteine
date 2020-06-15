@@ -1,7 +1,6 @@
 import m from 'mithril';
-import anime from 'animejs';
 
-export class SteinNavigation {
+export default class SteinNavigation {
     constructor() {
         this.active = 0;
         this.menu = [];
@@ -40,16 +39,18 @@ export class SteinNavigation {
 
     view() {
         return(
-            <div class="rs-footer">
-                <div class="rs-menu-next" style="cursor: pointer">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" preserveAspectRatio="none">
-                        <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/>
-                    </svg>
+            <div class="rs-footer circle">
+                <div class="rs-footer-content">
+                    <div class="rs-menu-next" style="cursor: pointer">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" preserveAspectRatio="none">
+                            <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/>
+                        </svg>
+                    </div>
+                    <h4 class="active rs-menu-stein">Stein</h4> 
+                    <h4 class="rs-menu-geschichte">Geschichte</h4> 
+                    <h4 class="rs-menu-fundort">Fundort</h4> 
+                    <h4 class="rs-menu-geologie">Geologie</h4>
                 </div>
-                <h4 class="active rs-menu-stein">Stein</h4> 
-                <h4 class="rs-menu-geschichte">Geschichte</h4> 
-                <h4 class="rs-menu-fundort">Fundort</h4> 
-                <h4 class="rs-menu-geologie">Geologie</h4>
             </div>
         )
     };

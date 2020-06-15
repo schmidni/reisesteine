@@ -47,7 +47,8 @@ export default class GeschichteIndex {
             view: () => m(SteinMain, {  'id': id, 
                                     'map':this.map, 
                                     'frame':this.frame,
-                                    'pushState': true
+                                    'pushState': true,
+                                    'overview': 'geschichte'
             })}
         );
 

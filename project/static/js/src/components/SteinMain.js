@@ -1,5 +1,9 @@
 import m from 'mithril';
 import SteinView from './SteinView.js';
+import SteinIndex from './SteinIndex.js';
+import GeschichteIndex from './GeschichteIndex.js';
+import GeologieIndex from './GeologieIndex.js';
+import FundortIndex from './FundortIndex.js';
 
 export default class SteinMain {
 
@@ -8,7 +12,8 @@ export default class SteinMain {
         this.frame = ctrl.attrs.frame;
         this.info = null;
         this.media = window.matchMedia("(max-width: 960px)")
-        
+        this.refOverview = ctrl.attrs.overview ? ctrl.attrs.overview : null;
+
         // frontend navigate, request data
         if (!ctrl.attrs.data){
             // API: Rock Info
@@ -29,6 +34,50 @@ export default class SteinMain {
         if (ctrl.attrs.data) {
             this.info = ctrl.attrs.data;
             this.onupdate(ctrl);
+        }
+
+        
+        if (this.refOverview) {
+            // insert back to overview
+            var overview = document.createElement('a');
+            overview.id = 'rs-small-uebersicht';
+            overview.href = "#";
+            overview.innerHTML = `<a id="rs-small-uebersicht" href="#" >
+                                    <img src="/static/img/uebersicht_button.svg"/>
+                                </a>`
+            document.getElementById('rs-small-navigation').appendChild(overview);
+            let func = (e) => {return null};
+
+            if (this.refOverview == 'steine') {
+                func = (e) => {
+                    e.preventDefault();
+                    m.render(document.getElementById('rs-body'), null);
+                    m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+                }
+            }
+            else if (this.refOverview == 'fundorte'){
+                func = (e) => {
+                    e.preventDefault();
+                    m.render(document.getElementById('rs-body'), null);
+                    m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+                }
+            }
+            else if (this.refOverview == 'geologie'){
+                func = (e) => {
+                    e.preventDefault();
+                    m.render(document.getElementById('rs-body'), null);
+                    m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+                }
+            }
+            else if (this.refOverview == 'geschichte'){
+                func = (e) => {
+                    e.preventDefault();
+                    m.render(document.getElementById('rs-body'), null);
+                    m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+                }
+            }
+            document.getElementById('rs-small-uebersicht').addEventListener('click', func);
+
         }
     }
 
@@ -54,7 +103,7 @@ export default class SteinMain {
         }
 
         // CONTENT
-        m.render(document.getElementById('rs-info'), m(SteinView, {fadeIn: true, info: this.info, frame: this.frame}));
+        m.render(document.getElementById('rs-info'), m(SteinView, {fadeIn: true, info: this.info, frame: this.frame, overview: this.refOverview}));
 
         // enable CLOSE and NAVIGATION
         frameDone.then(() => {
@@ -67,11 +116,15 @@ export default class SteinMain {
             ctrl.attrs.remove.remove();
 
         document.querySelector('#rs-nav-background').classList.remove('active');
+
+        try {
+            document.querySelector('#rs-small-uebersicht').remove();
+         } catch {};
     }
 
     view() {
         return (
-            <div>
+            <div>   
                 <div id="rs-coordinates"></div>
                 <div id="rs-info"></div>
                 <div id="rs-rocknav"></div>

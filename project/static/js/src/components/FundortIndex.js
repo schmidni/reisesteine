@@ -55,7 +55,7 @@ export default class FundortIndex {
 
         // load Stein component
         m.mount(document.getElementById('rs-body'), {
-            view: () => m(SteinMain, {'id': id, 'map':this.map, 'frame':this.frame, 'pushState': true}
+            view: () => m(SteinMain, {'id': id, 'map':this.map, 'frame':this.frame, 'pushState': true, 'overview': 'fundorte'}
             )}
         );
 

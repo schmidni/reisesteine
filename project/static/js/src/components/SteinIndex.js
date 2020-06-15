@@ -94,7 +94,8 @@ export default class SteinIndex {
                                         'map':this.map, 
                                         'frame':this.frame,
                                         'remove': e.target,
-                                        'pushState': true
+                                        'pushState': true,
+                                        'overview': 'steine'
                 })}
             );
 
