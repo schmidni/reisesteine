@@ -1,13 +1,15 @@
 import anime from 'animejs';
+import {setUpImage} from '../util/draggableImage.js'
 
 export default class SteinTimeLine {
 
-    constructor(coord, stein, geschichte, fundort, geologie) {
+    constructor(frame, coord, stein, geschichte, fundort, geologie) {
         this.coord = coord;
         this.stein = stein;
         this.geschichte = geschichte;
         this.fundort = fundort;
         this.geologie = geologie;
+        this.frame = frame;
 
         this.tl = {};
         this.animateTo = '';
@@ -34,12 +36,17 @@ export default class SteinTimeLine {
             translateY: [20,0],
             duration: 1000,
             easing: "easeInOutQuad",
+            delay: 1000,
+            begin: () => {
+                this.coord.style.opacity = 1;
+            }
         });
         anime({
             targets: this.stein,
             opacity: [0, 1],
             duration: 1000,
             easing: "easeInQuad",
+            delay: 1500
         });
     }
 
@@ -56,74 +63,84 @@ export default class SteinTimeLine {
             loop: true
         });
     
-        // Geschichte ********************************
+        // Stein Out ********************************
         this.tl.add({
             targets: [this.coord, this.stein],
-            opacity: [1, 0],
+            translateX: [0, '-100vw'],
             duration: 1000,
+            changeBegin: () => {
+                this.frame.navigate('leftout');
+            },
             changeComplete: (el) => {
                 console.log('0');
                 el.animatables.forEach(item => item.target.style.zIndex = -1);
             }
         })
-        .add({
+        // Geschichte ********************************
+        this.tl.add({
             targets: this.geschichte,
-            opacity: [0,1],
+            translateX: ['100vw', 0],
             duration: 1000,
             changeBegin: (el) => {
                 el.animatables[0].target.style.zIndex = 3;
-                console.log('1');
+            }
+        }, 1000)
+        .add({
+            targets: this.fundort,
+            translateX: ['145vw', '45vw'],
+            height: ['30vh', '30vh'],
+            rotate: '-10deg',
+            duration: 1000,
+            changeBegin: (el) => {
+                el.animatables.forEach(item => item.target.style.zIndex = 3);
             },
             changeComplete: () => {
                 this.checkStop('geschichte');
-                console.log('2');
             }
         }, 1000);
-    
+
         // Fundort **************************************
         this.tl.add({
-            targets: this.geschichte,
-            opacity: [1, 0],
-            duration: 1000,
-            changeComplete: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = -1);
-                console.log('3');
-            }
-        }, 2000)
-        .add({
             targets: this.fundort,
-            opacity: [0,1],
             duration: 1000,
             changeBegin: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = 3); 
-                console.log('4');
+                el.animatables[0].target.style.zIndex = 3;
+                console.log('setup')
+                setUpImage(this.fundort);
             },
             changeComplete: () => {
                 this.checkStop('fundort');
-                console.log('5');
             }
-        }, 3000);
+        }, 2050)
+        .add({
+            targets: this.fundort,
+            height: '30vh',
+            rotate: '-10deg',
+            translate: '45vh',
+            duration: 1000,
+            changeBegin:() => {
+                console.log('asdf')
+            }
+        }, 3000)
+
     
         // Geologie **************************************
         this.tl.add({
-            targets: this.fundort,
-            opacity: [1, 0],
+            targets: [this.fundort, this.geschichte],
+            translateX: '-100vw',
             duration: 1000,
             changeComplete: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = -1); 
-                console.log('6');
+                el.animatables.forEach(item => item.target.style.zIndex = -1);
             }
         }, 4000)
         .add({
             targets: this.geologie,
-            opacity: [0,1],
+            translateX: ['100vw', 0],
             duration: 1000,
             changeBegin: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = 3); 
-                console.log('7');
+                el.animatables.forEach(item => item.target.style.zIndex = 3);
             },
             changeComplete: () => {
-                console.log('8');
                 this.checkStop('geologie');
             }
         }, 5000);
@@ -131,24 +148,22 @@ export default class SteinTimeLine {
         // Stein **************************************
         this.tl.add({
             targets: this.geologie,
-            opacity: [1, 0],
+            translateX: [0, '-100vw'],
             duration: 1000,
             changeComplete: (el) => {
-                console.log('9');
                 el.animatables.forEach(item => item.target.style.zIndex = -1); 
             }
         }, 6000)
         .add({
             targets: [this.stein, this.coord],
-            opacity: [0,1],
+            translateX: ['100vw',0],
             duration: 1000,
             changeBegin: (el) => {
                 el.animatables.forEach(item => item.target.style.zIndex = 3); 
-                console.log('10');
+                this.frame.navigate('rightin');
             },
             changeComplete: () => {
                 this.checkStop('stein');
-                console.log('11');
             }
         }, 7000);
     }

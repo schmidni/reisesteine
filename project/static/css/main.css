@@ -113,7 +113,7 @@ h4.active {
     position: absolute;
     left: 20%;
     top: 25%;
-    opacity: 0;
+    /* opacity: 0; */
 }
 
 .rs-content-svg {
@@ -163,7 +163,7 @@ h4.active {
     touch-action: none;
     user-select: none;
     cursor: grab;
-    opacity: 0;
+    /* opacity: 0; */
 }
 
 .rs-content .rs-fundort:active {
