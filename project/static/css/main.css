@@ -20,7 +20,7 @@ body.rs-frontend {
     padding: 0;
 }
 
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 1025px) {
     #rs-body {
         position: absolute;
         top: 0px;
@@ -82,95 +82,150 @@ h4.active {
     font-weight: 700;
 }
 
-/************************** CONTENT ******************************************/
-.rs-coordinates {
-    position: absolute;
-    bottom: 20vh;
-    left: 70vw;
-    width: 20vw;
-    margin-left: -10vw;
-    z-index: 3;
-    text-align:center;
-}
-
-
-@media only screen and (max-width: 960px) {
-    .rs-coordinates {
-        position: relative;
-        bottom: auto;
-        left: auto;
-        width: 100%;
-        margin-left: 0;
-        margin-top: 40vh;
-    }
-}
-
-.rs-content .rs-text {
-    font-family: 'Sen', sans-serif;
-    font-weight: 400;
-    font-size: 1.4rem;
-    width: 35%;
-    position: absolute;
-    left: 20%;
-    top: 25%;
-    /* opacity: 0; */
-}
-
-.rs-content-svg {
+/************************** REISELINIEN ******************************************/
+.rs-svg {
     position: absolute;
     height: 100vh;
     width: 100vw;
+    z-Index: 2;
+    opacity: 1;
+}
+.rs-stein-svg {
     top: 0;
     left: 0;
-    z-Index: 2;
-    opacity: 0;
+}
+
+.rs-geschichte-svg {
+    top: 0;
+    left: 100vw;
+}
+
+.rs-geologie-svg {
+    top: 0;
+    left: 200vw;
 }
 
 .rs-path{
     fill:none;
     stroke-width:5px;
     stroke: #966e28;
+    stroke-dasharray:30 10;
+}
+
+.rs-path-dot.rs-path-blue{
+    fill: #145064;
+    stroke: none;
+}
+.rs-path-dot.rs-path-brown{
+    fill: #372d1e;
+    stroke: none;
+}
+.rs-path-dot.rs-path-green{
+    fill: #14501e;
+    stroke: none;
 }
 
 .rs-path.rs-path-blue {
     stroke:#145064;
-    stroke-dasharray:30 10;
 }
 
-.rs-path.rs-path-red {
-    stroke:#b41e1e;
-    stroke-dasharray:30 10;
+.rs-path.rs-path-brown {
+    stroke:#372d1e;
 }
 
 .rs-path.rs-path-green {
-    stroke:#145064;
-    stroke-dasharray:30 10;
+    stroke:#14501e;
+}
+
+@media only screen and (max-width: 1025px) {
+    .rs-svg {
+        display: none;
+    }
+}
+
+/************************** CONTENT ******************************************/
+.rs-content {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+}
+.rs-content .rs-coordinates {
+    position: absolute;
+    top: 20vh;
+    left: 60vw;
+    width: 20vw;
+    padding-top: 20vw;
+    z-index: 3;
+    text-align: center;
 }
 
 .rs-content .rs-bild {
-    height: 40vh;
+    width: 20vw;
+    min-width: 200px;
     z-index: 3;
     position: absolute;
-    top: 23vh;
-    left: 25vw;
+    top: 20vh;
+    left: 20vw;
     filter: drop-shadow(5px 5px 75px #222);
 }
 
-.rs-content .rs-fundort {
+.rs-content .rs-text {
+    font-family: 'Sen', sans-serif;
+    font-weight: 400;
+    font-size: 1.4rem;
+}
+
+.rs-content .rs-geschichte {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 30vh;
+    left: 115vw;
+    z-index: 3;
+    display: flex;
+    align-items: flex-start;
+}
+.rs-geschichte .rs-text {
+    width: 40vw;
+    margin-right: 10vw;
+}
+.rs-geschichte .rs-fundort {
+    width: 20vw;
+    transform: rotate(-10deg);
+    filter: drop-shadow(5px 5px 25px #222);
+}
+
+.rs-content .rs-fundort {
     touch-action: none;
     user-select: none;
     cursor: grab;
-    /* opacity: 0; */
 }
 
 .rs-content .rs-fundort:active {
     cursor: grabbing;
 }
 
-@media only screen and (max-width: 960px) {
+.rs-content .rs-geologie {
+    position: absolute;
+    top: 30vh;
+    left: 215vw;
+    z-index: 3;
+    display: flex;
+    align-items: flex-start;
+}
+
+.rs-geologie .rs-text {
+    width: 40vw;
+    margin-right: 10vw;
+}
+
+.rs-geologie-bild {
+    max-width: 15vw;
+    cursor: pointer;
+    filter: drop-shadow(5px 5px 75px #222);
+}
+
+@media only screen and (max-width: 1025px) {
     .rs-content {
         position: relative;
         display: flex;
@@ -179,34 +234,47 @@ h4.active {
         padding-bottom: 50px;
     }
 
+    .rs-content .rs-coordinates {
+        position: relative;
+        bottom: auto;
+        left: auto;
+        top: auto;
+        width: 100%;
+        margin-left: 0;
+        margin-top: 30vh;
+    }
+
     .rs-content .rs-bild {
         position: static;
         top: auto;
         left: auto;
-        height: 200px;
-        margin: 50px auto 0 auto;
+        width: 60vw;
+        margin: 100px auto 25px auto;
+        min-width: auto;
     }
 
-    .rs-content .rs-fundort {
+    .rs-content .rs-geschichte, .rs-content .rs-geologie {
         position: static;
         top: auto;
         left: auto;
-        opacity: 1;
-        width: 80%;
-        margin: 50px auto 0 auto;
-        filter: drop-shadow(5px 5px 5px #222);
+        width: 100%;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .rs-content .rs-geschichte>* , .rs-content .rs-geologie>* {
+        margin: 50px 0;
+        width: 90%;
+    }
+
+    .rs-content .rs-geschichte .rs-fundort {
+        width: 75vw;
         touch-action: auto;
         user-select: auto;
     }
-    
-    .rs-content .rs-text {
-        position: static;
-        top: auto;
-        left: auto;
-        opacity: 1;
-        width: 90%;
-        margin: 50px auto 0 auto;
-        font-size: 1rem;
+
+    .rs-geologie-bild {
+        display: none;
     }
 }
 
@@ -248,9 +316,16 @@ h4.active {
     margin-top: -10px;
 }
 
-@media only screen and (max-width: 960px) {
+@media only screen and (max-width: 1025px) {
     .rs-footer {
         display: none;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+    .rs-footer {
+        right: -140px;
+        bottom: -100px;
     }
 }
 
@@ -347,11 +422,6 @@ h4.active {
     height: 55px;
     display: none;
     fill: rgb(180, 30, 30);
-}
-
-
-@media only screen and (max-width: 960px) {
-
 }
 
 /************************** NAVIGATION ******************************************/
@@ -480,7 +550,8 @@ h4.active {
 .rs-index-geschichten>div {
     margin: 25px 25px;
     height: 100px;
-    width: 200px
+    width: 200px;
+    text-align: center;
 }
 
 .rs-index-geschichten a {
@@ -494,7 +565,8 @@ h4.active {
 .rs-index-geologie>div {
     margin: 25px 25px;
     height: 100px;
-    width: 300px
+    width: 300px;
+    text-align: center;
 }
 
 .rs-index-geologie a {
@@ -507,8 +579,8 @@ h4.active {
 
 .rs-index-fundort>div {
     width: 400px;
-    margin-bottom: 15px;
-    margin-right: 15px;
+    margin-bottom: 50px;
+    margin-right: 50px;
 }
 
 .rs-index-fundort img {
@@ -516,7 +588,7 @@ h4.active {
 }
 
 .rs-fundort-grid.is-loading {
-    min-height: 150px;
+    min-height: 300px;
     background-position: center center;
     background-repeat: no-repeat;
     background-color: black;
@@ -525,6 +597,19 @@ h4.active {
 
 .rs-fundort-grid.is-loading img{
     opacity: 0;
+}
+
+
+@media only screen and (max-width: 1025px) {
+
+    .rs-index-fundort>div {
+        width: 200px;
+    }
+    
+    .rs-index-reisesteine>div {
+        width: 150px;
+        height: 150px;
+    }
 }
 
 /************************** BACKEND ******************************************/
@@ -590,4 +675,23 @@ h4.active {
     font-size: 5rem;
     text-transform: uppercase;
     color: white;
+}
+
+
+
+@media only screen and (max-width: 1025px) {
+    #rs-title {
+        top: auto;
+        bottom: 20px;
+        width: 80vw;
+        margin-right: 10px
+    }
+
+    #rs-title p {
+        font-size: 1.4rem;
+    }
+    
+    #rs-title p:first-child{
+        font-size: 4rem;
+    }
 }

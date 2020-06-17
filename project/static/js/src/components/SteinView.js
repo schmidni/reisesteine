@@ -1,38 +1,12 @@
-import anime from 'animejs';
 import m from 'mithril';
 import {convertDMS} from '../util/convertCoords.js';
 import SteinNavigation from './SteinNavigation.js';
-import {setUpImage} from '../util/draggableImage.js'
-import imagesLoaded from 'imagesloaded';
 import SteinTimeLine from './SteinTimeLine';
 
 
 export default class SteinView {
     constructor () {
         this.media = window.matchMedia("(max-width: 960px)")
-    }
-
-    drawDashedLine = (target, frame) => {
-        let length = target.getTotalLength();
-        let dashCount = Math.ceil(length / 40);
-        let newDashes = new Array(2*dashCount).join( 20 + " " );
-        let dashArray = newDashes + " " + length + " 0";
-
-        var lineDrawing = anime({
-            targets: target,
-            strokeDashoffset: [anime.setDashoffset, 0],
-            easing: 'easeInOutQuad',
-            duration: 1000,
-            begin: function(el, i) {
-                target.parentNode.style.opacity = 1;
-                target.setAttribute('stroke', "#966e28");
-                target.setAttribute('stroke-dasharray', dashArray)
-            },
-            complete: function() {
-                // frame.navigate('rightin');
-                // frame.navigate('leftout');
-            }
-          });
     }
 
     oncreate(ctrl) {
@@ -44,11 +18,12 @@ export default class SteinView {
 
         if (!this.media.matches) {
             this.SteinLine = new SteinTimeLine(ctrl.attrs.frame, this.coordinates, this.bild, this.geschichte, this.fundort, this.geologie);
-
             m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine}));
-            // imagesLoaded(this.fundort, () => setUpImage(this.fundort));
-
-            // this.drawDashedLine(ctrl.dom.querySelector('.rs-stein-path-in'), ctrl.attrs.frame);
+        } else {
+            document.querySelector('.rs-content').addEventListener('touchmove', () => {
+                console.log('scroll');
+                ctrl.attrs.frame.navigate('mobilefull');
+            })
         }
     }
 
@@ -58,42 +33,70 @@ export default class SteinView {
             <div class="rs-coordinates">
                 <h3>{convertDMS(ctrl.attrs.info.latitude, null)}</h3>
                 <h3>{convertDMS(null, ctrl.attrs.info.longitude)}</h3>
-                <h2>{ctrl.attrs.info.herkunft}</h2>
+                <h2>{ctrl.attrs.info.herkunft}, <br></br>{ctrl.attrs.info.land}</h2>
             </div>
             <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
-            <div class="rs-geschichte rs-text">            
+            <div class="rs-geschichte">    
+                <div class="rs-text">        
+                    <h1>{ctrl.attrs.info.titel}</h1>
+                    <p>{ctrl.attrs.info.pers_geschichte}</p>
+                    <p>{ctrl.attrs.info.absender}, {ctrl.attrs.info.wohnort}</p>
+                </div>
                 <img class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
-                <h1>{ctrl.attrs.info.titel}</h1>
-                <p>{ctrl.attrs.info.pers_geschichte}</p>
             </div>
             <div class="rs-geologie rs-text">
-                <h1>{ctrl.attrs.info.gestein}</h1>
-                <h3>{ctrl.attrs.info.herkunft}</h3>
-                <p>{ctrl.attrs.info.geo_geschichte}</p>
+                <div class="rs-text">
+                    <h1>{ctrl.attrs.info.gestein}</h1>
+                    <h3>{ctrl.attrs.info.herkunft}</h3>
+                    <p>{ctrl.attrs.info.geo_geschichte}</p>
+                </div>
                 <img class="rs-geologie-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
             </div>
 
-            {/* <svg class="rs-content-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                <path class="rs-path rs-stein-path-in" d="M865.33,815.86C777,950.1,497.76,939.45,355,856.33c-111.58-65-252-268.74-174-498.79C224.71,228.55,191.65-9.83.17,3"/>
-                <path class="rs-path rs-stein-path-in" d="M852,808.75a15,15,0,1,1,5.15,20.63A15,15,0,0,1,852,808.75Z"/>
-                <path class="rs-path rs-stein-path-out" d="M1429,1.61c-151.3,180-422.09,327.44-515,364.53C666,465.14,241.86,170.73,2,480.8"/>
-            </svg> */}
-            
-            
-            {/* <svg class="rs-content-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                <path class="rs-path rs-geschichte-path" d="M1.51,690.13q3.81-4.54,7.53-9.07l2.49-3c189.07-231.34,202-433.63,425.89-523.17l7.3-2.85q5.44-2.08,11.06-4.07t11.13-3.89l3.71-1.28c562-192.37,896.4,84.33,843.78,229.88l-3,7.25a88.9,88.9,0,0,1-5.68,10.32q-3.13,4.9-6.34,10l-2.11,3.35c-99.7,158.57-246.8,439.69-204.54,644.73l1.69,7.74c.89,3.85,5.17,19.59,6.2,23.38"/>
-                <path class="rs-path rs-path-green" d="M1482.86,805.33c.32,1,.68,2,1.09,3.11l3.33,8.06c14.55,31.75,58.9,92.36,188.62,110.91l4.32.6q6,.79,12.14,1.47t12.14,1.08l8.65.47c75,3,131.58-23,190.28-33.52l4.26-.74q6-1,12.07-1.76"/><path class="b" d="M1474,808.26a9.4,9.4,0,1,1,11.55,6.57A9.4,9.4,0,0,1,1474,808.26Z"/>
-
+            <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+                <path class="rs-path" d="M682.48,926.89a125.49,125.49,0,0,1-7.87,12.76"/>
+                <path class="rs-path" d="M668.47,947.71c-77,93.33-284,83.27-391.75,20.52-87.46-50.92-197.53-210.65-136.39-391C173,480.84,151,306.43,18.67,299.2"/>
+                <path class="rs-path" d="M13.6,299c-4.86-.11-9.85,0-15,.35"/>
             </svg>
-            <svg class="rs-content-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                <path class="rs-path rs-fundort-path" d="M1785.22,1078.54c64-109.43-158.12-276.27,134.76-272.75"/>
-                <path class="rs-path rs-path-green" d="M-.5,896.55c3.8-.48,14.36-1.25,18.14-1.53l7.14-.43c69.21-4.16,126.88,38.7,180.13,77.09,48.32,34.83,95.9,70.23,142.48,107.34"/>
-            </svg> */}
-            {/* <svg class="rs-content-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
-                <path class="rs-path rs-geologie-path" d="M0,821.12q5.85.07,11.64.27l3.79.15c251.54,10.72,425.4,206.24,636,209.72l7.59,0q5.79,0,11.64-.27t11.51-.54l3.66-.22c150.72-9.23,227.67-64,320.11-147.43l5.45-4.93q4.23-3.84,8.51-7.76c2.69-2.46,5.58-5.12,8.65-7.95l2.87-2.64c112.77-104,458.9-431.22,625.9-510.32l7.08-3.25q5.56-2.48,10.83-4.54,5.52-2.16,11-4.16l3.64-1.32c83.31-29.94,154.44-32.74,210.67-33.73l7.75-.13,11.72-.19"/>
-                <path class="rs-path rs-path-blue" d="M1310.47,1.7c45,108.81,52.84,226.37,7.16,329.22"/>
-                <path class="rs-path rs-path-blue" d="M1309.25,326.58a9.4,9.4,0,1,0,12.46-4.65A9.4,9.4,0,0,0,1309.25,326.58Z"/>
-            </svg> */}
+            
+            <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+                <path class="rs-path" d="M1913.51,703q-4.8,5.72-9.79,11.36"/>
+                <path class="rs-path" d="M1897,721.91C1776.1,854.33,1579.39,961,1509.84,988.77c-190.07,75.87-512.13-143.07-702.12,74.36"/>
+                <path class="rs-path" d="M804.42,1067q-4.78,5.64-9.44,11.66"/>
+            </svg>
+
+            <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+                <path class="rs-path rs-path-green" d="M1462.23,279.1c.92-3.9,2.14-8.8,3.68-14.54"/>
+                <path class="rs-path rs-path-green" d="M1468.76,254.38c16.83-58.14,60.35-174.5,152.41-241.54"/>
+                <path class="rs-path rs-path-green" d="M1625.48,9.76Q1631.6,5.49,1638,1.5"/>
+                <path class="rs-path-dot rs-path-green" d="M1473.39,281a11.28,11.28,0,1,1-8.56-13.46A11.27,11.27,0,0,1,1473.39,281Z"/>
+            </svg>
+
+            <svg class="rs-svg rs-geschichte-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">    
+                <path class="rs-path" d="M1919.94,769.35q-7.61,0-15,.19"/>
+                <path class="rs-path" d="M1895,769.88c-178.35,7.61-264,95-480,96.53-204.77,1.42-187.29-213.6-111.51-462.64,48.38-159-254.83-452.34-848.52-241.88C214.77,247,205.32,451.5,14.17,687.19"/>
+                <path class="rs-path" d="M11,691.06q-4.71,5.76-9.57,11.54"/>
+            </svg>
+
+            <svg class="rs-svg rs-geschichte-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">    
+                <path class="rs-path rs-path-brown" d="M1401.14,307.59c-.25-4-.5-9.12-.63-15"/>
+                <path class="rs-path rs-path-brown" d="M1400.41,282.73c.13-38.34,6-99,38.14-137.23,45.62-54.31,92.56-60.52,102.33-125.88"/>
+                <path class="rs-path rs-path-brown" d="M1541.53,14.71q.81-7,1.07-15"/>
+                <path class="rs-path-dot rs-path-brown" d="M1412.43,306.16a11.28,11.28,0,1,1-12.11-10.39A11.29,11.29,0,0,1,1412.43,306.16Z"/>
+            </svg>
+
+            <svg class="rs-svg rs-geologie-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">    
+                <path class="rs-path" d="M1920.28,286.18l-15,.22"/>
+                <path class="rs-path" d="M1895.2,286.55c-58.19.93-130.48,4-217.37,38C1513.18,389,1123.76,760.46,1021.6,854s-180.91,154.39-349.73,161.12c-218.4,8.7-392.71-244.24-651.52-256.87"/>
+                <path class="rs-path" d="M15.31,758q-7.46-.27-15-.27"/>
+            </svg>
+
+            <svg class="rs-svg rs-geologie-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" preserveAspectRatio="none">    
+                <path class="rs-path rs-path-blue" d="M1464.85,1067.51q-5.62-5.07-10.88-10.33"/>
+                <path class="rs-path rs-path-blue" d="M1447,1050c-51.62-55.53-74-126-74.63-216.73"/>
+                <path class="rs-path rs-path-blue" d="M1372.38,828.26q0-7.41.21-15"/>
+                <path class="rs-path-dot rs-path-blue" d="M1383.94,814.12a11.28,11.28,0,1,0-11.57,11A11.27,11.27,0,0,0,1383.94,814.12Z"/>
+            </svg>
         </div>
         )
     }

@@ -1,4 +1,5 @@
 import interact from 'interactjs';
+import anime from 'animejs';
 import {outerSize} from '../util/outerSize.js';
 
 export default class IndexView {
@@ -12,7 +13,7 @@ export default class IndexView {
 
         this.oldx = 0;
         this.oldy = 0;
-        this.position = {};
+        this.position = {x: 0, y: 0};
 
         this.init(linkMethod);
         document.querySelector('#rs-nav-background').classList.add('active');
@@ -41,6 +42,34 @@ export default class IndexView {
     removeStyle() {
         document.getElementById('rs-alternating').remove();
         document.querySelector('#rs-nav-background').classList.remove('active');
+    }
+
+    async onClickEffect (e) {
+        let mydiv = e.target.closest('div');
+
+        let siblings = [... mydiv.parentElement.children].filter(c=>c!=mydiv);
+        
+        anime({
+            targets: siblings,
+            opacity: [1, 0],
+            duration: 500,
+            easing: 'linear',
+        });
+
+        anime({
+            targets: mydiv,
+            scale: [1, 1.5],
+            rotate: -10,
+            duration: 500,
+            easing: 'linear'
+        });
+
+        return await anime({
+            targets: mydiv,
+            opacity: [1,0],
+            duration: 500,
+            easing: 'linear'
+        }).finished;
     }
 
     init (linkMethod) {
@@ -75,41 +104,47 @@ export default class IndexView {
             document.head.appendChild(styleSheet);   
         }
         
-        if (width < vw && height < vh){
-            this.target.style.paddingLeft = (vw-width)/2 + 'px';
-            this.target.style.paddingTop =  (vh-height)/2 + 'px';
-        } else {
-            // center start position of screen
-            this.position = { x: -(width-vw) / 2, y: -(height-vh) / 2 };
-            this.target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
-            let position = this.position;
-            let tg = this.target;
+        // center start position of screen
+        if (outerSize(this.target,'width') < vw)
+            this.position.x = 0
+        else
+            this.position.x = -(width-vw) / 2;
 
-            interact(this.targetSelector).draggable({
-                listeners: {
-                    move (event) {
-                        position.x += event.dx;
-                        position.y += event.dy;
+        if (outerSize(this.target,'height') < vh)
+            this.position.y = 0
+        else
+            this.position.y = -(height-vh) / 2;
 
-                        // clamp position
-                        position.x = Math.min(Math.max(position.x, vw - width - 200), 0);
-                        position.y = Math.min(Math.max(position.y, vh - outerSize(tg, 'height') - 200), 0);
+        // this.position = { x: -(width-vw) / 2, y: -(height-vh) / 2 };
+        this.target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
+        let position = this.position;
+        let tg = this.target;
 
-                    event.target.style.transform =
-                        `translate(${position.x}px, ${position.y}px)`;
-                    }
-                },
-                inertia: {
-                    resistance: 5,
-                    minSpeed: 10,
-                    smoothEndDuration: 500
-                },
-                allowFrom: this.targetSelector,
-                cursorChecker () {
-                    return null
+        interact(this.targetSelector).draggable({
+            listeners: {
+                move (event) {
+                    position.x += event.dx;
+                    position.y += event.dy;
+
+                    // clamp position
+                    position.x = Math.min(Math.max(position.x, vw - width - 200), 0);
+                    position.y = Math.min(Math.max(position.y, vh - outerSize(tg, 'height') - 200), 0);
+
+                event.target.style.transform =
+                    `translate(${position.x}px, ${position.y}px)`;
                 }
-            });
-        }
+            },
+            inertia: {
+                resistance: 5,
+                minSpeed: 10,
+                smoothEndDuration: 500
+            },
+            allowFrom: this.targetSelector,
+            cursorChecker () {
+                return null
+            }
+        });
+
         
         interact(this.linkSelector).on('tap', (e) => {
             e.preventDefault();

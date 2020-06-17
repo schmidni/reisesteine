@@ -31,9 +31,9 @@ export default class FundortIndex {
     }
     
     onupdate() {
+        // init Index View
         this.IndexView = new IndexView('.rs-index', '.rs-fundort-link', this.onPlaceClick, false, this.msnry);
 
-        // init Index View with default measurements
         this.msnry = new Masonry( document.querySelector('.rs-index-fundort'), {
             itemSelector: '.rs-fundort-grid',
             gutter: 0
@@ -44,8 +44,10 @@ export default class FundortIndex {
         });
     }
 
-    onPlaceClick = (e) => {
+    onPlaceClick = async (e) => {
         const id = e.target.getAttribute('data-id');
+
+        await this.IndexView.onClickEffect(e);
 
         document.querySelector('.rs-close').style.display = "none";
 

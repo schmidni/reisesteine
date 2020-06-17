@@ -26,6 +26,9 @@ document.querySelector('.rs-close').addEventListener('click', () => {
 
 // HISTORY ***************************************************************************************************************************
 var id = document.getElementById('rs-body').getAttribute('data-stein');
+let showTitle = id ? false : true;
+
+var menu = new Menu(myMap, frame, showTitle);
 
 // check if stone should be rendered
 if (id)
@@ -68,7 +71,7 @@ function navBack(e) {
 
 
 // RESPONSIVE ***************************************************************************************************************************
-var breakpoint = 960; // reload site at breakpoint
+var breakpoint = 1025; // reload site at breakpoint
 var lastSize = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
 window.addEventListener('resize', debounce(() => { 
     let newSize = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);

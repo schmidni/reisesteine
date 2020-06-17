@@ -33,8 +33,10 @@ export default class GeschichteIndex {
         this.IndexView = new IndexView('.rs-index', '.rs-geschichten-link', this.onStoryClick)
     }
 
-    onStoryClick = (e) => {
+    onStoryClick = async (e) => {
         const id = e.target.getAttribute('data-id');
+
+        await this.IndexView.onClickEffect(e);
 
         document.querySelector('.rs-close').style.display = "none";
 
@@ -69,7 +71,7 @@ export default class GeschichteIndex {
             <div class="rs-index rs-index-geschichten">
                 { this.titles ? this.titles.map((val, idx) => (
                     <div key={"img"+idx}>
-                        <a data-id={val[0]} class="rs-geschichten-link">'{val[1]}'</a>
+                        <a data-id={val[0]} class="rs-geschichten-link">{val[1]}</a>
                     </div>
                 )) : "" }
 

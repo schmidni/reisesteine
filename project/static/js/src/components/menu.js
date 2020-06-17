@@ -6,7 +6,7 @@ import GeologieIndex from './GeologieIndex.js';
 import FundortIndex from './FundortIndex.js';
 
 export default class Menu {
-    constructor(map, frame) {
+    constructor(map, frame, id) {
         this.map = map;
         this.frame = frame;
 
@@ -21,7 +21,14 @@ export default class Menu {
         this.navBackground = document.getElementById("rs-nav-background");
 
         this.initListeners();
-        document.addEventListener('click', this.checkForClickTitle);
+        
+        if (id && id != undefined) {
+            document.addEventListener('click', this.checkForClickTitle);
+            document.querySelector('#rs-title').style.display = 'block';
+        }
+        else
+            document.querySelector('#rs-title').style.display = 'none';
+
     }
 
     openMenu = (e) => {
@@ -73,9 +80,8 @@ export default class Menu {
             }).finished.then( () => {
                 document.querySelector('#rs-title').style.display = 'none';
             })
+            document.removeEventListener('click', this.checkForClickTitle)
         }
-            
-        document.removeEventListener('click', this.checkForClickTitle)
     }
 
     closeMenu = (e) => {

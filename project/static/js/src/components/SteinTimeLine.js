@@ -11,24 +11,78 @@ export default class SteinTimeLine {
         this.geologie = geologie;
         this.frame = frame;
 
-        this.tl = {};
-        this.animateTo = '';
-        this.stops = {'stein': 1000, 'geschichte':3000, 'fundort':5000, 'geologie':7000};
-
-        this.startAnimation();
-        this.initTimeline();
+        this.current = 'stein';
+        this.fundort_rect = null;
+        this.startAnimationCoords();
     }
 
-    goTo (targetStop) {
-        if (!(targetStop in this.stops))
-            return;
+    async goTo (target) {
+        if (this.current == 'stein'){
+            this.frame.navigate('full');
+        }
+        else if (this.current == 'fundort'){
+            await this.resetFundort(this.fundort_rect);
+        }
 
-        this.tl.pause();
-        this.animateTo = targetStop;
-        this.tl.play();
+        if (target == 'stein'){
+            await this.panTo('0vw');
+            await this.frame.navigate('offset');
+            this.current = 'stein';
+        }
+
+        else if (target == 'geschichte'){
+            await this.panTo('-100vw');
+            this.current = 'geschichte';
+        }
+        
+        else if (target == 'fundort'){
+            if (this.current != 'geschichte')
+                await this.panTo('-100vw');
+
+            await this.rotate(this.fundort, [-10, 0]);
+            this.fundort_rect = await setUpImage(this.fundort);
+            this.current = 'fundort';
+        }
+
+        else if (target == 'geologie'){
+            await this.panTo('-200vw');
+            this.current = 'geologie';
+        }
+        return true;
     }
 
-    startAnimation () {
+    panTo (vw) {
+        return anime({
+            targets: '.rs-content>*',
+            translateX: vw,
+            duration: 1500,
+            easing: "easeInOutQuad"
+        }).finished;
+    }
+
+    rotate(target, deg) {
+        return anime({
+            targets: target,
+            rotate: deg,
+            duration: 500,
+            easing: 'linear'
+        }).finished;
+    }
+
+    resetFundort (rect) {
+        return anime({
+            targets: this.fundort,
+            translateX: 0,
+            translateY: 0,
+            rotate: -10,
+            width: rect.width,
+            height: rect.height,
+            duration: 1500,
+            easing: 'easeOutQuad'
+        }).finished;
+    }
+
+    startAnimationCoords () {
         anime({
             targets: this.coord.children,
             opacity: [0, 1],
@@ -37,7 +91,7 @@ export default class SteinTimeLine {
             duration: 1000,
             easing: "easeInOutQuad",
             delay: 1000,
-            begin: () => {
+            changeBegin: () => {
                 this.coord.style.opacity = 1;
             }
         });
@@ -49,140 +103,4 @@ export default class SteinTimeLine {
             delay: 1500
         });
     }
-
-    checkStop(name) {
-        if (this.animateTo == name)
-            this.tl.pause();
-    }
-
-    initTimeline () {
-        this.tl = anime.timeline({
-            easing: 'linear',
-            duration: 8000,
-            autoplay: false,
-            loop: true
-        });
-    
-        // Stein Out ********************************
-        this.tl.add({
-            targets: [this.coord, this.stein],
-            translateX: [0, '-100vw'],
-            duration: 1000,
-            changeBegin: () => {
-                this.frame.navigate('leftout');
-            },
-            changeComplete: (el) => {
-                console.log('0');
-                el.animatables.forEach(item => item.target.style.zIndex = -1);
-            }
-        })
-        // Geschichte ********************************
-        this.tl.add({
-            targets: this.geschichte,
-            translateX: ['100vw', 0],
-            duration: 1000,
-            changeBegin: (el) => {
-                el.animatables[0].target.style.zIndex = 3;
-            }
-        }, 1000)
-        .add({
-            targets: this.fundort,
-            translateX: ['145vw', '45vw'],
-            height: ['30vh', '30vh'],
-            rotate: '-10deg',
-            duration: 1000,
-            changeBegin: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = 3);
-            },
-            changeComplete: () => {
-                this.checkStop('geschichte');
-            }
-        }, 1000);
-
-        // Fundort **************************************
-        this.tl.add({
-            targets: this.fundort,
-            duration: 1000,
-            changeBegin: (el) => {
-                el.animatables[0].target.style.zIndex = 3;
-                console.log('setup')
-                setUpImage(this.fundort);
-            },
-            changeComplete: () => {
-                this.checkStop('fundort');
-            }
-        }, 2050)
-        .add({
-            targets: this.fundort,
-            height: '30vh',
-            rotate: '-10deg',
-            translate: '45vh',
-            duration: 1000,
-            changeBegin:() => {
-                console.log('asdf')
-            }
-        }, 3000)
-
-    
-        // Geologie **************************************
-        this.tl.add({
-            targets: [this.fundort, this.geschichte],
-            translateX: '-100vw',
-            duration: 1000,
-            changeComplete: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = -1);
-            }
-        }, 4000)
-        .add({
-            targets: this.geologie,
-            translateX: ['100vw', 0],
-            duration: 1000,
-            changeBegin: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = 3);
-            },
-            changeComplete: () => {
-                this.checkStop('geologie');
-            }
-        }, 5000);
-    
-        // Stein **************************************
-        this.tl.add({
-            targets: this.geologie,
-            translateX: [0, '-100vw'],
-            duration: 1000,
-            changeComplete: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = -1); 
-            }
-        }, 6000)
-        .add({
-            targets: [this.stein, this.coord],
-            translateX: ['100vw',0],
-            duration: 1000,
-            changeBegin: (el) => {
-                el.animatables.forEach(item => item.target.style.zIndex = 3); 
-                this.frame.navigate('rightin');
-            },
-            changeComplete: () => {
-                this.checkStop('stein');
-            }
-        }, 7000);
-    }
 };
-
-
-    // setDirection (targetTime) {
-    //     let currentTime = this.tl.currentTime;
-    //     let dir = 'fw';
-    //     if (targetTime > currentTime){
-    //         if (currentTime - targetTime + this.tl.duration < targetTime - currentTime)
-    //             dir = 'bw';
-    //     } else {
-    //         if(targetTime - currentTime + this.tl.duration < currentTime - targetTime)
-    //             dir = 'bw';
-    //     }
-    //     if (this.direction != dir){
-    //         this.direction = dir;
-    //         this.tl.reverse();
-    //     }    
-    // }
-

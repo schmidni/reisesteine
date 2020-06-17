@@ -54,7 +54,7 @@ export default class svgFrame {
         const rInitialOuter = r;
         const rInitialInner = r;
         const rFinalOuter = r;
-        const rFinalInner = this.rect.width*0.1;
+        const rFinalInner = this.rect.width*0.09;
         const rFinalInnerMobile = this.rect.height*0.15;
         let p = '';
 
@@ -62,10 +62,12 @@ export default class svgFrame {
             p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rInitialOuter} a ${rInitialOuter} ${rInitialOuter} 0 1 0 1 0 z m -1 ${rInitialOuter-rInitialInner} a ${rInitialInner} ${rInitialInner} 0 1 1 -1 0 Z`;
         else if(path === 'mobile')
             p = `M ${this.rect.width/2}, ${this.rect.height*0.2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInnerMobile} a ${rFinalInnerMobile} ${rFinalInnerMobile} 0 1 1 -1 0 Z`;
+        else if(path === 'mobilefull')
+            p = `M ${this.rect.width/2}, ${this.rect.height*0.2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-0.001} a ${0.001} ${0.001} 0 1 1 -1 0 Z`;    
         else if(path === 'offset')
-            p = `M ${this.rect.width*0.7}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
+            p = `M ${this.rect.width*0.7}, ${this.rect.height*0.2+rFinalInner} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-rFinalInner} a ${rFinalInner} ${rFinalInner} 0 1 1 -1 0 Z`;
         else if (path === 'full')
-            p = `M ${this.rect.width/2}, ${this.rect.height/2} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-0.001} a ${0.001} ${0.001} 0 1 1 -1 0 Z`;
+            p = `M ${this.rect.width*0.7}, ${this.rect.height/2-this.rect.width*0.05} m 0 ${-rFinalOuter} a ${rFinalOuter} ${rFinalOuter} 0 1 0 1 0 z m -1 ${rFinalOuter-0.001} a ${0.001} ${0.001} 0 1 1 -1 0 Z`;
         else if (path ==='rect')
             p = `M 0 0 H ${this.rect.width} V ${this.rect.height} H 0 Z`;
         else if (path === 'leftout')
@@ -98,6 +100,19 @@ export default class svgFrame {
                 this.paths.current = 'mobile';
             });
         }
+
+        if (dir === 'mobilefull') {
+            this.animateShape = anime({
+                targets: this.DOM.shape,
+                duration: this.settings.animation.shape.duration,
+                easing: this.settings.animation.shape.easing.in,
+                d: this.calculatePath('mobilefull')
+            }).finished.then( () => {
+                this.isAnimating = false
+                this.paths.current = 'mobilefull';
+            });
+        }
+
         else if (dir === 'offset') {
             this.animateShape = anime({
                 targets: this.DOM.shape,

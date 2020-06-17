@@ -11,7 +11,7 @@ export default class SteinMain {
         this.myMap = ctrl.attrs.map;
         this.frame = ctrl.attrs.frame;
         this.info = null;
-        this.media = window.matchMedia("(max-width: 960px)")
+        this.media = window.matchMedia("(max-width: 1025px)")
         this.refOverview = ctrl.attrs.overview ? ctrl.attrs.overview : null;
 
         // frontend navigate, request data
@@ -99,7 +99,7 @@ export default class SteinMain {
             this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
         } else {
             frameDone = this.frame.navigate('offset');
-            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.05]);
+            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.055]);
         }
 
         // CONTENT

@@ -6,15 +6,19 @@ export default class SteinNavigation {
         this.menu = [];
         this.slides = [];
         this.SteinLine = null;
+        this.navigating = false;
     }
 
-    switchIt = (target_in) => {
+    switchIt = async (target_in) => {
+        if (this.active == target_in || this.navigating)
+            return;
+
+        this.navigating = true;
         this.menu[this.active].classList.remove('active');
         this.menu[target_in].classList.add('active');
-
-        this.SteinLine.goTo(this.stop[target_in]);
-
+        let d = await this.SteinLine.goTo(this.stop[target_in]);
         this.active = target_in;
+        this.navigating = false;
     };
 
     oncreate(ctrl) {
@@ -25,16 +29,24 @@ export default class SteinNavigation {
                         ctrl.dom.querySelector('.rs-menu-geologie')];
         this.stop = [ 'stein', 'geschichte', 'fundort', 'geologie'];
 
-        this.menu.forEach((item, idx) => {
-            item.addEventListener('click', () => {
-                this.switchIt(idx);
+        // timeout so user cant navigate away too quickly
+        setTimeout(() => {
+            this.menu.forEach((item, idx) => {
+                item.addEventListener('click', () => {
+                    this.switchIt(idx);
+                })
             })
-        })
+    
+            ctrl.dom.querySelector('.rs-menu-next').addEventListener('click', () => {
+                let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
+                this.switchIt(next); 
+            });
 
-        ctrl.dom.querySelector('.rs-menu-next').addEventListener('click', () => {
-            let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
-            this.switchIt(next); 
-        });
+            document.querySelector('.rs-geologie-bild').addEventListener('click', () => {
+                this.switchIt(0);
+            })
+
+        }, 1000);
     };
 
     view() {

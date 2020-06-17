@@ -99,6 +99,7 @@ class Stein(db.Model):
             'geo_geschichte': self.geo_geschichte,
             'bild_stein': self.bild_stein,
             'bild_herkunft': self.bild_herkunft,
-            'published': self.published
+            'absender': self.absender.vorname,
+            'wohnort': self.absender.wohnort
         }
         return data
