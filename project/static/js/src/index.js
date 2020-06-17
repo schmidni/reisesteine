@@ -13,9 +13,6 @@ import Menu from './components/menu.js';
 var frame = new svgFrame(document.querySelector('#map'));
 var myMap = new worldMap(document.querySelector('#map'), frame, data_index);
 
-var menu = new Menu(myMap, frame);
-
-
 // NAVIGATION *************************************************************************************************************************
 // Close Icon
 document.querySelector('.rs-close').addEventListener('click', () => {

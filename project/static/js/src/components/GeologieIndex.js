@@ -6,7 +6,7 @@ export default class GeologieIndex {
     constructor (ctrl) {
         this.frame = ctrl.attrs.frame;
         this.map = ctrl.attrs.map;
-
+        this.IndexView = null;
         this.titles = [];
         if(ctrl.attrs.pushState)
             history.pushState('geologie', 'Geologie - Reisesteine', `/${document.documentElement.lang}/geologie`);

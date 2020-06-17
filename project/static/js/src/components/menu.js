@@ -117,33 +117,33 @@ export default class Menu {
         // Stein Index
         this.steine.addEventListener('click', (e) => {
             e.preventDefault();
+            this.closeMenu(e)
             m.render(document.getElementById('rs-body'), null);
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
-            this.closeMenu(e)
         });
 
         // Geschichten Index
         this.geschichten.addEventListener('click', (e) => {
             e.preventDefault();
+            this.closeMenu(e)
             m.render(document.getElementById('rs-body'), null);
             m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
-            this.closeMenu(e)
         });
 
         // Geologie Index
         this.geologie.addEventListener('click', (e) => {
             e.preventDefault();
+            this.closeMenu(e)
             m.render(document.getElementById('rs-body'), null);
             m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
-            this.closeMenu(e)
         });
 
         // Geologie Index
         this.fundorte.addEventListener('click', (e) => {
             e.preventDefault();
+            this.closeMenu(e)
             m.render(document.getElementById('rs-body'), null);
             m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': this.map, 'frame':this.frame, 'pushState': true})});
-            this.closeMenu(e)
         });
     }
 }
