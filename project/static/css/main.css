@@ -52,6 +52,7 @@ h1 {
     font-size: 3.4rem;
     margin: 0 0 -0.5rem 0;
     color: rgb(24, 38, 50);
+    text-transform: uppercase;
 }
 
 h2 {
@@ -65,7 +66,7 @@ h2 {
 h3 {
     font-family: 'Sen', sans-serif;
     font-weight: 400;
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin: 0 0 -5px 0;
     color: rgb(24, 38, 50);
 }
@@ -162,19 +163,20 @@ h4.active {
 }
 
 .rs-content .rs-bild {
-    width: 20vw;
+    max-width: 30vw;
     min-width: 200px;
+    max-height: 50vh;
     z-index: 3;
     position: absolute;
     top: 20vh;
-    left: 20vw;
+    left: 17vw;
     filter: drop-shadow(5px 5px 75px #222);
 }
 
 .rs-content .rs-text {
     font-family: 'Sen', sans-serif;
     font-weight: 400;
-    font-size: 1.4rem;
+    font-size: 1.5rem;
 }
 
 .rs-content .rs-geschichte {
@@ -186,7 +188,7 @@ h4.active {
     align-items: flex-start;
 }
 .rs-geschichte .rs-text {
-    width: 40vw;
+    width: 35vw;
     margin-right: 10vw;
 }
 .rs-geschichte .rs-fundort {
@@ -207,7 +209,7 @@ h4.active {
 
 .rs-content .rs-geologie {
     position: absolute;
-    top: 30vh;
+    top: 27vh;
     left: 215vw;
     z-index: 3;
     display: flex;
@@ -220,9 +222,17 @@ h4.active {
 }
 
 .rs-geologie-bild {
-    max-width: 15vw;
+    max-width: 20vw;
+    margin-top: 70px;
     cursor: pointer;
     filter: drop-shadow(5px 5px 75px #222);
+}
+
+
+@media only screen and (max-width: 1600px) {
+    .rs-content .rs-text {
+        font-size: 1.3rem;
+    }
 }
 
 @media only screen and (max-width: 1025px) {
@@ -249,7 +259,7 @@ h4.active {
         top: auto;
         left: auto;
         width: 60vw;
-        margin: 100px auto 25px auto;
+        margin: 50px auto 25px auto;
         min-width: auto;
     }
 
@@ -282,7 +292,7 @@ h4.active {
 
 .rs-footer {
     position: absolute;
-    bottom: -70px;
+    bottom: -50px;
     right: -70px;
     width:250px;
     height: 250px;
@@ -312,20 +322,13 @@ h4.active {
 
 .rs-footer-content {
     width: 200px;
-    margin-left: -70px;
-    margin-top: -10px;
+    margin-left: -50px;
+    margin-top: 10px;
 }
 
 @media only screen and (max-width: 1025px) {
     .rs-footer {
         display: none;
-    }
-}
-
-@media only screen and (max-width: 1200px) {
-    .rs-footer {
-        right: -140px;
-        bottom: -100px;
     }
 }
 
@@ -359,18 +362,18 @@ h4.active {
 
 #rs-small-menu img {
     height: 27px;
-    margin-top: 10px;
+    margin-top: 13px;
 }
 
 #rs-small-navigation a {
-    margin: 3px auto 3px auto;
+    margin: 5px auto 3px auto;
     text-align: center;
-    padding-left: 40px;
+    padding-left: 30px;
 }
 
 #rs-small-navigation span {
     text-align: center;
-    padding-left: 40px;
+    padding-left: 30px;
     padding-top: 15px;
 }
 
@@ -384,11 +387,11 @@ h4.active {
 }
 
 #rs-small-navigation a:first-child {
-    margin-top: 90px;
+    margin-top: 75px;
 }
 
 #rs-nav-background.active #rs-small-navigation a:first-child {
-    margin-top: 110px;
+    margin-top: 90px;
 }
 
 #rs-small-uebersicht {
@@ -427,8 +430,8 @@ h4.active {
 /************************** NAVIGATION ******************************************/
 #rs-nav-background{
     position: absolute;
-    top: -100px;
-    left: -100px;
+    top: -70px;
+    left: -80px;
     z-index: 4;
     background-color: rgba(256, 256, 256, 0.75);
 }
@@ -446,10 +449,9 @@ h4.active {
     top: 0;
     height: 100vh;
     width: 450px;
-    padding: 25vh 0 0 50px;
+    padding: 25vh 0 0 75px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
 }
 
 #rs-nav div {
@@ -461,30 +463,42 @@ h4.active {
 
 #rs-nav .rs-logo img{
     height: 50px;
+    margin-top: 35px;
 }
 #rs-nav .rs-title {
     font-family: 'Passion One', cursive;
-    font-weight: 700;
-    font-size: 3.5rem;
+    font-weight: 400;
+    font-size: 3.9rem;
     text-transform: uppercase;
     color: rgb(180, 30, 30);
-    margin-top: 25px;
+    margin-top: 10vh;
+}
+
+#rs-nav .rs-nav-indexpages {
+    margin-top: 60px;
 }
 
 #rs-nav .rs-nav-indexpages a{
     color: rgb(180, 30, 30);
     text-decoration: none;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 700;
-    margin-top: 5px;
+    margin-top: 20px;
 }
-
+#rs-nav .rs-nav-impressum {
+    margin-top: 60px;
+}
 #rs-nav .rs-nav-impressum a {
     color: rgb(180, 30, 30);
     text-decoration: none;
     font-size: 2rem;
     font-weight: 300;
-    margin-top: 5px;
+    margin-top: 20px;
+}
+
+#rs-nav .rs-nav-controls {
+    margin-top: auto;
+    margin-bottom: 75px;
 }
 
 #rs-nav .rs-nav-controls a, #rs-nav .rs-nav-controls span {
@@ -511,6 +525,22 @@ h4.active {
     margin:0 10px 5px 5px;
 }
 
+#rs-nav .rs-nav-line {
+    position: absolute;
+    top: 30vh;
+    left: 0;
+    stroke:#b41e1e;
+    fill: none;
+    margin-top: 35px;
+    stroke-dasharray: 30 10;
+    stroke-width: 5px;
+    z-index: -1;
+}
+
+#rs-nav .rs-nav-line .rs-nav-dot {
+    stroke-dasharray: none;
+    fill: #b41e1e;
+}
 
 /************************** REISESTEINE DRAGGABLE ******************************************/
 .rs-index {
@@ -549,32 +579,38 @@ h4.active {
 
 .rs-index-geschichten>div {
     margin: 25px 25px;
-    height: 100px;
-    width: 200px;
+    height: 150px;
+    width: 350px;
     text-align: center;
 }
 
 .rs-index-geschichten a {
     font-family: 'Passion One', cursive;
-    font-weight: 700;
-    font-size: 2rem;
+    font-weight: 400;
+    font-size: 3rem;
     text-transform: uppercase;
     color: rgb(24, 38, 50);
 }
 
 .rs-index-geologie>div {
     margin: 25px 25px;
-    height: 100px;
-    width: 300px;
+    height: 200px;
+    width: 350px;
     text-align: center;
 }
 
 .rs-index-geologie a {
     font-family: 'Passion One', cursive;
-    font-weight: 700;
-    font-size: 2rem;
-    text-transform: uppercase;
+    font-weight: 400;
+    font-size: 2.4rem;
+    text-transform: none;
     color: rgb(24, 38, 50);
+}
+
+.rs-index-geologie a b{
+    font-weight: 400;
+    font-size: 3rem;
+    text-transform: uppercase;
 }
 
 .rs-index-fundort>div {
@@ -655,24 +691,24 @@ h4.active {
     top: 0;
     right: 0;
     z-Index: 4;
-    width: 30vw;
+    width: 60vw;
     text-align: right;
     margin-top: 25px;
     margin-right: 50px;
 }
 
 #rs-title p{
-    margin: 0;
+    margin: -10px 0 0 0;
     font-family: 'Josefin Sans', sans-serif;
     font-weight: 300;
-    font-size: 1.6rem;
+    font-size: 1.3rem;
     color: white;
 }
 
 #rs-title p:first-child{
     font-family: 'Passion One', cursive;
-    font-weight: 700;
-    font-size: 5rem;
+    font-weight: 400;
+    font-size: 6.5rem;
     text-transform: uppercase;
     color: white;
 }

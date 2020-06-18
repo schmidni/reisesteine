@@ -67,7 +67,7 @@ export default class GeologieIndex {
             <div class="rs-index rs-index-geologie">
                 { this.titles ? this.titles.map((val, idx) => (
                     <div key={"img"+idx}>
-                        <a data-id={val[0]} class="rs-geologie-link">{val[1]},<br/>{val[2]}</a>
+                        <a data-id={val[0]} class="rs-geologie-link"><b>{val[1]}</b><br/>{val[2]}, {val[3]}</a>
                     </div>
                 )) : "" }
 

@@ -50,23 +50,28 @@ export default class Menu {
         }).finished.then(() => {
             anime({
                 targets:this.navBackground,
-                translateX: [-300, -250],
+                translateX: [-300, -150],
                 duration: 500,
                 easing: 'easeOutQuad',
             });
             anime({
                 targets: this.nav,
-                translateX: [0, 850],
+                translateX: [0, 700],
                 duration: 500,
                 easing: 'easeOutQuad'
             }).finished.then(() => {
                 document.addEventListener('click', this.checkForClickMenu);
+                document.addEventListener('keydown', this.checkForEscape);
             });
         })
     }
 
     checkForClickMenu = (e) => {
         if(e.target.closest('#rs-nav') == null)
+            this.closeMenu(e);
+    }
+    checkForEscape = (e) => {
+        if (event.key == "Escape")
             this.closeMenu(e);
     }
 
@@ -87,6 +92,7 @@ export default class Menu {
     closeMenu = (e) => {
         e.preventDefault();
         document.removeEventListener('click', this.checkForClickMenu);
+        document.removeEventListener('keydown', this.checkForEscape);
         anime({
             targets: this.navBackground,
             translateX: 0,
@@ -101,7 +107,7 @@ export default class Menu {
         });
         anime({
             targets: this.nav,
-            translateX: [850, 0],
+            translateX: [700, 0],
             duration: 500,
             easing: 'easeInQuad'
         }).finished.then(() => {

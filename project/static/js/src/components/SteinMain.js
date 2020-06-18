@@ -1,9 +1,10 @@
 import m from 'mithril';
 import SteinView from './SteinView.js';
-import SteinIndex from './SteinIndex.js';
-import GeschichteIndex from './GeschichteIndex.js';
-import GeologieIndex from './GeologieIndex.js';
-import FundortIndex from './FundortIndex.js';
+import debounce from '../util/debounce.js';
+// import SteinIndex from './SteinIndex.js';
+// import GeschichteIndex from './GeschichteIndex.js';
+// import GeologieIndex from './GeologieIndex.js';
+// import FundortIndex from './FundortIndex.js';
 
 export default class SteinMain {
 
@@ -37,49 +38,57 @@ export default class SteinMain {
         }
 
         
-        if (this.refOverview) {
-            // insert back to overview
-            var overview = document.createElement('a');
-            overview.id = 'rs-small-uebersicht';
-            overview.href = "#";
-            overview.innerHTML = `<a id="rs-small-uebersicht" href="#" >
-                                    <img src="/static/img/uebersicht_button.svg"/>
-                                </a>`
-            document.getElementById('rs-small-navigation').appendChild(overview);
-            let func = (e) => {return null};
+        // if (this.refOverview) {
+        //     // insert back to overview
+        //     var overview = document.createElement('a');
+        //     overview.id = 'rs-small-uebersicht';
+        //     overview.href = "#";
+        //     overview.innerHTML = `<a id="rs-small-uebersicht" href="#" >
+        //                             <img src="/static/img/uebersicht_button.svg"/>
+        //                         </a>`
+        //     document.getElementById('rs-small-navigation').appendChild(overview);
+        //     let func = (e) => {return null};
 
-            if (this.refOverview == 'steine') {
-                func = (e) => {
-                    e.preventDefault();
-                    m.render(document.getElementById('rs-body'), null);
-                    m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
-                }
-            }
-            else if (this.refOverview == 'fundorte'){
-                func = (e) => {
-                    e.preventDefault();
-                    m.render(document.getElementById('rs-body'), null);
-                    m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
-                }
-            }
-            else if (this.refOverview == 'geologie'){
-                func = (e) => {
-                    e.preventDefault();
-                    m.render(document.getElementById('rs-body'), null);
-                    m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
-                }
-            }
-            else if (this.refOverview == 'geschichte'){
-                func = (e) => {
-                    e.preventDefault();
-                    m.render(document.getElementById('rs-body'), null);
-                    m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
-                }
-            }
-            document.getElementById('rs-small-uebersicht').addEventListener('click', func);
-
-        }
+        //     if (this.refOverview == 'steine') {
+        //         func = (e) => {
+        //             e.preventDefault();
+        //             m.render(document.getElementById('rs-body'), null);
+        //             m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+        //         }
+        //     }
+        //     else if (this.refOverview == 'fundorte'){
+        //         func = (e) => {
+        //             e.preventDefault();
+        //             m.render(document.getElementById('rs-body'), null);
+        //             m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+        //         }
+        //     }
+        //     else if (this.refOverview == 'geologie'){
+        //         func = (e) => {
+        //             e.preventDefault();
+        //             m.render(document.getElementById('rs-body'), null);
+        //             m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+        //         }
+        //     }
+        //     else if (this.refOverview == 'geschichte'){
+        //         func = (e) => {
+        //             e.preventDefault();
+        //             m.render(document.getElementById('rs-body'), null);
+        //             m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': this.myMap, 'frame':this.frame, 'pushState': true})});
+        //         }
+        //     }
+        //     document.getElementById('rs-small-uebersicht').addEventListener('click', func);
+        // }
     }
+
+    keepMarkerCentered = debounce(() => {
+            if( this.media.matches) {
+                this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
+            } else {
+                let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.2) + (this.myMap.map.getSize().x * 0.09);
+                this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, h]);
+            }
+        }, 500);
 
     onupdate (ctrl) {
         if(!this.info)
@@ -99,8 +108,11 @@ export default class SteinMain {
             this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
         } else {
             frameDone = this.frame.navigate('offset');
-            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, -this.myMap.map.getSize().x*0.055]);
+            let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.2) + (this.myMap.map.getSize().x * 0.09);
+            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, h]);
         }
+
+        window.addEventListener('resize', this.keepMarkerCentered);
 
         // CONTENT
         m.render(document.getElementById('rs-info'), m(SteinView, {fadeIn: true, info: this.info, frame: this.frame, overview: this.refOverview}));
@@ -116,10 +128,11 @@ export default class SteinMain {
             ctrl.attrs.remove.remove();
 
         document.querySelector('#rs-nav-background').classList.remove('active');
-
-        try {
-            document.querySelector('#rs-small-uebersicht').remove();
-         } catch {};
+        window.removeEventListener('resize', this.keepMarkerCentered);
+        
+        // try {
+        //     document.querySelector('#rs-small-uebersicht').remove();
+        //  } catch {};
     }
 
     view() {

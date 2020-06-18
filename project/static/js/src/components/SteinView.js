@@ -21,7 +21,6 @@ export default class SteinView {
             m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine}));
         } else {
             document.querySelector('.rs-content').addEventListener('touchmove', () => {
-                console.log('scroll');
                 ctrl.attrs.frame.navigate('mobilefull');
             })
         }
