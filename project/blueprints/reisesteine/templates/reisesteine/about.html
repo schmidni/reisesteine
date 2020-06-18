@@ -1,0 +1,97 @@
+{% extends "layouts/base_app.html" %}
+
+{% block body %}
+<noscript>
+    <style>
+        body.rs-frontend {
+            overflow: visible!important;
+        }
+    </style>
+</noscript>
+<style>
+    #rs-small-menu {
+        display: none;
+    }
+    #rs-small-navigation span {
+        display: block!important;
+    }
+    .rs-close {
+        display: block!important;
+    }
+    .overlay path {
+        fill: rgba(256,256,256,0.85);
+    }
+
+    #rs-about-impressum {
+        position: absolute;
+        top: 20vh;
+        left: 60vw;
+        width: 20vw;
+        padding-top: 20vw;
+        z-index: 3;
+        text-align: center;
+    }
+
+
+    #rs-about {
+        z-index: 3;
+        width: 40vw;
+        height: 30vh;
+
+        position: absolute;
+        top: 20vh;
+        left: 15vw;
+
+        font-family: 'Sen', sans-serif;
+        font-weight: 400;
+        font-size: 1.2rem;
+    }
+</style>
+
+<div id="map"></div>
+
+<svg id="svg" class="overlay" width="100%" height="100%">
+    <path id="svg-path" />
+</svg>
+
+<div id="rs-body" data-stein="{{id}}"></div>
+
+<div id="rs-about">
+    <h1>Über REISESTEINE</h1>
+    <p>
+        Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen. 
+    </p>
+    <p>
+        Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von focusTerra weiterentwickelt. Die Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid. 
+    </p>
+    <p>
+        <b>Konzeptentwicklerin, Herausgeberin & Redaktion:</b> focusTerra<br/>
+        <b>Gestaltung & technische Umsetzung:</b> Marion Deichmann und Nicolas Schmid
+    </p>
+    <p style="display: flex; margin-top: 50px;">
+    <img src=" {{ url_for('static', filename='img/eth_logo.png') }} " width="300"/>
+    <img src=" {{ url_for('static', filename='img/focusTerra_logo.png') }} " width="300"/>
+</p>
+</div>
+<div id="rs-about-impressum">
+    <h2>focusTerra</h2>
+    <h3>ETH Zürich</h3>
+    <h3>Sonneggstrasse 5</h3>
+    <h3>8092 Zürich</h3>
+    <h3>Schweiz</h3>
+    <h3>+41 44 632 62 81</h3>
+</div>
+
+<div id="rs-site-content" style="margin-left: 150px;">
+</div>
+
+<script>
+    // if javascript isnt disabled, apply crucial styles, else fallback content is used
+    document.getElementById('map').style.zIndex = 1;
+    document.getElementById('map').style.backgroundColor = 'white';
+
+    var data_index = {{ steine|tojson|safe }};
+    var data_stein = {{ {} if not ste else ste|tojson|safe }};
+
+</script>
+{% endblock %}

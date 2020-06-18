@@ -8,6 +8,7 @@ import FundortIndex from './components/FundortIndex.js';
 import SteinMain from './components/SteinMain.js';
 import debounce from './util/debounce.js';
 import Menu from './components/menu.js';
+import About from './components/About.js';
 
 // SVG Frame and Map init ************************************************************************************************************
 var frame = new svgFrame(document.querySelector('#map'));
@@ -37,6 +38,8 @@ if (id)
         m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
     else if (id == 'fundorte')
         m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+    else if (id == 'about')
+        m.mount(document.getElementById('rs-body'), {view: () => m(About, {'map': myMap, 'frame':frame})})
     else
         m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': id, 'map':myMap, 'frame':frame, 'data': data_stein, 'pushState': false})});
 

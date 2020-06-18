@@ -50,6 +50,13 @@ def index():
     steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', steine=steine, ste=None)
 
+@reisesteine.route('/uber-uns', defaults={'lang_code': 'de'})
+@reisesteine.route('/about', defaults={'lang_code': 'en'})
+def about():
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/about.html', steine=steine, id='about')
+
+
 @reisesteine.route('/stein/<id>', defaults={'lang_code': 'de'})
 @reisesteine.route('/stone/<id>', defaults={'lang_code': 'en'})
 def stein(id):        

@@ -45,10 +45,15 @@ export default class worldMap {
         });
     }
 
-    flyToOffset = (coords, pos) => {
-        var targetPoint = this.map.project(coords, 8).subtract(pos);
-        var targetLatLng = this.map.unproject(targetPoint, 8);
-        this.map.flyTo(targetLatLng, 8), {duration: 1};
+    addMarker = (el_coord) => {
+        L.marker(el_coord, {icon: this.redIcon})
+                            .addTo(this.map)
+    }
+
+    flyToOffset = (coords, pos, zoom=8) => {
+        var targetPoint = this.map.project(coords, zoom).subtract(pos);
+        var targetLatLng = this.map.unproject(targetPoint, zoom);
+        this.map.flyTo(targetLatLng, zoom), {duration: 1};
     }
 
     init = (el) => {

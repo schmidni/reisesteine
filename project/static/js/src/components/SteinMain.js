@@ -81,15 +81,16 @@ export default class SteinMain {
         // }
     }
 
+    // keep marker zoomed to center of circle when resizing
     keepMarkerCentered = debounce(() => {
-            if( this.media.matches) {
+            let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.2) + (this.myMap.map.getSize().x * 0.09);
+            if( this.media.matches)
                 this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
-            } else {
-                let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.2) + (this.myMap.map.getSize().x * 0.09);
+            else
                 this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, h]);
-            }
         }, 500);
 
+        
     onupdate (ctrl) {
         if(!this.info)
             return;
@@ -102,15 +103,14 @@ export default class SteinMain {
         // keep Close and Navigation disabled during animation
         let frameDone = new Promise(res => {return res()});
 
-        // Zoom in
-        if( this.media.matches) {
+        // navigate frame
+        if( this.media.matches)
             frameDone = this.frame.navigate('mobile');
-            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
-        } else {
+        else
             frameDone = this.frame.navigate('offset');
-            let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.2) + (this.myMap.map.getSize().x * 0.09);
-            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, h]);
-        }
+        
+        // zoom in
+        this.keepMarkerCentered();
 
         window.addEventListener('resize', this.keepMarkerCentered);
 
