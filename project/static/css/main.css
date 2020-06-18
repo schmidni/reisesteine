@@ -198,12 +198,16 @@ h4.active {
 }
 
 .rs-content .rs-fundort {
+    cursor: pointer;
+}
+
+.rs-content .rs-fundort.active {
     touch-action: none;
     user-select: none;
     cursor: grab;
 }
 
-.rs-content .rs-fundort:active {
+.rs-content .rs-fundort.active:active {
     cursor: grabbing;
 }
 
@@ -223,6 +227,7 @@ h4.active {
 
 .rs-geologie-bild {
     max-width: 20vw;
+    max-height: 30vh;
     margin-top: 70px;
     cursor: pointer;
     filter: drop-shadow(5px 5px 75px #222);

@@ -44,7 +44,11 @@ export default class SteinNavigation {
 
             document.querySelector('.rs-geologie-bild').addEventListener('click', () => {
                 this.switchIt(0);
-            })
+            });
+
+            document.querySelector('.rs-fundort').addEventListener('click', () => {
+                this.switchIt(2);
+            });
 
         }, 1000);
     };

@@ -22,6 +22,7 @@ export default class SteinTimeLine {
         }
         else if (this.current == 'fundort'){
             await this.resetFundort(this.fundort_rect);
+            this.fundort.classList.remove('active');
         }
 
         if (target == 'stein'){
@@ -41,6 +42,7 @@ export default class SteinTimeLine {
 
             await this.rotate(this.fundort, [-10, 0]);
             this.fundort_rect = await setUpImage(this.fundort);
+            this.fundort.classList.add('active');
             this.current = 'fundort';
         }
 
