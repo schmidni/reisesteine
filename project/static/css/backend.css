@@ -1,0 +1,45 @@
+
+body.rs-backend {
+    padding-top: 60px;
+}
+
+/************************** BACKEND FORM ******************************************/
+.form-group img {
+    height: 150px;
+    margin-top: 20px;
+}
+
+/************************** NAVIGATION ******************************************/
+#rs-backend-navigation {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    width: 150px;
+    height: 150px;
+    padding-left: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+#rs-backend-navigation a {
+    color: rgb(180, 30, 30);
+    text-decoration: none;
+    font-weight: 400;
+}
+
+#rs-backend-logo img {
+    height: 50px;
+    margin-right: 20px;
+}
+
+#rs-backend-logo {
+    display: flex;
+    align-items: center;
+    font-family: 'Passion One', cursive;
+    font-size: 3.5rem;
+}
+
+#rs-backend-lang a{
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 1.4rem;
+}

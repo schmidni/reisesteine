@@ -7,12 +7,24 @@
         <meta name="description" content="{% block metadescription %}{% endblock %}">
 
         <title>Reisesteine</title>
-
+        
+        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Passion+One:wght@400;700&family=Sen&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"></script>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"></script> 
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/backend.css') }}"></script> 
     </head>
 
     <body class="rs-backend"> 
+
+        <div id="rs-backend-navigation">
+            <a id="rs-backend-logo" href="{{ url_for('reisesteine.index') }}">
+                <img src="{{ url_for('static', filename='img/logo.svg') }}"/> Reisesteine
+            </a>
+            <span id="rs-backend-lang">
+                <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> / 
+                <a id="rs-small-en" href="{{ url_for(request.endpoint, lang_code='en') }}">en</a>
+            </span>
+    </div>
+
         {% block body %}{% endblock %}
     </body>
 </html>

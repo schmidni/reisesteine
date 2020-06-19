@@ -457,7 +457,6 @@ h4.active {
     height: 95vh;
     width: 450px;
     padding-left: 50px;
-    /* padding: 10vh 0 0 75px; */
     display: flex;
     flex-direction: column;
     z-index: 4;
@@ -657,12 +656,6 @@ h4.active {
         width: 150px;
         height: 150px;
     }
-}
-
-/************************** BACKEND ******************************************/
-.form-group img {
-    height: 150px;
-    margin-top: 20px;
 }
 
 /************************** TOOLTIP ******************************************/

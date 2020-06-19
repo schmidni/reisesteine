@@ -124,7 +124,11 @@ def geologie_all():
     geo = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Gestein.name, Stein.herkunft, Stein.land).all()
     return jsonify(geo)
 
-
+# Mitmachen Routes *************************************
+@reisesteine.route('/mitmachen', defaults={'lang_code': 'de'})
+@reisesteine.route('/participate', defaults={'lang_code': 'en'})
+def mitmachen():
+    return render_template('reisesteine/mitmachen.html')
 
 # Backend Routes *************************************
 @reisesteine.route('/listSteine')

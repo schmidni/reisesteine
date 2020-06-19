@@ -87,7 +87,7 @@ export default class SteinMain {
                 this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
             else
                 this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.2, h]);
-        }, 500);
+        }, 100);
 
         
     onupdate (ctrl) {
