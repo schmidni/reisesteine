@@ -4,6 +4,7 @@ import IndexView from './IndexView.js';
 import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
 
+
 export default class FundortIndex {
     constructor (ctrl) {
         this.frame = ctrl.attrs.frame;
@@ -60,7 +61,6 @@ export default class FundortIndex {
             view: () => m(SteinMain, {'id': id, 'map':this.map, 'frame':this.frame, 'pushState': true, 'overview': 'fundorte'}
             )}
         );
-
     }
 
     onremove () {

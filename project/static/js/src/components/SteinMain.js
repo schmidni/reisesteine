@@ -36,7 +36,6 @@ export default class SteinMain {
             this.info = ctrl.attrs.data;
             this.onupdate(ctrl);
         }
-
         
         // if (this.refOverview) {
         //     // insert back to overview

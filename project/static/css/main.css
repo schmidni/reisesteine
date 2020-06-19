@@ -181,6 +181,7 @@ h4.active {
 
 .rs-content .rs-geschichte {
     position: absolute;
+    min-width: 70%;
     top: 30vh;
     left: 115vw;
     z-index: 3;
@@ -213,6 +214,7 @@ h4.active {
 
 .rs-content .rs-geologie {
     position: absolute;
+    min-width: 70%;
     top: 27vh;
     left: 215vw;
     z-index: 3;
@@ -532,7 +534,8 @@ h4.active {
 
 #rs-nav .rs-nav-line {
     position: absolute;
-    top: 30vh;
+    /* top: 30vh; */
+    top: 0;
     left: 0;
     stroke:#b41e1e;
     fill: none;
@@ -557,6 +560,7 @@ h4.active {
     left: 0;
     touch-action: none;
     user-select: none;
+    -ms-user-select: none;
     cursor: grab;
     padding: 200px;
 }

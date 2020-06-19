@@ -58,16 +58,6 @@ export default class SteinIndex {
 
         // stop navigation
         document.querySelector('.rs-close').style.display = "none";
-        let parentContainer = document.querySelector('.rs-index-reisesteine');
-
-        // hide all other rocks
-        const siblings = [...parentContainer.children].filter(child => child !== e.target.parentNode.parentNode);
-        anime({
-            targets: siblings,
-            duration: 500,
-            opacity: [1, 0],
-            easing: 'linear'
-        });
 
         // replace overlay
         this.frame.paths.current = 'full';

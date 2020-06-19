@@ -4,6 +4,7 @@ import SteinIndex from './SteinIndex.js';
 import GeschichteIndex from './GeschichteIndex.js';
 import GeologieIndex from './GeologieIndex.js';
 import FundortIndex from './FundortIndex.js';
+import 'mdn-polyfills/element.prototype.closest';
 
 export default class Menu {
     constructor(map, frame, id) {
@@ -43,8 +44,8 @@ export default class Menu {
             translateX: [0, -300],
             height: vh + 'px',
             width: '800px',
-            paddingTop: 0.25*vh + 'px',
-            paddingBottom: 0.25*vh + 'px',
+            // paddingTop: 0.25*vh + 'px',
+            // paddingBottom: 0.25*vh + 'px',
             easing: 'easeInQuad',
             duration: 500
         }).finished.then(() => {

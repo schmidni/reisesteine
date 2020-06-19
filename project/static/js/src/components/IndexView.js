@@ -1,6 +1,9 @@
 import interact from 'interactjs';
 import anime from 'animejs';
 import {outerSize} from '../util/outerSize.js';
+import 'mdn-polyfills/element.prototype.closest';
+import 'mdn-polyfills/Array.prototype.findIndex';
+import 'mdn-polyfills/Node.prototype.remove';
 
 export default class IndexView {
     constructor(targetSelector, linkSelector, linkMethod, alternating=true){
@@ -46,8 +49,7 @@ export default class IndexView {
 
     async onClickEffect (e) {
         let mydiv = e.target.closest('div');
-
-        let siblings = [... mydiv.parentElement.children].filter(c=>c!=mydiv);
+        let siblings = Array.prototype.filter.call(mydiv.parentElement.children, c=>c!=mydiv);
         
         anime({
             targets: siblings,
