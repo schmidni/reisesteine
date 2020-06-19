@@ -40,12 +40,10 @@ export default class Menu {
         
         anime({
             targets: this.navBackground,
-            translateY: [0, -vh * 0.25 + 100],
+            // translateY: [0, -vh * 0.25 + 100],
             translateX: [0, -300],
-            height: vh + 'px',
+            height: vh*1.2 + 'px',
             width: '800px',
-            // paddingTop: 0.25*vh + 'px',
-            // paddingBottom: 0.25*vh + 'px',
             easing: 'easeInQuad',
             duration: 500
         }).finished.then(() => {
@@ -57,7 +55,7 @@ export default class Menu {
             });
             anime({
                 targets: this.nav,
-                translateX: [0, 700],
+                translateX: [0, 600],
                 duration: 500,
                 easing: 'easeOutQuad'
             }).finished.then(() => {
@@ -108,7 +106,7 @@ export default class Menu {
         });
         anime({
             targets: this.nav,
-            translateX: [700, 0],
+            translateX: [600, 0],
             duration: 500,
             easing: 'easeInQuad'
         }).finished.then(() => {

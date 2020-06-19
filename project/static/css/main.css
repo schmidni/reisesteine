@@ -4,6 +4,9 @@ html {
 }
 
 body.rs-frontend {
+    position: absolute;
+    top: 0;
+    left: 0;
     height:100vh;
     width:100vw;
     margin: 0;
@@ -401,6 +404,10 @@ h4.active {
     margin-top: 90px;
 }
 
+#rs-nav-background.active #rs-small-navigation span {
+    display: none;
+}
+
 #rs-small-uebersicht {
     position: absolute;
     top: 15px;
@@ -409,18 +416,6 @@ h4.active {
 #rs-small-uebersicht img {
     height: 37px;
     width: 37px;
-}
-
-#rs-nav-background.active #rs-small-navigation span {
-    display: none;
-}
-
-#rs-nav-background.active {
-    background-color: rgba(256, 256, 256, 0);
-}
-
-#rs-nav-background.active:hover {
-    background-color: rgba(256, 256, 256, 0.65);
 }
 
 .rs-close {
@@ -439,26 +434,33 @@ h4.active {
     position: absolute;
     top: -70px;
     left: -80px;
-    z-index: 4;
-    background-color: rgba(256, 256, 256, 0.75);
-}
-
-#rs-nav-background.circle {
     width:230px;
     height:230px;
     border-radius: 0 50% 50% 50%;
     padding: 30px;
+    z-index: 4;
+    background-color: rgba(256, 256, 256, 0.75);
+}
+
+#rs-nav-background.active {
+    background-color: rgba(256, 256, 256, 0);
+}
+
+#rs-nav-background.active:hover {
+    background-color: rgba(256, 256, 256, 0.65);
 }
 
 #rs-nav {
     position: absolute;
-    left: -500px;
-    top: 0;
-    height: 100vh;
+    left: -600px;
+    top: 5vh;
+    height: 95vh;
     width: 450px;
-    padding: 25vh 0 0 75px;
+    padding-left: 50px;
+    /* padding: 10vh 0 0 75px; */
     display: flex;
     flex-direction: column;
+    z-index: 4;
 }
 
 #rs-nav div {
@@ -534,12 +536,12 @@ h4.active {
 
 #rs-nav .rs-nav-line {
     position: absolute;
-    /* top: 30vh; */
-    top: 0;
+    top: 11vh;
     left: 0;
+    width: 500px;
+    height: 577px;
     stroke:#b41e1e;
     fill: none;
-    margin-top: 35px;
     stroke-dasharray: 30 10;
     stroke-width: 5px;
     z-index: -1;

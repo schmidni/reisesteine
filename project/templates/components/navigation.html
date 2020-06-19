@@ -7,7 +7,7 @@
     <p>{{_('Eine interaktive virtuelle Ausstellung von')}} <b><i>focus</i>Terra</b></p>
 </div>
 
-<div id="rs-nav-background" class="circle">
+<div id="rs-nav-background">
     <div id="rs-small-navigation">
             <a id="rs-small-home" href="/"><img src="{{ url_for('static', filename='img/logo.svg') }}"/></a>
             <a id="rs-small-menu" href="#" >
@@ -17,37 +17,37 @@
                 <a id="rs-small-de" href="/de">de</a> / <a id="rs-small-en" href="/en">en</a>
             </span>
     </div>
+</div>
 
-    <div id="rs-nav">
-        <svg class="rs-nav-line" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 761.89 880">
-            <path d="M1.5,35.25s4.37,3.27,12.57,8.17"/>
-            <path d="M22.73,48.35c43.1,23.54,147.75,65.76,276.08,12.38C421.13,9.85,492.41-6.8,559.62,7.32S759.39,79,759.39,189.4,667.83,311.54,592.92,311.54,472.47,384,512.46,426.09C601.25,519.55,645,594.6,595.69,689.51c-23.78,45.78-63.88,68.38-122,76.58"/>
-            <path d="M468.7,766.74q-7.27.91-14.92,1.54"/>
-            <path class="rs-nav-dot" d="M453.52,757a11.28,11.28,0,1,0,12.07,10.43A11.29,11.29,0,0,0,453.52,757Z"/>
+<div id="rs-nav">
+    <svg class="rs-nav-line" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 761.89 880" preserveAspectRatio="xMidYMid meet" >
+        <path d="M1.5,35.25s4.37,3.27,12.57,8.17"/>
+        <path d="M22.73,48.35c43.1,23.54,147.75,65.76,276.08,12.38C421.13,9.85,492.41-6.8,559.62,7.32S759.39,79,759.39,189.4,667.83,311.54,592.92,311.54,472.47,384,512.46,426.09C601.25,519.55,645,594.6,595.69,689.51c-23.78,45.78-63.88,68.38-122,76.58"/>
+        <path d="M468.7,766.74q-7.27.91-14.92,1.54"/>
+        <path class="rs-nav-dot" d="M453.52,757a11.28,11.28,0,1,0,12.07,10.43A11.29,11.29,0,0,0,453.52,757Z"/>
+    </svg>
+    <a id="rs-nav-home" class="rs-logo" href="/"><img src="{{ url_for('static', filename='img/logo.svg') }}"/></a>
+    <div>
+        <span class="rs-title">{{_('Reisesteine')}}</span>
+
+        <div class="rs-nav-indexpages">
+            <a id="rs-nav-steine" href="#">{{_('Steine')}}</a>
+            <a id="rs-nav-geschichten" href="#">{{_('Geschichten')}}</a>
+            <a id="rs-nav-fundorte" href="#">{{_('Fundorte')}}</a>
+            <a id="rs-nav-geologie" href="#">{{_('Geologie')}}</a>
+        </div>
+
+        <div class="rs-nav-impressum">
+            <a id="rs-nav-participate"href="">{{_('Mitmachen')}}</a>
+            <a id="rs-nav-about"href="{{ url_for('reisesteine.about') }}">{{_('Über Uns')}}</a>
+        </div>
+    </div>
+    <div class="rs-nav-controls">
+        <svg id="rs-nav-close" xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 48 48">
+            <path d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z"/>
         </svg>
-        <a id="rs-nav-home" class="rs-logo" href="/"><img src="{{ url_for('static', filename='img/logo.svg') }}"/></a>
-        <div>
-            <span class="rs-title">{{_('Reisesteine')}}</span>
-
-            <div class="rs-nav-indexpages">
-                <a id="rs-nav-steine" href="#">{{_('Steine')}}</a>
-                <a id="rs-nav-geschichten" href="#">{{_('Geschichten')}}</a>
-                <a id="rs-nav-fundorte" href="#">{{_('Fundorte')}}</a>
-                <a id="rs-nav-geologie" href="#">{{_('Geologie')}}</a>
-            </div>
-
-            <div class="rs-nav-impressum">
-                <a id="rs-nav-participate"href="">{{_('Mitmachen')}}</a>
-                <a id="rs-nav-about"href="{{ url_for('reisesteine.about') }}">{{_('Über Uns')}}</a>
-            </div>
-        </div>
-        <div class="rs-nav-controls">
-            <svg id="rs-nav-close" xmlns="http://www.w3.org/2000/svg" width="55" height="55" viewBox="0 0 48 48">
-                <path d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z"/>
-            </svg>
-            <span>
-                <a id="rs-nav-de" href="/de">de</a> / <a id="rs-nav-en" href="/en">en</a>
-            </span>
-        </div>
+        <span>
+            <a id="rs-nav-de" href="/de">de</a> / <a id="rs-nav-en" href="/en">en</a>
+        </span>
     </div>
 </div>

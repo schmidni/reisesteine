@@ -13,6 +13,7 @@ export default class SteinTimeLine {
 
         this.current = 'stein';
         this.fundort_rect = null;
+        this.startLineAnimations();
         this.startAnimationCoords();
     }
 
@@ -84,6 +85,16 @@ export default class SteinTimeLine {
             duration: 1500,
             easing: 'easeOutQuad'
         }).finished;
+    }
+
+    startLineAnimations () {
+        anime({
+            targets: ".rs-svg",
+            opacity: [0, 1],
+            duration: 1000,
+            easing: "easeInQuad",
+            delay: 500
+        })
     }
 
     startAnimationCoords () {
