@@ -14,7 +14,6 @@ export default class SteinMain {
         this.info = null;
         this.media = window.matchMedia("(max-width: 1025px)")
         this.refOverview = ctrl.attrs.overview ? ctrl.attrs.overview : null;
-        this.desc = "";
 
         // frontend navigate, request data
         if (!ctrl.attrs.data){
@@ -100,8 +99,7 @@ export default class SteinMain {
             history.pushState(this.info.id, this.info.gestein + ' - Reisesteine', `/${document.documentElement.lang}/stein/${this.info.id}`);
         document.title = this.info.gestein + ' - Reisesteine';
 
-        this.desc = document.getElementById('description').getAttribute('content')
-        document.getElementById('description').setAttribute('content', this.info.description);
+        document.querySelector("meta[name='description']").setAttribute('content', this.info.description);
 
         // keep Close and Navigation disabled during animation
         let frameDone = new Promise(res => {return res()});
@@ -133,7 +131,7 @@ export default class SteinMain {
         document.querySelector('#rs-nav-background').classList.remove('active');
         window.removeEventListener('resize', this.keepMarkerCentered);
         
-        document.getElementById('description').setAttribute('content', this.desc);
+        document.querySelector("meta[name='description']").setAttribute('content', 'Entdecken Sie in der Ausstellung unsere Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.');
 
         // try {
         //     document.querySelector('#rs-small-uebersicht').remove();

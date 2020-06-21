@@ -4,6 +4,11 @@
 {{_('Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von focusTerra weiterentwickelt.')}}
 {% endblock %}
 
+{% block canonical %}
+        <link rel="alternate" hreflang="de" href="{{ url_for(request.endpoint, _external=True, lang_code='de', **request.view_args) }}" />
+        <link rel="alternate" hreflang="en" href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
+{% endblock %}
+
 {% block body %}
 <noscript>
     <style>
