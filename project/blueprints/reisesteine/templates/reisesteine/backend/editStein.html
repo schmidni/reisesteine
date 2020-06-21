@@ -218,6 +218,11 @@
                     {{ form.geo_geschichte(class_="form-control", rows=10, maxlength="600") }}
                     <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 600</small>
                 </div>
+                <div class="form-group">
+                    {{ form.description.label }} <small class="form-text text-muted">Beschreibung für Google Suchresultate</small>
+                    {{ form.description(class_="form-control", rows=5, maxlength="160") }}
+                    <small id="descHelp" class="form-text text-muted"><span id="current_desc">0</span>/ 160</small>
+                </div>
             </div>
             <div class="col-12">
                 {{ form.submit(class_="btn btn-primary") }}
@@ -240,6 +245,10 @@
     document.getElementById('current_titel').innerHTML = document.getElementById('titel').value.length;
     document.getElementById('titel').addEventListener('keyup', function(e){
         document.getElementById('current_titel').innerHTML = this.value.length;
+    });
+    document.getElementById('current_desc').innerHTML = document.getElementById('description').value.length;
+    document.getElementById('description').addEventListener('keyup', function(e){
+        document.getElementById('current_desc').innerHTML = this.value.length;
     });
 </script>
 

@@ -63,6 +63,7 @@ class Stein(db.Model):
     absender_id = db.Column(db.Integer, db.ForeignKey('person.id'))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     published = db.Column(db.Boolean, index=True)
+    description = db.Column(db.String(1))
 
     def __repr__(self):
         return '{}, {}, {}'.format(self.gestein, self.herkunft, self.bild_stein)
@@ -85,6 +86,7 @@ class Stein(db.Model):
         self.pers_geschichte = form.pers_geschichte.data
         self.geo_geschichte = form.geo_geschichte.data
         self.published = form.published.data
+        self.description = form.description.data
 
     def to_dict(self):
         data = {
@@ -100,6 +102,7 @@ class Stein(db.Model):
             'bild_stein': self.bild_stein,
             'bild_herkunft': self.bild_herkunft,
             'absender': self.absender.vorname,
-            'wohnort': self.absender.wohnort
+            'wohnort': self.absender.wohnort,
+            'description': self.description
         }
         return data

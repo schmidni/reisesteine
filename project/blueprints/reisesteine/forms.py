@@ -35,6 +35,7 @@ class editSteinForm(FlaskForm):
     bild_stein =        FileField('Bild Stein *', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
     bild_herkunft =     FileField('Bild Fundort *', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
     published =         BooleanField('Published', default=False)
+    description =       TextAreaField('Meta Description *', validators=[DataRequired()])
 
     submit = SubmitField('Speichern')
 
@@ -135,6 +136,7 @@ class editSteinForm(FlaskForm):
         self.pers_geschichte.data = curr_stein.pers_geschichte
         self.geo_geschichte.data = curr_stein.geo_geschichte
         self.published.data = curr_stein.published
+        self.description.data = curr_stein.description
 
     def populate_absender(self, absender):
         self.user_id.data = absender.id
