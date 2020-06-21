@@ -8,8 +8,13 @@ export default class GeschichteIndex {
         this.map = ctrl.attrs.map;
 
         this.titles = [];
-        if(ctrl.attrs.pushState)
-            history.pushState('geschichten', 'Geschichten - Reisesteine', `/${document.documentElement.lang}/geschichten`);
+
+        if(ctrl.attrs.pushState){
+            if (document.documentElement.lang == 'de')
+                history.pushState('geschichten', 'Geschichten - Reisesteine', `/de/geschichten`);
+            else
+                history.pushState('geschichten', 'Stories - Travelstones', `/en/stories`);
+        }
     }
 
     oncreate (ctrl) {
@@ -21,7 +26,7 @@ export default class GeschichteIndex {
 
         m.request({
             method: "GET",
-            url: `/${document.documentElement.lang}/geschichten/all`,
+            url: `/de/geschichten/all`,
         })
         .then(result => {
             this.titles = result;

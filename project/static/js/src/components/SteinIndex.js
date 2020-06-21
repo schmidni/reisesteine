@@ -11,8 +11,12 @@ export default class SteinIndex {
         this.imgs = [];
         this.media = window.matchMedia("(max-width: 960px)")
 
-        if(ctrl.attrs.pushState)
-            history.pushState('steine', 'Steine - Reisesteine', `/${document.documentElement.lang}/steine`);
+        if(ctrl.attrs.pushState) {
+            if (document.documentElement.lang == 'de')
+                history.pushState('steine', 'Steine - Reisesteine', `/de/steine`);
+            else
+                history.pushState('steine', 'Stones - Travelstones', `/en/stones`);
+        }
     }
 
     oncreate (ctrl) {
@@ -24,7 +28,7 @@ export default class SteinIndex {
 
         m.request({
             method: "GET",
-            url: `/${document.documentElement.lang}/steine/images/all`,
+            url: `/de/steine/images/all`,
         })
         .then(result => {
             this.imgs = result;

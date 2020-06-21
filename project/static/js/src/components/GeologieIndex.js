@@ -8,8 +8,12 @@ export default class GeologieIndex {
         this.map = ctrl.attrs.map;
         this.IndexView = null;
         this.titles = [];
-        if(ctrl.attrs.pushState)
-            history.pushState('geologie', 'Geologie - Reisesteine', `/${document.documentElement.lang}/geologie`);
+        if(ctrl.attrs.pushState){
+            if (document.documentElement.lang == 'de')
+                history.pushState('geologie', 'Geologie - Reisesteine', `/de/geologie`);
+            else
+                history.pushState('geologie', 'Geology - Travelstones', `/en/geology`);
+        }
     }
 
     oncreate (ctrl) {
@@ -21,7 +25,7 @@ export default class GeologieIndex {
 
         m.request({
             method: "GET",
-            url: `/${document.documentElement.lang}/geologie/all`,
+            url: `/de/geologie/all`,
         })
         .then(result => {
             this.titles = result;

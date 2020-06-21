@@ -95,9 +95,17 @@ export default class SteinMain {
             return;
 
         // PUSHSTATE
-        if(ctrl.attrs.pushState)
-            history.pushState(this.info.id, this.info.gestein + ' - Reisesteine', `/${document.documentElement.lang}/stein/${this.info.id}`);
-        document.title = this.info.gestein + ' - Reisesteine';
+        if(ctrl.attrs.pushState){
+            if (document.documentElement.lang == 'de')
+                history.pushState(this.info.id, this.info.gestein + ' - Reisesteine', `/de/stein/${this.info.id}`);
+            else
+                history.pushState(this.info.id, this.info.gestein + ' - Reisesteine', `/en/stone/${this.info.id}`);
+        }
+        if (document.documentElement.lang == 'de')
+            document.title = this.info.gestein + ' - Reisesteine';
+        else
+            document.title = this.info.gestein + ' - Travelstones';
+        
 
         document.querySelector("meta[name='description']").setAttribute('content', this.info.description);
 

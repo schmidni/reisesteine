@@ -11,8 +11,12 @@ export default class FundortIndex {
         this.map = ctrl.attrs.map;
 
         this.titles = [];
-        if(ctrl.attrs.pushState)
-            history.pushState('fundorte', 'Fundorte - Reisesteine', `/${document.documentElement.lang}/fundorte`);
+        if(ctrl.attrs.pushState){
+            if (document.documentElement.lang == 'de')
+                history.pushState('fundorte', 'Fundorte - Reisesteine', `/de/fundorte`);
+            else
+                history.pushState('fundorte', 'Places - Travelstones', `/en/places`);
+        }
     }
 
     oncreate (ctrl) {
@@ -24,7 +28,7 @@ export default class FundortIndex {
 
         m.request({
             method: "GET",
-            url: `/${document.documentElement.lang}/fundorte/images/all`,
+            url: `/de/fundorte/images/all`,
         })
         .then(result => {
             this.titles = result;

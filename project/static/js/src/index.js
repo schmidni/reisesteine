@@ -55,11 +55,19 @@ window.addEventListener('popstate', debounce((e) => {
 // POPSTATE: router
 function navBack(e) {
     closeAll().then(() => {
+        console.log(e.state);
+        console.log(e.state != null);
         // site was home
         if (e.state == 'home')
             return;
-        else if ( e.state == 'steine' || id == 'steine')
+        else if ( e.state == 'steine' || (e.state == null && id == 'steine'))
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+        else if ( e.state == 'geschichten' ||(e.state == null && id == 'geschichten'))
+            m.mount(document.getElementById('rs-body'), {view: () => m(GeschichteIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+        else if ( e.state == 'fundorte' || (e.state == null && id == 'fundorte'))
+            m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+        else if ( e.state == 'geologie' || (e.state == null && id == 'geologie'))
+            m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
         // render rock state there is any
         else if ( e.state != null )
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': e.state, 'map':myMap, 'frame':frame, 'pushState': false})});
