@@ -1,5 +1,15 @@
 {% extends "layouts/base_app.html" %}
 
+{% block metadescription -%}
+    {% if ste %}
+        {{ste['description']}}
+    {% else %}
+        {{_('Entdecken Sie in der Ausstellung unsere Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.')}}
+    {% endif %}
+{%- endblock %}
+
+
+
 {% block body %}
 <noscript>
     <style>
