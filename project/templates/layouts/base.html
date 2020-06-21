@@ -19,7 +19,7 @@
 
         <div id="rs-backend-navigation">
             <a id="rs-backend-logo" href="{{ url_for('reisesteine.index') }}">
-                <img src="{{ url_for('static', filename='img/logo.svg') }}"/> Reisesteine
+                <img src="{{ url_for('static', filename='img/logo.svg') }}"/> {{_('Reisesteine')}}
             </a>
             <span id="rs-backend-lang">
                 <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> / 

@@ -8,7 +8,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header d-flex">
-                        <h5>Absender</h5>
+                        <h5>{{_('Absender')}}</h5>
                         {% if form.user_id.data %}
                             <button type="button" id="user_edit" class="btn btn-primary btn-sm ml-auto">edit</button>
                         {% endif %}
@@ -68,7 +68,7 @@
 
                 <div class="card">
                     <div class="card-header d-flex">
-                        <h5>Gestein</h5>
+                        <h5>{{_('Gestein')}}</h5>
                         {% set gestein = true if form.gestein_id.data else false%}
                         {% if gestein %}
                             <button type="button" id="gestein_edit" class="btn btn-primary btn-sm ml-auto">edit</button>
@@ -96,7 +96,7 @@
                 </div>
 
                 <div class="card mt-4">
-                    <h5 class="card-header">Stein</h5>
+                    <h5 class="card-header">{{_('Stein')}}</h5>
                     <div class="card-body">
                         <div class="form-row">
                             <div class="form-group col-md-6">
@@ -109,7 +109,7 @@
                                     {{ form.published(class_="form-check-input") }}
                                     {{ form.published.label(class_="form-check-label")}}
                                 </div>
-                                <a target="_blank" href="#" class="btn btn-primary mt-2 ml-3">Vorschau</a>
+                                <a target="_blank" href="#" class="btn btn-primary mt-2 ml-3">{{_('Vorschau')}}</a>
                             </div>
                         </div>
                         <div class="form-row">
@@ -127,7 +127,7 @@
                             <div class="form-group col-md-6">
                                 {{ form.latitude.label }}
                                 {{ form.latitude(class_="form-control" + (" is-invalid" if form.latitude.errors else "")) }}
-                                <small id="latitudeHelp" class="form-text text-muted">Koordinaten oder Dezimalzahl</small>
+                                <small id="latitudeHelp" class="form-text text-muted">{{_('Koordinaten oder Dezimalzahl')}}</small>
                                 {% for error in form.latitude.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
@@ -137,7 +137,7 @@
                             <div class="form-group col-md-6">
                                 {{ form.longitude.label }}
                                 {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
-                                <small id="longitudeHelp" class="form-text text-muted">Koordinaten oder Dezimalzahl</small>
+                                <small id="longitudeHelp" class="form-text text-muted">{{_('Koordinaten oder Dezimalzahl')}}</small>
                                 {% for error in form.longitude.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
@@ -219,14 +219,14 @@
                     <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 600</small>
                 </div>
                 <div class="form-group">
-                    {{ form.description.label }} <small class="form-text text-muted">Beschreibung für Google Suchresultate</small>
+                    {{ form.description.label }} <small class="form-text text-muted">{{_('Beschreibung für Google Suchresultate')}}</small>
                     {{ form.description(class_="form-control", rows=5, maxlength="160") }}
                     <small id="descHelp" class="form-text text-muted"><span id="current_desc">0</span>/ 160</small>
                 </div>
             </div>
             <div class="col-12">
                 {{ form.submit(class_="btn btn-primary") }}
-                <a class="btn btn-secondary" href="{{ url_for('reisesteine.listSteine') }}">Verwerfen</a>
+                <a class="btn btn-secondary" href="{{ url_for('reisesteine.listSteine') }}">{{_('Verwerfen')}}</a>
             </div>
         </div>
     </form>

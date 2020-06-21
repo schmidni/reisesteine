@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-05-04 16:26+0200\n"
+"POT-Creation-Date: 2020-06-21 16:17+0200\n"
 "PO-Revision-Date: 2020-05-04 16:26+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -17,4 +17,304 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.8.0\n"
+
+#: project/blueprints/reisesteine/forms.py:14
+msgid "Stein ID"
+msgstr "Stone ID"
+
+#: project/blueprints/reisesteine/forms.py:15
+msgid "Absender ID"
+msgstr "Sender ID"
+
+#: project/blueprints/reisesteine/forms.py:16
+msgid "Gestein ID"
+msgstr "Rock Type ID"
+
+#: project/blueprints/reisesteine/forms.py:18
+msgid "Vorname*"
+msgstr "First Name *"
+
+#: project/blueprints/reisesteine/forms.py:19
+msgid "Nachname"
+msgstr "Surname"
+
+#: project/blueprints/reisesteine/forms.py:20
+msgid "Wohnort *"
+msgstr "Place of residence *"
+
+#: project/blueprints/reisesteine/forms.py:21
+msgid "Email *"
+msgstr "Email *"
+
+#: project/blueprints/reisesteine/forms.py:22
+msgid "Telefonnummer"
+msgstr "Phone Number"
+
+#: project/blueprints/reisesteine/forms.py:23
+msgid "Instagram"
+msgstr "Instagram"
+
+#: project/blueprints/reisesteine/forms.py:24
+msgid "Twitter"
+msgstr "Twitter"
+
+#: project/blueprints/reisesteine/forms.py:25
+msgid "Facebook"
+msgstr "Facebook"
+
+#: project/blueprints/reisesteine/forms.py:27
+msgid "Gestein*"
+msgstr "Rock Type *"
+
+#: project/blueprints/reisesteine/forms.py:29
+msgid "Herkunft *"
+msgstr "Locality *"
+
+#: project/blueprints/reisesteine/forms.py:30
+msgid "Land *"
+msgstr "Country *"
+
+#: project/blueprints/reisesteine/forms.py:31
+msgid "Longitude *"
+msgstr "Longitude *"
+
+#: project/blueprints/reisesteine/forms.py:32
+msgid "Latitude *"
+msgstr "Latitude *"
+
+#: project/blueprints/reisesteine/forms.py:33
+msgid "Titel"
+msgstr "Title"
+
+#: project/blueprints/reisesteine/forms.py:34
+msgid "Persönliche Geschichte"
+msgstr "Personal Story"
+
+#: project/blueprints/reisesteine/forms.py:35
+msgid "Geologische Einschätzung *"
+msgstr "Geological Assessment"
+
+#: project/blueprints/reisesteine/forms.py:36
+msgid "Bild Stein *"
+msgstr "Image Stone"
+
+#: project/blueprints/reisesteine/forms.py:36
+#: project/blueprints/reisesteine/forms.py:37
+msgid "Bitte nur Bilder hochladen."
+msgstr "Images only."
+
+#: project/blueprints/reisesteine/forms.py:37
+msgid "Bild Fundort *"
+msgstr "Image Place"
+
+#: project/blueprints/reisesteine/forms.py:38
+msgid "Published"
+msgstr "Published"
+
+#: project/blueprints/reisesteine/forms.py:39
+msgid "Meta Description *"
+msgstr "Meta Description"
+
+#: project/blueprints/reisesteine/forms.py:41
+msgid "Speichern"
+msgstr "Save"
+
+#: project/blueprints/reisesteine/forms.py:66
+msgid "Dieses Gestein gibt es bereits. Wert zurückgesetzt"
+msgstr "This rock type already exists, value has been reset."
+
+#: project/blueprints/reisesteine/forms.py:77
+msgid "Diese Email gibt es bereits. Wert zurückgesetzt."
+msgstr "This email already exists, value has been reset."
+
+#: project/blueprints/reisesteine/forms.py:83
+#: project/blueprints/reisesteine/forms.py:89
+msgid "Stein Bild wird benötigt."
+msgstr "Stone image is required."
+
+#: project/blueprints/reisesteine/forms.py:94
+msgid "Stein Bild zu gross."
+msgstr "Stone image file size too large."
+
+#: project/blueprints/reisesteine/forms.py:101
+#: project/blueprints/reisesteine/forms.py:107
+msgid "Fundort Bild wird benötigt."
+msgstr "Place image is required."
+
+#: project/blueprints/reisesteine/forms.py:112
+msgid "Bild Fundort zu gross."
+msgstr "Place image file size too large."
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:4
+msgid ""
+"Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der "
+"Steine» von Anna Sullivan und wurde von focusTerra weiterentwickelt."
+msgstr ""
+"The idea for the exhibition is based on the project \"Nowhere - The Trace"
+" of Stones\" by Anna Sullivan and was further developed by focusTerra."
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:78
+msgid "Über REISESTEINE"
+msgstr "About"
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:80
+msgid ""
+"Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in "
+"die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt "
+"oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung "
+"Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die"
+" Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere "
+"gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit"
+" verbundenen persönlichen und geologischen Geschichten kennen."
+msgstr ""
+"Are you also constantly gripped by the desire to travel and the longing "
+"to go out into the world? Travel with your stones to the end of the world"
+" or to your front garden. The exhibition is a virtual collection of your "
+"favourite stones from somewhere in the world and the history you "
+"associate with them. In the exhibition you can discover more about our "
+"jointly created stone collection, its locations and learn about the "
+"personal and geological stories associated with it. "
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:83
+msgid ""
+"Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der "
+"Steine» von Anna Sullivan und wurde von focusTerra weiterentwickelt. Die "
+"Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid."
+msgstr ""
+"The idea for the exhibition is based on the project \"Nowhere - The Trace"
+" of Stones\" by Anna Sullivan and was further developed by focusTerra. "
+"The exhibition was designed and set up together with Marion Deichmann and"
+" Nicolas Schmid."
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:86
+msgid "Konzeptentwicklerin, Herausgeberin & Redaktion:"
+msgstr "Concept developer, publisher & editor:"
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:87
+msgid "Gestaltung & technische Umsetzung:"
+msgstr "Design & technical implementation:"
+
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:7
+msgid ""
+"Entdecken Sie in der Ausstellung unsere Steinsammlung, ihre Fundorte und "
+"lernen Sie die damit verbundenen persönlichen und geologischen "
+"Geschichten kennen."
+msgstr ""
+"Discover more about our jointly created stone collection, its locations "
+"and learn about the personal and geological stories associated with it."
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:99
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:71
+msgid "Stein"
+msgstr "Stone"
+
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:71
+msgid "Geschichte"
+msgstr "History"
+
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:71
+msgid "Fundort"
+msgstr "Place"
+
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:71
+#: project/templates/components/navigation.html:37
+msgid "Geologie"
+msgstr "Geology"
+
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:4
+msgid ""
+"Haben Sie auf Ihrer Reisen einen Stein gefunden, den Sie interessant "
+"finden oder der Sie einfach an Ihre Reise oder ein Ereignis erinnert? "
+"Dann machen Sie mit!"
+msgstr ""
+"Have you found a stone on one of your trips that you like, that you find "
+"interesting or that simply reminds you of your trip or an event? Then "
+"take part! "
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:11
+msgid "Absender"
+msgstr "Sender"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:71
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:11
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:12
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:34
+msgid "Gestein"
+msgstr "Rock Type"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:112
+msgid "Vorschau"
+msgstr "Preview"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:130
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:140
+msgid "Koordinaten oder Dezimalzahl"
+msgstr "Coordinates or Decimal"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:222
+msgid "Beschreibung für Google Suchresultate"
+msgstr "Description for Google search results."
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:229
+msgid "Verwerfen"
+msgstr "Discard Changes"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:6
+msgid "Neuer Stein"
+msgstr "New Stone"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:15
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:17
+msgid "Email Einsender"
+msgstr "Email Sender"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:21
+msgid "Erstellen"
+msgstr "Create"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:35
+msgid "Herkunft"
+msgstr "Locality"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:36
+msgid "Einsender"
+msgstr "Sender"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:50
+msgid "editiern"
+msgstr "edit"
+
+#: project/blueprints/reisesteine/templates/reisesteine/backend/listSteine.html:53
+msgid "löschen"
+msgstr "delete"
+
+#: project/templates/components/navigation.html:6
+#: project/templates/components/navigation.html:31
+msgid "Reisesteine"
+msgstr "Travelstones"
+
+#: project/templates/components/navigation.html:7
+msgid "Eine interaktive virtuelle Ausstellung von"
+msgstr "A virtual interactive exhibition by"
+
+#: project/templates/components/navigation.html:34
+msgid "Steine"
+msgstr "Stones"
+
+#: project/templates/components/navigation.html:35
+msgid "Geschichten"
+msgstr "Stories"
+
+#: project/templates/components/navigation.html:36
+msgid "Fundorte"
+msgstr "Places"
+
+#: project/templates/components/navigation.html:41
+#: project/templates/components/navigation.html:42
+msgid "Mitmachen"
+msgstr "Participate"
+
+#: project/templates/components/navigation.html:43
+msgid "Über Uns"
+msgstr "About us"
 

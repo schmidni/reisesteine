@@ -75,16 +75,16 @@
 <div id="rs-body" data-stein="{{id}}"></div>
 
 <div id="rs-about">
-    <h1>Über REISESTEINE</h1>
+    <h1>{{_('Über REISESTEINE')}}</h1>
     <p>
-        Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen. 
+        {{_('Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.')}}
     </p>
     <p>
-        Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von focusTerra weiterentwickelt. Die Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid. 
+        {{_('Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von focusTerra weiterentwickelt. Die Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid.')}} 
     </p>
     <p>
-        <b>Konzeptentwicklerin, Herausgeberin & Redaktion:</b> <a href="{{ url_for('reisesteine.focusTerra') }}">focusTerra</a><br/>
-        <b>Gestaltung & technische Umsetzung:</b> <a href="{{ url_for('reisesteine.marion') }}">Marion Deichmann</a> und <a href="{{ url_for('reisesteine.nicolas') }}">Nicolas Schmid</a>
+        <b>{{_('Konzeptentwicklerin, Herausgeberin & Redaktion:')}}</b> <a href="{{ url_for('reisesteine.focusTerra') }}">focusTerra</a><br/>
+        <b>{{_('Gestaltung & technische Umsetzung:')}}</b> <a href="{{ url_for('reisesteine.marion') }}">Marion Deichmann</a> und <a href="{{ url_for('reisesteine.nicolas') }}">Nicolas Schmid</a>
     </p>
     <p style="display: flex; margin-top: 50px;">
     <img src=" {{ url_for('static', filename='img/eth_logo.svg') }} " width="300"/>

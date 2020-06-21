@@ -7,6 +7,13 @@ export default class SteinNavigation {
         this.slides = [];
         this.SteinLine = null;
         this.navigating = false;
+        let navStrings = document.getElementById('rs-nav-rock-strings');
+        this.strings = [ 
+                            navStrings.getAttribute('data-ste'),
+                            navStrings.getAttribute('data-gesch'),
+                            navStrings.getAttribute('data-fund'),
+                            navStrings.getAttribute('data-geo'),
+        ]
     }
 
     switchIt = async (target_in) => {
@@ -22,6 +29,9 @@ export default class SteinNavigation {
     };
 
     oncreate(ctrl) {
+
+        console.log(this.strings);
+
         this.SteinLine = ctrl.attrs.SteinLine;
         this.menu = [   ctrl.dom.querySelector('.rs-menu-stein'),
                         ctrl.dom.querySelector('.rs-menu-geschichte'),
@@ -64,10 +74,10 @@ export default class SteinNavigation {
                             <line class="a" x1="65.8" y1="29.45" x2="39.38" y2="58.92"/>
                         </svg>
                     </div>
-                    <h4 class="active rs-menu-stein">Stein</h4> 
-                    <h4 class="rs-menu-geschichte">Geschichte</h4> 
-                    <h4 class="rs-menu-fundort">Fundort</h4> 
-                    <h4 class="rs-menu-geologie">Geologie</h4>
+                    <h4 class="active rs-menu-stein">{this.strings[0]}</h4> 
+                    <h4 class="rs-menu-geschichte">{this.strings[1]}</h4> 
+                    <h4 class="rs-menu-fundort">{this.strings[2]}</h4> 
+                    <h4 class="rs-menu-geologie">{this.strings[3]}</h4>
                 </div>
             </div>
         )

@@ -1,4 +1,5 @@
 from flask_wtf import FlaskForm
+from flask_babel import lazy_gettext as _l
 from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, BooleanField, SubmitField, DecimalField, TextAreaField, IntegerField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional
@@ -10,34 +11,34 @@ import re
 import os
 
 class editSteinForm(FlaskForm):
-    stein_id =          IntegerField('Stein ID', validators=[Optional()])
-    user_id =           IntegerField('Absender ID', validators=[Optional()])
-    gestein_id =        IntegerField('Gestein ID', validators=[Optional()])
+    stein_id =          IntegerField(_l('Stein ID'), validators=[Optional()])
+    user_id =           IntegerField(_l('Absender ID'), validators=[Optional()])
+    gestein_id =        IntegerField(_l('Gestein ID'), validators=[Optional()])
 
-    vorname =           StringField('Vorname*', validators=[DataRequired()])
-    nachname =          StringField('Nachname')
-    wohnort =           StringField('Wohnort *', validators=[DataRequired()])
-    email =             EmailField('Email *', validators=[DataRequired(), Email()])
-    telefon =           StringField('Telefonnummer')
-    instagram =         StringField('Instagram')
-    twitter =           StringField('Twitter')
-    facebook =          StringField('Facebook')
+    vorname =           StringField(_l('Vorname*'), validators=[DataRequired()])
+    nachname =          StringField(_l('Nachname'))
+    wohnort =           StringField(_l('Wohnort *'), validators=[DataRequired()])
+    email =             EmailField(_l('Email *'), validators=[DataRequired(), Email()])
+    telefon =           StringField(_l('Telefonnummer'))
+    instagram =         StringField(_l('Instagram'))
+    twitter =           StringField(_l('Twitter'))
+    facebook =          StringField(_l('Facebook'))
 
-    gestein =           StringField('Gestein*', validators=[DataRequired()])
+    gestein =           StringField(_l('Gestein*'), validators=[DataRequired()])
     
-    herkunft =          StringField('Herkunft *', validators=[DataRequired()])
-    land =              StringField('Land *', validators=[DataRequired()])
-    longitude =         StringField('Longitude *', validators=[DataRequired()])
-    latitude =          StringField('Latitude *', validators=[DataRequired()])
-    titel =             StringField('Titel')
-    pers_geschichte =   TextAreaField('Persönliche Geschichte')
-    geo_geschichte =    TextAreaField('Geologische Einschätzung *', validators=[DataRequired()])
-    bild_stein =        FileField('Bild Stein *', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
-    bild_herkunft =     FileField('Bild Fundort *', validators=[FileAllowed(['jpg', 'png', 'gif'], 'Images only!')])
-    published =         BooleanField('Published', default=False)
-    description =       TextAreaField('Meta Description *', validators=[DataRequired()])
+    herkunft =          StringField(_l('Herkunft *'), validators=[DataRequired()])
+    land =              StringField(_l('Land *'), validators=[DataRequired()])
+    longitude =         StringField(_l('Longitude *'), validators=[DataRequired()])
+    latitude =          StringField(_l('Latitude *'), validators=[DataRequired()])
+    titel =             StringField(_l('Titel'))
+    pers_geschichte =   TextAreaField(_l('Persönliche Geschichte'))
+    geo_geschichte =    TextAreaField(_l('Geologische Einschätzung *'), validators=[DataRequired()])
+    bild_stein =        FileField(_l('Bild Stein *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
+    bild_herkunft =     FileField(_l('Bild Fundort *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
+    published =         BooleanField(_l('Published'), default=False)
+    description =       TextAreaField(_l('Meta Description *'), validators=[DataRequired()])
 
-    submit = SubmitField('Speichern')
+    submit = SubmitField(_l('Speichern'))
 
     def validate_longitude(self, longitude):
         try:
@@ -62,7 +63,7 @@ class editSteinForm(FlaskForm):
         else:
             by_id = None
         if by_name is not None and by_name != by_id:
-            raise ValidationError('Dieses Gestein gibt es bereits. Wert zurückgesetzt')
+            raise ValidationError(_l('Dieses Gestein gibt es bereits. Wert zurückgesetzt'))
 
     def validate_email(self, email):
         by_name = Person.query.filter_by(email=email.data).first()
@@ -73,42 +74,42 @@ class editSteinForm(FlaskForm):
             by_id = None
         if by_name is not None and by_name != by_id:
             self.email.data = email.data
-            raise ValidationError('Diese Email gibt es bereits. Wert zurückgesetzt.')
+            raise ValidationError(_l('Diese Email gibt es bereits. Wert zurückgesetzt.'))
 
         
     def validate_bild_stein(self, bild_stein):
         # if stein gets created, require bild
         if not self.stein_id.data and not bild_stein.data:
-            raise ValidationError('Stein Bild Required')
+            raise ValidationError(_l('Stein Bild wird benötigt.'))
         # check if an image exists in db
         bild = Stein.query.get(self.stein_id.data)
         if bild:
             bild = bild.bild_stein
             if not bild_stein.data and not bild:
-                raise ValidationError('Stein Bild Required')
+                raise ValidationError(_l('Stein Bild wird benötigt.'))
         # check image size
         if bild_stein.data:
             bild_stein.data.seek(0, os.SEEK_END)
             if bild_stein.data.tell() > 1*1024*1024:
-                raise ValidationError('Stein Bild zu gross')
+                raise ValidationError(_l('Stein Bild zu gross.'))
             bild_stein.data.seek(0)
 
 
     def validate_bild_herkunft(self, bild_herkunft):
         # if stein gets created, require bild
         if not self.stein_id.data and not bild_herkunft.data:
-            raise ValidationError('Stein Bild Required')
+            raise ValidationError(_l('Fundort Bild wird benötigt.'))
         # check if an image exists in db
         bild = Stein.query.get(self.stein_id.data)
         if bild:
             bild = bild.bild_herkunft
             if not bild_herkunft.data and not bild:
-                raise ValidationError('Herkunft Bild Required')
+                raise ValidationError(_l('Fundort Bild wird benötigt.'))
         # check image size
         if bild_herkunft.data:
             bild_herkunft.data.seek(0, os.SEEK_END)
             if bild_herkunft.data.tell() > 2*1024*1024:
-                raise ValidationError('Stein Fundort zu gross')
+                raise ValidationError(_l('Bild Fundort zu gross.'))
             bild_herkunft.data.seek(0)
 
 
