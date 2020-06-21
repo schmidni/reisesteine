@@ -45,22 +45,23 @@ def verify_password(username, password):
 
 
 # Frontend Routes ************************************
-@auth.login_required
 @reisesteine.route('/')
+@auth.login_required
 def index():
     steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', steine=steine, ste=None)
 
-@auth.login_required
 @reisesteine.route('/uber-uns', defaults={'lang_code': 'de'})
 @reisesteine.route('/about', defaults={'lang_code': 'en'})
+@auth.login_required
 def about():
     steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/about.html', steine=steine, id='about')
 
-@auth.login_required
+
 @reisesteine.route('/stein/<id>', defaults={'lang_code': 'de'})
 @reisesteine.route('/stone/<id>', defaults={'lang_code': 'en'})
+@auth.login_required
 def stein(id):        
     ste = Stein.query.get(id)
     if not ste or not ste.published:
@@ -77,30 +78,34 @@ def get_stein(id):
     else:
         return make_response('Not Found', 404)
 
-@auth.login_required
+
 @reisesteine.route('/steine', defaults={'lang_code': 'de'})
 @reisesteine.route('/stones', defaults={'lang_code': 'en'})
+@auth.login_required
 def steine():
     steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', id='steine', steine=steine, ste=None)
 
-@auth.login_required
+
 @reisesteine.route('/geschichten', defaults={'lang_code': 'de'})
 @reisesteine.route('/stories', defaults={'lang_code': 'en'})
+@auth.login_required
 def geschichten():
     steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', id='geschichten', steine=steine, ste=None)
 
-@auth.login_required
+
 @reisesteine.route('/geologie', defaults={'lang_code': 'de'})
 @reisesteine.route('/geology', defaults={'lang_code': 'en'})
+@auth.login_required
 def geologie():
     steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', id='geologie', steine=steine, ste=None)
 
-@auth.login_required
+
 @reisesteine.route('/fundorte', defaults={'lang_code': 'de'})
 @reisesteine.route('/places', defaults={'lang_code': 'en'})
+@auth.login_required
 def fundorte():
     steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
     return render_template('reisesteine/home.html', id='fundorte', steine=steine, ste=None)
@@ -145,6 +150,7 @@ def focusTerra():
 # Mitmachen Routes *************************************
 @reisesteine.route('/mitmachen', defaults={'lang_code': 'de'})
 @reisesteine.route('/participate', defaults={'lang_code': 'en'})
+@auth.login_required
 def mitmachen():
     return render_template('reisesteine/mitmachen.html')
 
