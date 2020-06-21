@@ -109,12 +109,18 @@ h4.active {
     left: 200vw;
 }
 
-.rs-path{
+.rs-path {
     fill:none;
     stroke-width:5px;
     stroke: #966e28;
     stroke-dasharray:30 10;
 }
+
+.rs-path-dot {
+    fill: #966e28;
+    stroke: none;
+}
+
 
 .rs-path-dot.rs-path-blue{
     fill: #145064;
@@ -327,7 +333,10 @@ h4.active {
     z-index: 4;
     height: 30px;
     width: 30px;
-    fill: rgb(180, 30, 30);
+    fill: none;
+    stroke: rgb(180, 30, 30);
+    stroke-width: 4px;
+    
 }
 
 .rs-footer-content {
@@ -450,6 +459,10 @@ h4.active {
     background-color: rgba(256, 256, 256, 0.65);
 }
 
+#rs-nav-background.active.open {
+    background-color: rgba(256, 256, 256, 0.65);
+}
+
 #rs-nav {
     position: absolute;
     left: -600px;
@@ -535,7 +548,7 @@ h4.active {
 
 #rs-nav .rs-nav-line {
     position: absolute;
-    top: 11vh;
+    top: 8vh;
     left: 0;
     width: 500px;
     height: 577px;

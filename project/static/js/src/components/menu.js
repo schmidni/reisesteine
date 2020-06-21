@@ -37,7 +37,8 @@ export default class Menu {
         const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
         this.smallNav.style.display = 'none';
-        
+        this.navBackground.classList.add('open');
+
         anime({
             targets: this.navBackground,
             // translateY: [0, -vh * 0.25 + 100],
@@ -103,6 +104,8 @@ export default class Menu {
             easing: 'easeOutQuad',
             duration: 750,
             delay: 500
+        }).finished.then(() => {
+            this.navBackground.classList.remove('open');
         });
         anime({
             targets: this.nav,

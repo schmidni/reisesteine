@@ -58,8 +58,10 @@ export default class SteinNavigation {
             <div class="rs-footer circle">
                 <div class="rs-footer-content">
                     <div class="rs-menu-next" style="cursor: pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" preserveAspectRatio="none">
-                            <path d="M190.5 66.9l22.2-22.2c9.4-9.4 24.6-9.4 33.9 0L441 239c9.4 9.4 9.4 24.6 0 33.9L246.6 467.3c-9.4 9.4-24.6 9.4-33.9 0l-22.2-22.2c-9.5-9.5-9.3-25 .4-34.3L311.4 296H24c-13.3 0-24-10.7-24-24v-32c0-13.3 10.7-24 24-24h287.4L190.9 101.2c-9.8-9.3-10-24.8-.4-34.3z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 67.29 60.26">
+                            <line class="a" y1="30.13" x2="65.04" y2="30.13"/>
+                            <line class="a" x1="65.8" y1="30.81" x2="39.38" y2="1.34"/>
+                            <line class="a" x1="65.8" y1="29.45" x2="39.38" y2="58.92"/>
                         </svg>
                     </div>
                     <h4 class="active rs-menu-stein">Stein</h4> 
