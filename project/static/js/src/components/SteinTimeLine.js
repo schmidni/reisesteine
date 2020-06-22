@@ -1,5 +1,5 @@
 import anime from 'animejs';
-import {setUpImage} from '../util/draggableImage.js'
+import DraggableImage from '../util/draggableImage.js'
 
 export default class SteinTimeLine {
 
@@ -13,7 +13,6 @@ export default class SteinTimeLine {
 
         this.current = 'stein';
         this.fundort_rect = null;
-        this.startLineAnimations();
         this.startAnimationCoords();
     }
 
@@ -22,7 +21,7 @@ export default class SteinTimeLine {
             this.frame.navigate('full');
         }
         else if (this.current == 'fundort'){
-            await this.resetFundort(this.fundort_rect);
+            await this.draggableImage.animateDown();
             this.geschichte.style.width = "auto";
             this.fundort.classList.remove('active');
         }
@@ -44,7 +43,10 @@ export default class SteinTimeLine {
 
             await this.rotate(this.fundort, [-10, 0]);
             this.geschichte.style.width = "200vw";
-            this.fundort_rect = await setUpImage(this.fundort);
+
+            this.draggableImage = new DraggableImage(this.fundort);
+            await this.draggableImage.init();
+
             this.fundort.classList.add('active');
             this.current = 'fundort';
         }
@@ -75,33 +77,9 @@ export default class SteinTimeLine {
         }).finished;
     }
 
-    resetFundort (rect) {
-        return anime({
-            targets: this.fundort,
-            translateX: 0,
-            translateY: 0,
-            translateZ: 0,
-            rotate: -10,
-            width: rect.width,
-            height: rect.height,
-            duration: 1500,
-            easing: 'easeOutQuad'
-        }).finished;
-    }
-
-    startLineAnimations () {
-        anime({
-            targets: ".rs-svg",
-            opacity: [0, 1],
-            duration: 1000,
-            easing: "easeInQuad",
-            delay: 500
-        })
-    }
-
     startAnimationCoords () {
         anime({
-            targets: [this.coord, this.stein],
+            targets: [this.coord, this.stein, ".rs-svg"],
             opacity: [0, 1],
             duration: 1000,
             easing: "easeInOutQuad",

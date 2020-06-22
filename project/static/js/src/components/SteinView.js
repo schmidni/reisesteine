@@ -18,7 +18,7 @@ export default class SteinView {
 
         if (!this.media.matches) {
             this.SteinLine = new SteinTimeLine(ctrl.attrs.frame, this.coordinates, this.bild, this.geschichte, this.fundort, this.geologie);
-            m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine}));
+            ctrl.attrs.done.then(() => m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine})));
         } else {
             document.querySelector('.rs-content').addEventListener('touchmove', () => {
                 ctrl.attrs.frame.navigate('mobilefull');

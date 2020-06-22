@@ -15,9 +15,8 @@ export default class SteinMain {
         this.media = window.matchMedia("(max-width: 1025px)")
         this.refOverview = ctrl.attrs.overview ? ctrl.attrs.overview : null;
 
-        // frontend navigate, request data
+        // request data
         if (!ctrl.attrs.data){
-            // API: Rock Info
             m.request({
                 method: "GET",
                 url: `/${document.documentElement.lang}/steine/${ctrl.attrs.id}`,
@@ -111,8 +110,6 @@ export default class SteinMain {
 
         // keep Close and Navigation disabled during animation
         let frameDone = new Promise(res => {return res()});
-
-        // navigate frame
         if( this.media.matches)
             frameDone = this.frame.navigate('mobile');
         else
@@ -120,16 +117,13 @@ export default class SteinMain {
         
         // zoom in
         this.keepMarkerCentered();
-
         window.addEventListener('resize', this.keepMarkerCentered);
 
         // CONTENT
-        m.render(document.getElementById('rs-info'), m(SteinView, {fadeIn: true, info: this.info, frame: this.frame, overview: this.refOverview}));
+        m.render(document.getElementById('rs-info'), m(SteinView, {fadeIn: true, info: this.info, frame: this.frame, overview: this.refOverview, done: frameDone}));
 
-        // enable CLOSE and NAVIGATION
-        frameDone.then(() => {
-            document.querySelector('.rs-close').style.display = "block";  
-        });
+        // enable CLOSE
+        frameDone.then(() => {document.querySelector('.rs-close').style.display = "block"});
     }
 
     onremove(ctrl) {

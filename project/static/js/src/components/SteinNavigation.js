@@ -29,9 +29,6 @@ export default class SteinNavigation {
     };
 
     oncreate(ctrl) {
-
-        console.log(this.strings);
-
         this.SteinLine = ctrl.attrs.SteinLine;
         this.menu = [   ctrl.dom.querySelector('.rs-menu-stein'),
                         ctrl.dom.querySelector('.rs-menu-geschichte'),

@@ -48,7 +48,7 @@ export default class GeologieIndex {
         // replace overlay
         this.frame.paths.current = 'full';
         document.getElementById('svg-path').setAttribute('d', this.frame.calculatePath('full'));
-        console.log(e.target);
+
         // load Stein component
         m.mount(document.getElementById('rs-body'), {
             view: () => m(SteinMain, {'id': id, 'map':this.map, 'frame':this.frame, 'pushState': true, 'overview': 'geologie'}

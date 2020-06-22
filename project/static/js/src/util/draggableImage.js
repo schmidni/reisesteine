@@ -1,73 +1,107 @@
 import interact from 'interactjs';
 import anime from 'animejs';
 
-// export default class DraggableImage {
-//     constructor(slide) {
+export default class DraggableImage {
+    constructor(slide) {
+        this.slide = slide;
+        this.slide_rect = this.slide.getBoundingClientRect();
 
-//     }
-// }
+        this.vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
+        this.vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
 
+        this.oldx = 0;
+        this.oldy = 0;
 
-// ********** helper function to make fundort image cover fullscreen ************************
-export var setUpImage = async function (slide) {
-    const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
-    const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-    let slide_rect = null;
-    slide_rect = slide.getBoundingClientRect();
+        // Calculate start size and position
+        let factor = this.vh*1.05 / this.slide_rect.height;
+        let temp_w = this.slide_rect.width * factor;
     
-    let factor = vh*1.05 / slide_rect.height;
-    let temp_w = slide_rect.width * factor;
-
-    if (temp_w < vw*1.05)
-        factor = vw*1.05 / slide_rect.width;
+        if (temp_w < this.vw*1.05)
+            factor = this.vw*1.05 / this.slide_rect.width;
+        
+        this.target_w = this.slide_rect.width*factor;
+        this.target_h = this.slide_rect.height*factor;
     
-    let target_w = slide_rect.width*factor;
-    let target_h = slide_rect.height*factor;
+        this.position = { x: -(this.target_w - this.vw) / 2 - this.slide_rect.left, y: -(this.target_h - this.vh) / 2 -this.slide_rect.top}
+    }
 
-    anime({
-        targets: slide,
-        duration: 1500,
-        easing: 'easeInOutQuad'
-    });
+    init = async () => {
+        let wait = await this.animateUp();
+        this.initInteract();
+        document.addEventListener('mousemove', this.mousemovemethod);
+        return wait;
+    }
 
-    // set up draggable
-    const position = { x: -(target_w - vw) / 2 - slide_rect.left, y: -(target_h - vh) / 2 -slide_rect.top}
+    animateUp = () => {
+        return anime({
+            targets: this.slide,
+            translateX: [0, this.position.x],
+            translateY: [0, this.position.y],
+            width: [this.slide_rect.width, this.target_w],
+            height: [this.slide_rect.height, this.target_h],
+            translateZ: 0,
+            duration: 1500,
+            easing: 'easeInQuad'
+        }).finished;
+    }
 
-    await anime({
-        targets: slide,
-        translateX: [0, position.x],
-        translateY: [0, position.y],
-        width: [slide_rect.width, target_w],
-        height: [slide_rect.height, target_h],
-        translateZ: 0,
-        duration: 1500,
-        easing: 'easeInQuad'
-    }).finished;
+    animateDown = () => {
+        interact(this.slide).unset();
+        document.removeEventListener('mousemove', this.mousemovemethod);
+        return anime({
+            targets: this.slide,
+            translateX: 0,
+            translateY: 0,
+            translateZ: 0,
+            width: this.slide_rect.width,
+            height: this.slide_rect.height,
+            rotate: -10,
+            duration: 1000,
+            easing: 'easeOutQuad'
+        }).finished;
+    }
 
-    interact(slide).draggable({
-        listeners: {
-            move (event) {
-                position.x += event.dx
-                position.y += event.dy
+    initInteract = () => {
+        let position = this.position;
+        let vw = this.vw;
+        let vh = this.vh;
+        let slide_rect = this.slide_rect;
+        let target_w = this.target_w;
+        let target_h = this.target_h;
 
-                // clamp position
-                position.x = Math.min(Math.max(position.x, vw-target_w - slide_rect.left), -slide_rect.left);
-                position.y = Math.min(Math.max(position.y, vh-target_h - slide_rect.top), -slide_rect.top);
-
-                event.target.style.transform =
-                    `translateX(${position.x}px) translateY(${position.y}px)`;
-
+        interact(this.slide).draggable({
+            listeners: {
+                move (event) {
+                    position.x += event.dx
+                    position.y += event.dy
+    
+                    // clamp position
+                    position.x = Math.min(Math.max(position.x, vw-target_w - slide_rect.left), -slide_rect.left);
+                    position.y = Math.min(Math.max(position.y, vh-target_h - slide_rect.top), -slide_rect.top);
+    
+                    event.target.style.transform =
+                        `translateX(${position.x}px) translateY(${position.y}px)`;
+                }
+            },
+            inertia: {
+                resistance: 5,
+                minSpeed: 10,
+                smoothEndDuration: 400
+            },
+            cursorChecker () {
+                return null
             }
-        },
-        inertia: {
-            resistance: 5,
-            minSpeed: 10,
-            smoothEndDuration: 400
-        },
-        cursorChecker () {
-            return null
-        }
-    });
+        });
+    }
 
-    return slide_rect;
+    mousemovemethod = (e) => {
+        this.position.x += (e.pageX-this.oldx)*0.007;
+        this.position.y += (e.pageY-this.oldy)*0.007;
+
+        this.slide.style.transform =
+            `translateX(${this.position.x}px) translateY(${this.position.y}px)`
+
+        this.oldx = e.pageX;
+        this.oldy = e.pageY;
+    }
 }
