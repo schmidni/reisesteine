@@ -8,8 +8,9 @@ export default class svgFrame {
         this.settings = {
             animation: {
                 shape: {
-                    duration: 1000,
-                    easing: {in: 'easeOutQuint', out: 'easeOutQuad'}
+                    duration: 1500,
+                    easing: {in: 'easeOutQuint', out: 'easeOutQuad'},
+                    delay: 500
                 }
             },
             frameFill: 'rgba(256, 256, 256, 0.7)'
@@ -94,6 +95,7 @@ export default class svgFrame {
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.in,
+                delay: this.settings.animation.shape.delay,
                 d: this.calculatePath('mobile')
             }).finished.then( () => {
                 this.isAnimating = false
@@ -118,6 +120,7 @@ export default class svgFrame {
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
+                delay: this.settings.animation.shape.delay,
                 d: this.calculatePath('offset')
             }).finished.then( () => {
                 this.isAnimating = false

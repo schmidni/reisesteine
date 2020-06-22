@@ -275,11 +275,11 @@ def editStein(id):
 def unique_filename(folder, filename):
     output_filename, file_extension = os.path.splitext(filename)
     n = ''
-    while os.path.exists(os.path.join(current_app.static_folder, folder, f'{output_filename}{n}{file_extension}')):
+    while os.path.exists(os.path.join(current_app.static_folder, folder, f"{output_filename}{n}{file_extension}")):
         if isinstance(n, str):
             n = -1
         n += 1
-    return f'{output_filename}{n}{file_extension}'
+    return f"{output_filename}{n}{file_extension}"
 
 def optimize_image(filename, width):
     data = {

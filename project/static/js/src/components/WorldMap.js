@@ -53,7 +53,7 @@ export default class worldMap {
     flyToOffset = (coords, pos, zoom=8) => {
         var targetPoint = this.map.project(coords, zoom).subtract(pos);
         var targetLatLng = this.map.unproject(targetPoint, zoom);
-        this.map.flyTo(targetLatLng, zoom), {duration: 1};
+        this.map.flyTo(targetLatLng, zoom, {duration: 2});
     }
 
     init = (el) => {

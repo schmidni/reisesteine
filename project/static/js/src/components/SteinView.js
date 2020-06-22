@@ -41,7 +41,7 @@ export default class SteinView {
                     <p>{ctrl.attrs.info.pers_geschichte}</p>
                     <p>{ctrl.attrs.info.absender}, {ctrl.attrs.info.wohnort}</p>
                 </div>
-                <img class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
+                <img style="will-change: transform, width, height" class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
             </div>
             <div class="rs-geologie rs-text">
                 <div class="rs-text">

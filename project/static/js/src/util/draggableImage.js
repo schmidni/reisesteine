@@ -1,12 +1,18 @@
 import interact from 'interactjs';
 import anime from 'animejs';
 
+// export default class DraggableImage {
+//     constructor(slide) {
+
+//     }
+// }
+
+
 // ********** helper function to make fundort image cover fullscreen ************************
 export var setUpImage = async function (slide) {
     const vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
     let slide_rect = null;
-
     slide_rect = slide.getBoundingClientRect();
     
     let factor = vh*1.05 / slide_rect.height;
@@ -20,8 +26,6 @@ export var setUpImage = async function (slide) {
 
     anime({
         targets: slide,
-        width: [slide_rect.width, target_w],
-        height: [slide_rect.height, target_h],
         duration: 1500,
         easing: 'easeInOutQuad'
     });
@@ -33,8 +37,11 @@ export var setUpImage = async function (slide) {
         targets: slide,
         translateX: [0, position.x],
         translateY: [0, position.y],
+        width: [slide_rect.width, target_w],
+        height: [slide_rect.height, target_h],
+        translateZ: 0,
         duration: 1500,
-        easing: 'easeInOutQuad'
+        easing: 'easeInQuad'
     }).finished;
 
     interact(slide).draggable({
@@ -60,6 +67,7 @@ export var setUpImage = async function (slide) {
         cursorChecker () {
             return null
         }
-    })
+    });
+
     return slide_rect;
 }

@@ -60,6 +60,7 @@ export default class SteinTimeLine {
         return anime({
             targets: '.rs-content>*',
             translateX: vw,
+            translateZ: 0,
             duration: 1500,
             easing: "easeInOutQuad"
         }).finished;
@@ -79,6 +80,7 @@ export default class SteinTimeLine {
             targets: this.fundort,
             translateX: 0,
             translateY: 0,
+            translateZ: 0,
             rotate: -10,
             width: rect.width,
             height: rect.height,
@@ -99,23 +101,14 @@ export default class SteinTimeLine {
 
     startAnimationCoords () {
         anime({
-            targets: this.coord.children,
+            targets: [this.coord, this.stein],
             opacity: [0, 1],
-            translateX: [40,0],
-            translateY: [20,0],
             duration: 1000,
             easing: "easeInOutQuad",
             delay: 1000,
             changeBegin: () => {
                 this.coord.style.opacity = 1;
             }
-        });
-        anime({
-            targets: this.stein,
-            opacity: [0, 1],
-            duration: 1000,
-            easing: "easeInQuad",
-            delay: 1500
         });
     }
 };

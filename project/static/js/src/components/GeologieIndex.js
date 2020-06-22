@@ -1,6 +1,7 @@
 import m from 'mithril';
 import SteinMain from './SteinMain.js';
 import IndexView from './IndexView.js';
+import 'mdn-polyfills/element.prototype.closest';
 
 export default class GeologieIndex {
     constructor (ctrl) {
@@ -38,7 +39,7 @@ export default class GeologieIndex {
     }
 
     onGeoClick = async (e) => {
-        const id = e.target.getAttribute('data-id');
+        const id = e.target.closest('a').getAttribute('data-id');
 
         await this.IndexView.onClickEffect(e);
 
@@ -47,7 +48,7 @@ export default class GeologieIndex {
         // replace overlay
         this.frame.paths.current = 'full';
         document.getElementById('svg-path').setAttribute('d', this.frame.calculatePath('full'));
-
+        console.log(e.target);
         // load Stein component
         m.mount(document.getElementById('rs-body'), {
             view: () => m(SteinMain, {'id': id, 'map':this.map, 'frame':this.frame, 'pushState': true, 'overview': 'geologie'}
