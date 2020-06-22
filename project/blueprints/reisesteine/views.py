@@ -17,7 +17,7 @@ import urllib.request
 import os
 
 users = {
-    'admin': generate_password_hash("reisesteine_alpha")
+    'admin': generate_password_hash("reisesteine2020")
 }
 
 reisesteine = Blueprint('reisesteine', __name__, template_folder='templates', url_prefix='/<lang_code>/')
