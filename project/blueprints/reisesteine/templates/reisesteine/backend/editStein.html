@@ -127,7 +127,7 @@
                             <div class="form-group col-md-6">
                                 {{ form.latitude.label }}
                                 {{ form.latitude(class_="form-control" + (" is-invalid" if form.latitude.errors else "")) }}
-                                <small id="latitudeHelp" class="form-text text-muted">{{_('Koordinaten oder Dezimalzahl')}}</small>
+                                <small id="latitudeHelp" class="form-text text-muted">{{_('Koordinaten (11°11\'11.0"N) oder Dezimalzahl (11.1)')}}</small>
                                 {% for error in form.latitude.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
@@ -137,7 +137,7 @@
                             <div class="form-group col-md-6">
                                 {{ form.longitude.label }}
                                 {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
-                                <small id="longitudeHelp" class="form-text text-muted">{{_('Koordinaten oder Dezimalzahl')}}</small>
+                                <small id="longitudeHelp" class="form-text text-muted">{{_('Koordinaten (99°99\'99"N) oder Dezimalzahl (11.1)')}}</small>
                                 {% for error in form.longitude.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}

@@ -582,6 +582,7 @@ h4.active {
     -ms-user-select: none;
     cursor: grab;
     padding: 200px;
+    will-change: transform;
 }
 
 .rs-index:active {

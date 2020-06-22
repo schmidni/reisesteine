@@ -88,8 +88,8 @@ export default class IndexView {
         let len_w = Math.round(Math.sqrt(len*(vw / vh)))
 
         // height and width of the container: x * width of one element + safety
-        width =  len_w * outerSize(this.target.children[1], 'width') + outerSize(this.target.children[1], 'width') -100;
-        height = Math.ceil(len / len_w) * outerSize(this.target.children[1], 'height') + outerSize(this.target.children[1], 'width') -100;
+        width =  len_w * outerSize(this.target.children[1], 'width') + outerSize(this.target.children[1], 'width')/2;
+        height = Math.ceil(len / len_w) * outerSize(this.target.children[1], 'height') + outerSize(this.target.children[1], 'width')/2;
         this.target.style.width = width + 'px';
 
         if (this.alternating) {
@@ -117,7 +117,6 @@ export default class IndexView {
         else
             this.position.y = -(height-vh) / 2;
 
-        // this.position = { x: -(width-vw) / 2, y: -(height-vh) / 2 };
         this.target.style.transform = `translate(${this.position.x}px, ${this.position.y}px)`;
         let position = this.position;
         let tg = this.target;
@@ -129,8 +128,8 @@ export default class IndexView {
                     position.y += event.dy;
 
                     // clamp position
-                    position.x = Math.min(Math.max(position.x, vw - width - 200), 0);
-                    position.y = Math.min(Math.max(position.y, vh - outerSize(tg, 'height') - 200), 0);
+                    position.x = Math.min(Math.max(position.x, vw - outerSize(tg, 'width')), 0);
+                    position.y = Math.min(Math.max(position.y, vh - outerSize(tg, 'height')), 0);
 
                 event.target.style.transform =
                     `translate(${position.x}px, ${position.y}px)`;

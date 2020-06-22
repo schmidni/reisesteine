@@ -95,8 +95,8 @@ export default class DraggableImage {
     }
 
     mousemovemethod = (e) => {
-        this.position.x += (e.pageX-this.oldx)*0.007;
-        this.position.y += (e.pageY-this.oldy)*0.007;
+        this.position.x += (e.pageX-this.oldx)*0.01;
+        this.position.y += (e.pageY-this.oldy)*0.01;
 
         this.slide.style.transform =
             `translateX(${this.position.x}px) translateY(${this.position.y}px)`

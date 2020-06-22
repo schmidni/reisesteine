@@ -31,6 +31,10 @@
         fill: rgba(256,256,256,0.85);
     }
 
+    #rs-about-wrapper>* {
+        opacity: 0;
+    }
+
     #rs-about-impressum {
         position: absolute;
         top: 20vh;
@@ -64,6 +68,41 @@
         color: rgb(180, 30, 30);
         font-weight: 700;
     }
+
+    
+    @media only screen and (max-width: 1025px) {
+        #rs-about-wrapper {
+            display: flex;
+            flex-direction: column;
+            height:100vh;
+            overflow: scroll;
+        }
+        #rs-about {
+            position:static;
+            margin: 50px auto 50px auto;
+            top: auto;
+            left: auto;
+            width: 90vw;
+            height: auto;
+        }
+        #rs-about-impressum {
+            position:static;
+            margin-top: 30vh;
+            top: auto;
+            left: auto;
+            width: 90vw;
+            height: auto;
+        }
+        #rs-small-navigation>* {
+            transform: translate(-30px, -30px);
+        }
+        .rs-close {
+            top: 15px!important;
+        }
+        .rs-about-logos {
+            flex-direction: column;
+        }
+    }
 </style>
 
 <div id="map"></div>
@@ -73,32 +112,35 @@
 </svg>
 
 <div id="rs-body" data-stein="{{id}}"></div>
+<div id="rs-about-wrapper">
+    <div id="rs-about-impressum">
+        <h2><i>focus</i>Terra</h2>
+        <h3>ETH Zürich</h3>
+        <h3>Sonneggstrasse 5</h3>
+        <h3>8092 Zürich</h3>
+        <h3>Schweiz</h3>
+        <h3>+41 44 632 62 81</h3>
+    </div>
 
-<div id="rs-about">
-    <h1>{{_('Über REISESTEINE')}}</h1>
-    <p>
-        {{_('Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.')}}
-    </p>
-    <p>
-        {{_('Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von <i>focus</i>Terra weiterentwickelt. Die Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid.')}} 
-    </p>
-    <p>
-        <b>{{_('Konzeptentwicklerin, Herausgeberin & Redaktion:')}}</b> <a href="{{ url_for('reisesteine.focusTerra') }}"><i>focus</i>Terra</a><br/>
-        <b>{{_('Gestaltung & technische Umsetzung:')}}</b> <a href="{{ url_for('reisesteine.marion') }}">Marion Deichmann</a> und <a href="{{ url_for('reisesteine.nicolas') }}">Nicolas Schmid</a>
-    </p>
-    <p style="display: flex; margin-top: 50px;">
-    <a href="https://ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/eth_logo.svg') }} " width="300"/></a>
-    <a href="https://focusterra.ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/focusTerra_logo.svg') }} " width="300"/></a>
-</p>
+    <div id="rs-about">
+        <h1>{{_('Über REISESTEINE')}}</h1>
+        <p>
+            {{_('Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.')}}
+        </p>
+        <p>
+            {{_('Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von <i>focus</i>Terra weiterentwickelt. Die Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid.')}} 
+        </p>
+        <p>
+            <b>{{_('Konzeptentwicklerin, Herausgeberin & Redaktion:')}}</b> <a href="{{ url_for('reisesteine.focusTerra') }}"><i>focus</i>Terra</a><br/>
+            <b>{{_('Gestaltung & technische Umsetzung:')}}</b> <a href="{{ url_for('reisesteine.marion') }}">Marion Deichmann</a> und <a href="{{ url_for('reisesteine.nicolas') }}">Nicolas Schmid</a>
+        </p>
+        <p class="rs-about-logos" style="display: flex; margin-top: 50px;">
+            <a href="https://ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/eth_logo.svg') }} " width="300"/></a>
+            <a href="https://focusterra.ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/focusTerra_logo.svg') }} " width="300"/></a>
+        </p>
+    </div>
 </div>
-<div id="rs-about-impressum">
-    <h2><i>focus</i>Terra</h2>
-    <h3>ETH Zürich</h3>
-    <h3>Sonneggstrasse 5</h3>
-    <h3>8092 Zürich</h3>
-    <h3>Schweiz</h3>
-    <h3>+41 44 632 62 81</h3>
-</div>
+
 
 <div id="rs-site-content" style="margin-left: 150px;">
 </div>

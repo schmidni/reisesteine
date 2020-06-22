@@ -8,9 +8,9 @@ export default class svgFrame {
         this.settings = {
             animation: {
                 shape: {
-                    duration: 1500,
+                    duration: 1800,
                     easing: {in: 'easeOutQuint', out: 'easeOutQuad'},
-                    delay: 500
+                    delay: 200
                 }
             },
             frameFill: 'rgba(256, 256, 256, 0.7)'
@@ -108,7 +108,8 @@ export default class svgFrame {
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.in,
-                d: this.calculatePath('mobilefull')
+                d: this.calculatePath('mobilefull'),
+                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'mobilefull';
@@ -121,7 +122,8 @@ export default class svgFrame {
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
                 delay: this.settings.animation.shape.delay,
-                d: this.calculatePath('offset')
+                d: this.calculatePath('offset'),
+                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'offset';
@@ -132,7 +134,8 @@ export default class svgFrame {
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
-                d: this.calculatePath('full')
+                d: this.calculatePath('full'),
+                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'full';
@@ -143,7 +146,8 @@ export default class svgFrame {
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
-                d: this.calculatePath('leftout')
+                d: this.calculatePath('leftout'),
+                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'leftout';
@@ -155,7 +159,8 @@ export default class svgFrame {
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
-                d: this.calculatePath('offset')
+                d: this.calculatePath('offset'),
+                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'offset';
@@ -166,7 +171,8 @@ export default class svgFrame {
                 targets: this.DOM.shape,
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
-                d: this.calculatePath('initial')
+                d: this.calculatePath('initial'),
+                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.DOM.svg.style.display = 'none';

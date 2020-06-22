@@ -1,6 +1,6 @@
 import m from 'mithril';
 import debounce from '../util/debounce.js';
-import L from 'leaflet';
+import anime from 'animejs';
 
 export default class About {
 
@@ -16,6 +16,13 @@ export default class About {
         document.querySelector('.rs-close').addEventListener('click', () => {
             window.location.href = '/';
         })
+        anime({
+            targets: '#rs-about-wrapper>*',
+            opacity: [0, 1],
+            duration: 1000,
+            delay: 1000,
+            easing: 'linear'
+        })
     }
 
     oncreate (ctrl) {
@@ -29,6 +36,9 @@ export default class About {
 
         this.keepMarkerCentered();
         this.myMap.addMarker([47.378600, 8.547214]);
+        document.addEventListener('touchmove', () => {
+            this.frame.navigate('mobilefull');
+        })
     }
     
     onremove(ctrl) {
