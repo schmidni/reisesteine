@@ -47,6 +47,13 @@ class Gestein(db.Model):
             gestein = cls()
         return gestein
 
+class Bild(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(64))
+    stein = db.Column(db.Integer, db.ForeignKey('stein.id'))
+
+    def __repr__(self):
+        return '{}'.format(self.filename) 
 
 class Stein(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -64,6 +71,8 @@ class Stein(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     published = db.Column(db.Boolean, index=True)
     description = db.Column(db.String(1))
+    user_bilder = db.relationship('Bild', backref='bilder', lazy='dynamic')
+    bemerkungen = db.Column(db.String(1))
 
     def __repr__(self):
         return '{}, {}, {}'.format(self.gestein, self.herkunft, self.bild_stein)
@@ -85,8 +94,7 @@ class Stein(db.Model):
         self.titel = form.titel.data
         self.pers_geschichte = form.pers_geschichte.data
         self.geo_geschichte = form.geo_geschichte.data
-        self.published = form.published.data
-        self.description = form.description.data
+        self.bemerkungen = form.bemerkungen.data
 
     def to_dict(self):
         data = {

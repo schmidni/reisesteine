@@ -1,7 +1,7 @@
 from flask import jsonify, json, render_template, Blueprint, g, redirect, request, current_app, abort, url_for, make_response
 from project.blueprints.reisesteine.forms import EditSteinForm, MitmachenForm
 from project import db
-from project.models import Gestein, Stein, Person
+from project.models import Gestein, Stein, Person, Bild
 from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf.file import FileRequired
@@ -15,6 +15,7 @@ from PIL import Image
 import requests
 import urllib.request
 import os
+import sys
 
 users = {
     'admin': generate_password_hash("reisesteine2020")
@@ -153,9 +154,44 @@ def focusTerra():
 @auth.login_required
 def mitmachen():
     form = MitmachenForm()
-    
+
     if form.validate_on_submit():
-        print(len(form.bild_stein.data))
+        # get or create absender
+        absender = Person.query.filter_by(email=form.email.data).first()
+        if not absender:
+            absender = Person()
+
+        # populate absender
+        absender.email = form.email.data
+        absender.vorname = form.vorname.data
+        absender.wohnort = form.wohnort.data
+        absender.nachname = form.nachname.data or absender.nachname
+        absender.telefon = form.telefon.data or absender.telefon
+        absender.instagram = form.instagram.data or absender.instagram
+        absender.twitter = form.twitter.data or absender.twitter
+        absender.facebook = form.facebook.data or absender.facebook 
+
+        # create new stone and populate
+        stein = Stein()
+        stein.populate(form)
+        stein.absender = absender
+        db.session.add(stein)
+
+        # create user images
+        bilder = []
+        if form.bild_stein.data:
+            for f_stein in form.bild_stein.data:
+                fn_stein = unique_filename('img/user_images', secure_filename(f_stein.filename))
+                f_stein.save(os.path.join(current_app.static_folder, 'img/user_images', fn_stein))
+                db.session.add(Bild(stein=stein.id, filename=fn_stein))
+        if form.bild_herkunft.data:
+            for f_stein in form.bild_herkunft.data:
+                fn_stein = unique_filename('img/user_images', secure_filename(f_stein.filename))
+                f_stein.save(os.path.join(current_app.static_folder, 'img/user_images', fn_stein))
+                db.session.add(Bild(stein=stein.id, filename=fn_stein))
+
+        db.session.commit()
+        # return redirect(url_for('reisesteine.danke'))
 
     return render_template('reisesteine/mitmachen.html', form=form)
 
@@ -219,14 +255,15 @@ def editStein(id):
         stein.populate(form)
         stein.absender = absender
         stein.gesteinsart = gestein
+        stein.published = form.published.data
+        stein.description = form.description.data
 
         # process stein bild
         if (form.bild_stein.data):
             fn_stein= ''
             f_stein = form.bild_stein.data
-            if f_stein:
-                fn_stein = unique_filename('img/steine', secure_filename(f_stein.filename))
-                f_stein.save(os.path.join(current_app.static_folder, 'img/steine', fn_stein))
+            fn_stein = unique_filename('img/steine', secure_filename(f_stein.filename))
+            f_stein.save(os.path.join(current_app.static_folder, 'img/steine', fn_stein))
             with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
                 width, height = img.size
             optimize_image(os.path.join('img/steine', fn_stein), min(width, 1000))
@@ -238,9 +275,8 @@ def editStein(id):
         if (form.bild_herkunft.data):
             fn_her = ''
             f_her = form.bild_herkunft.data
-            if f_her:
-                fn_her = unique_filename('img/steine', secure_filename(f_her.filename))
-                f_her.save(os.path.join(current_app.static_folder, 'img/steine', fn_her))
+            fn_her = unique_filename('img/steine', secure_filename(f_her.filename))
+            f_her.save(os.path.join(current_app.static_folder, 'img/steine', fn_her))
             with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_her)) as img:
                 width, height = img.size
             optimize_image(os.path.join('img/steine', fn_her), min(width, 1980))

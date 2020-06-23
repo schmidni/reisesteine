@@ -12,12 +12,12 @@
 {% block body %}
 
 <div class="container mt-3 pt-3">
-    <h1>Vielen Dank</h1>
+    <h1>{{_('Vielen Dank')}}</h1>
     <p>
-        Ihr Reisestein wurde erfolgreich erfasst. Wir werden Sie kontaktieren sobald wir den Stein bearbeitet und online gestellt haben.
+        {{_('Ihr Reisestein wurde erfolgreich erfasst. Wir werden Sie kontaktieren sobald wir den Stein bearbeitet und online gestellt haben.')}}
     </p>
-    <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> Weiteren Stein einsenden</h4></a>
-    <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> Zurück zur Übersicht</h4></a>
+    <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> {{_('Weiteren Stein einsenden')}}</h4></a>
+    <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> {{_('Zurück zur Übersicht')}}</h4></a>
 </div>
 
 {% endblock %}

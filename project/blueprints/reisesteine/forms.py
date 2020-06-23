@@ -32,10 +32,10 @@ class MitmachenForm(FlaskForm):
     geo_geschichte =    TextAreaField(_l('Hinweise Fundort / Geologie'))
     bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
 
-    bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
-    bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+    bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[ FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+    bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[ FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
 
-    recaptcha = RecaptchaField()
+    # recaptcha = RecaptchaField()
     submit = SubmitField(_l('Speichern'))
 
     def validate_longitude(self, longitude):
@@ -103,12 +103,17 @@ class EditSteinForm(FlaskForm):
     longitude =         StringField(_l('Breitengrad *'), validators=[DataRequired()])
     latitude =          StringField(_l('Längengrad *'), validators=[DataRequired()])
     titel =             StringField(_l('Titel *'), validators=[DataRequired()])
-    pers_geschichte =   TextAreaField(_l('Persönliche Geschichte'))
-    geo_geschichte =    TextAreaField(_l('Geologische Einschätzung *'), validators=[DataRequired()])
+    
     bild_stein =        FileField(_l('Bilder Stein *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
     bild_herkunft =     FileField(_l('Bilder Fundort *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
-    published =         BooleanField(_l('Published'), default=False)
+    
+    pers_geschichte =   TextAreaField(_l('Persönliche Geschichte'))
+    geo_geschichte =    TextAreaField(_l('Geologische Einschätzung *'), validators=[DataRequired()])
+    bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
     description =       TextAreaField(_l('Meta Description *'), validators=[DataRequired()])
+
+    published =         BooleanField(_l('Published'), default=False)
+    
 
     submit = SubmitField(_l('Speichern'))
 

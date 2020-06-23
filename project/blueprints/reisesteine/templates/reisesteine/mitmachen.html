@@ -13,6 +13,7 @@
 
 <div class="container mt-3 pt-3">
     <form method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
         <div class="row">
             <div class="col">
                 <h1>{{_('Mitmachen')}}</h1>
@@ -219,7 +220,7 @@
         <div class="row mt-5">
             <div class="col">
                 <p>
-                    Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an focusTerra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden.
+                    {{_('Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an focusTerra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden.')}}
                 </p>
             </div>
             <div class="col-12">
