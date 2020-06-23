@@ -1,7 +1,7 @@
-from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm, RecaptchaField
 from flask_babel import lazy_gettext as _l
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import StringField, BooleanField, SubmitField, DecimalField, TextAreaField, IntegerField
+from wtforms import StringField, BooleanField, SubmitField, DecimalField, TextAreaField, IntegerField, MultipleFileField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional
 from wtforms.fields.html5 import EmailField
 from project.models import Gestein, Stein, Person
@@ -10,7 +10,35 @@ from flask import current_app
 import re
 import os
 
-class editSteinForm(FlaskForm):
+class MitmachenForm(FlaskForm):
+    vorname =           StringField(_l('Vorname*'), validators=[DataRequired()])
+    nachname =          StringField(_l('Nachname'))
+    wohnort =           StringField(_l('Wohnort *'), validators=[DataRequired()])
+    email =             EmailField(_l('Email *'), validators=[DataRequired(), Email()])
+    telefon =           StringField(_l('Telefonnummer'))
+    instagram =         StringField(_l('Instagram'))
+    twitter =           StringField(_l('Twitter'))
+    facebook =          StringField(_l('Facebook'))    
+    
+    herkunft =          StringField(_l('Lokalität/Ort *'), validators=[DataRequired()])
+    land =              StringField(_l('Land *'), validators=[DataRequired()])
+
+    longitude =         StringField(_l('Breitengrad *'), validators=[DataRequired()])
+    latitude =          StringField(_l('Längengrad *'), validators=[DataRequired()])
+
+    titel =             StringField(_l('Titel *'), validators=[DataRequired()])
+
+    pers_geschichte =   TextAreaField(_l('Persönliche Geschichte *'), validators=[DataRequired()])
+    geo_geschichte =    TextAreaField(_l('Hinweise Fundort / Geologie'))
+    bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
+
+    bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+    bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+
+    recaptcha = RecaptchaField()
+    submit = SubmitField(_l('Speichern'))
+
+class EditSteinForm(FlaskForm):
     stein_id =          IntegerField(_l('Stein ID'), validators=[Optional()])
     user_id =           IntegerField(_l('Absender ID'), validators=[Optional()])
     gestein_id =        IntegerField(_l('Gestein ID'), validators=[Optional()])
@@ -26,15 +54,15 @@ class editSteinForm(FlaskForm):
 
     gestein =           StringField(_l('Gestein*'), validators=[DataRequired()])
     
-    herkunft =          StringField(_l('Herkunft *'), validators=[DataRequired()])
+    herkunft =          StringField(_l('Lokalität/Ort *'), validators=[DataRequired()])
     land =              StringField(_l('Land *'), validators=[DataRequired()])
-    longitude =         StringField(_l('Longitude *'), validators=[DataRequired()])
-    latitude =          StringField(_l('Latitude *'), validators=[DataRequired()])
-    titel =             StringField(_l('Titel'))
+    longitude =         StringField(_l('Breitengrad *'), validators=[DataRequired()])
+    latitude =          StringField(_l('Längengrad *'), validators=[DataRequired()])
+    titel =             StringField(_l('Titel *'), validators=[DataRequired()])
     pers_geschichte =   TextAreaField(_l('Persönliche Geschichte'))
     geo_geschichte =    TextAreaField(_l('Geologische Einschätzung *'), validators=[DataRequired()])
-    bild_stein =        FileField(_l('Bild Stein *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
-    bild_herkunft =     FileField(_l('Bild Fundort *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
+    bild_stein =        FileField(_l('Bilder Stein *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
+    bild_herkunft =     FileField(_l('Bilder Fundort *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
     published =         BooleanField(_l('Published'), default=False)
     description =       TextAreaField(_l('Meta Description *'), validators=[DataRequired()])
 

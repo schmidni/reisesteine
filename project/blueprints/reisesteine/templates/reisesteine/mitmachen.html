@@ -11,51 +11,237 @@
 
 {% block body %}
 
-<div class="container">
-    <div class="row">
-        <div class="col">
-            <h1>Mitmachen</h1>
-            <p>
-                Haben Sie auf einer Ihrer Reisen einen Stein gefunden, der Ihnen gefällt, den Sie interessant finden oder der Sie einfach an Ihre Reise oder ein Ereignis erinnert? Dann machen Sie mit! Je mehr Menschen mitmachen, desto reicher wird unsere Sammlung. Bitte laden Sie Freunde und Familie überall auf der Welt ein, gemeinsam mit uns auf Reisen zu gehen.<br>
-                Wir freuen uns auf Ihre Reisesteine!
-            </p>
+<div class="container mt-3 pt-3">
+    <form method="POST" enctype="multipart/form-data">
+        <div class="row">
+            <div class="col">
+                <h1>{{_('Mitmachen')}}</h1>
+                <p>
+                    {{_('Haben Sie auf einer Ihrer Reisen einen Stein gefunden, der Ihnen gefällt, den Sie interessant finden oder der Sie einfach an Ihre Reise oder ein Ereignis erinnert? Dann machen Sie mit! Je mehr Menschen mitmachen, desto reicher wird unsere Sammlung. Bitte laden Sie Freunde und Familie überall auf der Welt ein, gemeinsam mit uns auf Reisen zu gehen.')}}<br>
+                </p>
+                <p>
+                    {{_('Wir freuen uns auf Ihre Reisesteine!')}}
+                </p>
+            </div>
         </div>
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <h2>Personalien</h2>
-            <div class="row">
-                <div class="col-lg-6">
-                    <input class="form-control">
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h2>{{_('Personalien')}}</h2>
+                <small class="form-text text-muted mb-3">
+                    {{_('Die Publikation erfolgt mit Angabe des Vornamens und des Wohnorts, ohne Ihre Kontaktangaben.')}}
+                </small>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-group row">
+                            {{ form.vorname.label(class_="col-sm-4 col-form-label") }}
+                            <div class="col-sm-8">
+                                {{ form.vorname(class_="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form.nachname.label(class_="col-sm-4 col-form-label") }}
+                            <div class="col-sm-8">
+                                {{ form.nachname(class_="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form.wohnort.label(class_="col-sm-4 col-form-label") }}
+                            <div class="col-sm-8">
+                                {{ form.wohnort(class_="form-control") }}
+                                {% for error in form.wohnort.errors %}
+                                    <div class="invalid-feedback">
+                                        {{error}}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            {{ form.email.label(class_="col-sm-4 col-form-label") }}
+                            <div class="col-sm-8">
+                                {{ form.email(class_="form-control" + (" is-invalid" if form.email.errors else "")) }}
+                                {% for error in form.email.errors %}
+                                <div class="invalid-feedback">
+                                    {{error}}
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.telefon.label }}
+                                {{ form.telefon(class_="form-control") }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.instagram.label }}
+                                {{ form.instagram(class_="form-control") }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.twitter.label }}
+                                {{ form.twitter(class_="form-control") }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.facebook.label }}
+                                {{ form.facebook(class_="form-control") }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>    
+            <div class="col-md-6">
+                <h2>{{_('Stein')}}</h2>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.herkunft.label }}
+                                {{ form.herkunft(class_="form-control") }}
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                {{ form.land.label }}
+                                {{ form.land(class_="form-control") }}
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.latitude.label }} 
+                                <a class="rs-form-popover" data-toggle="modal" data-target="#coords-modal">
+                                    <img class="rs-form-info" src="{{ url_for('static', filename='img/info-circle-solid.svg') }}"/>
+                                </a>
+                                {{ form.latitude(class_="form-control" + (" is-invalid" if form.latitude.errors else "")) }}
+                                {% for error in form.latitude.errors %}
+                                <div class="invalid-feedback">
+                                    {{error}}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.longitude.label }} 
+                                <a class="rs-form-popover" data-toggle="modal" data-target="#coords-modal">
+                                    <img class="rs-form-info" src="{{ url_for('static', filename='img/info-circle-solid.svg') }}"/>
+                                </a>
+                                {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
+                                {% for error in form.longitude.errors %}
+                                <div class="invalid-feedback">
+                                    {{error}}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="modal fade" id="coords-modal" tabindex="-1" role="dialog" aria-labelledby="coords-modal-label" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h2 class="modal-title" id="coords-modal-label">
+                                                {{_('Längen- und Breitengrade')}}
+                                            </h2>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h5>{{_('Wie finde ich die korrekten Koordinaten?')}}</h5>
+                                            <p>
+                                                {{_('Auf Google Maps können sie mit der rechten Maustaste auf den gewünschten Ort oder Bereich der Karte klicken. Danach wählen sie "Was ist hier?" aus. Die Koordinaten werden daraufhin im unteren Bildschirmbereich angezeigt.')}}
+                                            </p>
+                                            <p>
+                                                {{_('Mehr Informationen dazu finden sie <a href="https://support.google.com/maps/answer/18539?co=GENIE.Platform&percnt;3DDesktop&hl=de">hier</a>.')}}
+                                            </p>
+                                            <h5>{{_('Schreibweise')}}</h5>
+                                            <p>
+                                                {{_('Zur Eingabe kann entweder die Koordinatenschreibweise mit <span class="font-italic">11°11\'11.0\"N 11°11\'11.0\"E</span> verwendet werden, oder die Schreibweise in Dezimalzahlen <span class="font-italic">11.123456789.</span>')}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.bild_stein.label }}
+                                {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
+                                <small id="steinHelp" class="form-text text-muted">max. 3 files à 8MB</small>
+                                {% for error in form.bild_stein.errors %}
+                                <div class="invalid-feedback">
+                                    {{error}}
+                                </div>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.bild_herkunft.label }}
+                                {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
+                                <small id="herkunftHelp" class="form-text text-muted">max. 3 files à 8MB</small>
+                                {% for error in form.bild_herkunft.errors %}
+                                    <div class="invalid-feedback">
+                                        {{error}}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>    
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <h2>Stein</h2>
-            <div class="row">
-                <div class="col-lg-6">
-                    <input class="form-control">
-                    <p>
-                        Bitte laden Sie nur Bilder hoch, über deren Verwendungsrechte Sie verfügen. Bei einer Urheberrechtsverletzung lehnt focusTerra jegliche Verantwortung ab.
-                    </p>
+        </div>
+        <div class="row mt-3">
+            <div class="col-12">
+                <div class="form-group">
+                    {{ form.titel.label }}
+                    {{ form.titel(class_="form-control", maxlength="25") }}
+                    <small id="titelhelp" class="form-text text-muted"><span id="current_titel">0</span>/ 25</small>
+                </div>
+                <div class="form-group">
+                    {{ form.pers_geschichte.label(class_="mb-0") }}
+                    <small class="form-text text-muted mb-1">{{_('Hinweise persönliche Geschichte')}}</small>
+                    {{ form.pers_geschichte(class_="form-control", rows=5, maxlength="400") }}
+                    <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 400</small>
+                </div>
+                <div class="form-group">
+                    {{ form.geo_geschichte.label(class_="mb-0") }}
+                    <small class="form-text text-muted mb-1">{{_('Hinweise Geologie')}}</small>
+                    {{ form.geo_geschichte(class_="form-control", rows=5, maxlength="400") }}
+                    <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 400</small>
+                </div>
+                <div class="form-group">
+                    {{ form.bemerkungen.label(class_="mb-0") }}
+                    <small class="form-text text-muted mb-1">{{_('Hinweise Bemerkungen')}}</small>
+                    {{ form.bemerkungen(class_="form-control", rows=5) }}
+                </div>
+                <div class="form-group">
+                    {{ form.recaptcha }}
+                    {% if form.recaptcha.errors|length > 0 %}
+                        <p class="uk-text-danger">reCaptcha verification Failed</p>
+                    {% endif %}
                 </div>
             </div>
-        </div>    
-    </div>
-    <div class="row mt-5">
-        <div class="col">
-            <p>
-                Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an focusTerra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden. Die Publikation erfolgt mit Angabe des Vornamens und des Wohnorts, ohne Ihre Kontaktangaben.
-            </p>
-            <button class="btn btn-primary">Absenden</button>
         </div>
-    </div>
-
-
-    
+        <div class="row mt-5">
+            <div class="col">
+                <p>
+                    Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an focusTerra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden.
+                </p>
+            </div>
+            <div class="col-12">
+                {{ form.submit(class_="btn btn-primary") }}
+                <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}">{{_('Verwerfen')}}</a>
+            </div>
+        </div>
+    </form>
+    </br>
+    </br>
+    </br>
 </div>
+
+<script>
+    document.getElementById('current_geschichte').innerHTML = document.getElementById('pers_geschichte').value.length;
+    document.getElementById('pers_geschichte').addEventListener('keyup', function(e){
+        document.getElementById('current_geschichte').innerHTML = this.value.length;
+    });
+    document.getElementById('current_geologie').innerHTML = document.getElementById('geo_geschichte').value.length;
+    document.getElementById('geo_geschichte').addEventListener('keyup', function(e){
+        document.getElementById('current_geologie').innerHTML = this.value.length;
+    });
+    document.getElementById('current_titel').innerHTML = document.getElementById('titel').value.length;
+    document.getElementById('titel').addEventListener('keyup', function(e){
+        document.getElementById('current_titel').innerHTML = this.value.length;
+    });
+</script>
 
 
 {% endblock %}

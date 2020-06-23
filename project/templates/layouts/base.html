@@ -16,7 +16,6 @@
     </head>
 
     <body class="rs-backend"> 
-
         <div id="rs-backend-navigation">
             <a id="rs-backend-logo" href="{{ url_for('reisesteine.index') }}">
                 <img src="{{ url_for('static', filename='img/logo.svg') }}"/> {{_('Reisesteine')}}
@@ -25,8 +24,9 @@
                 <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> / 
                 <a id="rs-small-en" href="{{ url_for(request.endpoint, lang_code='en') }}">en</a>
             </span>
-    </div>
-
+        </div>
         {% block body %}{% endblock %}
+        <script type="text/javascript" src="{{ url_for('static', filename='js/ext/bootstrap.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/ext/jquery-3.3.1.slim.min.js') }}"></script>
     </body>
 </html>

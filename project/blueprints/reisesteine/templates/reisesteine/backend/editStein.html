@@ -137,7 +137,7 @@
                             <div class="form-group col-md-6">
                                 {{ form.longitude.label }}
                                 {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
-                                <small id="longitudeHelp" class="form-text text-muted">{{_('Koordinaten (99°99\'99"N) oder Dezimalzahl (11.1)')}}</small>
+                                <small id="longitudeHelp" class="form-text text-muted">{{_('Koordinaten (11°11\'11.0"E) oder Dezimalzahl (11.1)')}}</small>
                                 {% for error in form.longitude.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
@@ -152,7 +152,7 @@
                         </div>
                         <div class="form-group">
                             {{ form.bild_stein.label }}
-                            {{ form.bild_stein(class_="form-control" + (" is-invalid" if form.bild_stein.errors else "")) }}
+                            {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
                             <small id="steinHelp" class="form-text text-muted">max. 1MB</small>
                             {% for error in form.bild_stein.errors %}
                             <div class="invalid-feedback">
@@ -165,7 +165,7 @@
                         </div>
                         <div class="form-group">
                             {{ form.bild_herkunft.label }}
-                            {{ form.bild_herkunft(class_="form-control" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
+                            {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
                             <small id="herkunftHelp" class="form-text text-muted">max. 2MB</small>
                             {% for error in form.bild_herkunft.errors %}
                                 <div class="invalid-feedback">
@@ -219,7 +219,7 @@
                     <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 600</small>
                 </div>
                 <div class="form-group">
-                    {{ form.description.label }} <small class="form-text text-muted">{{_('Beschreibung für Google Suchresultate')}}</small>
+                    {{ form.description.label }} <small class="form-text text-muted mb-1">{{_('Beschreibung für Google Suchresultate')}}</small>
                     {{ form.description(class_="form-control", rows=5, maxlength="160") }}
                     <small id="descHelp" class="form-text text-muted"><span id="current_desc">0</span>/ 160</small>
                 </div>

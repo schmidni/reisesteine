@@ -43,3 +43,16 @@ body.rs-backend {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 1.4rem;
 }
+
+/************************** MITMACHEN FORM ******************************************/
+img.rs-form-info {
+    height: 1rem;
+    width: 1rem;
+    margin: 0;
+    padding: 0;
+}
+
+a.rs-form-popover {
+    cursor: pointer;
+}
+

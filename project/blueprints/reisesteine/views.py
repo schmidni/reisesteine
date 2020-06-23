@@ -1,5 +1,5 @@
 from flask import jsonify, json, render_template, Blueprint, g, redirect, request, current_app, abort, url_for, make_response
-from project.blueprints.reisesteine.forms import editSteinForm
+from project.blueprints.reisesteine.forms import EditSteinForm, MitmachenForm
 from project import db
 from project.models import Gestein, Stein, Person
 from werkzeug.utils import secure_filename
@@ -152,7 +152,8 @@ def focusTerra():
 @reisesteine.route('/participate', defaults={'lang_code': 'en'})
 @auth.login_required
 def mitmachen():
-    return render_template('reisesteine/mitmachen.html')
+    form = MitmachenForm()
+    return render_template('reisesteine/mitmachen.html', form=form)
 
 # Backend Routes *************************************
 @reisesteine.route('/listSteine')
@@ -188,7 +189,7 @@ def newStein():
 @reisesteine.route('/editStein', defaults={'id': None}, methods=['GET', 'POST'])
 @auth.login_required
 def editStein(id):
-    form = editSteinForm()
+    form = EditSteinForm()
 
     if form.validate_on_submit():
 
