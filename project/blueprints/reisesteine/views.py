@@ -148,12 +148,23 @@ def focusTerra():
     return redirect('mailto:info_focusTerra@erdw.ethz.ch')
 
 # Mitmachen Routes *************************************
-@reisesteine.route('/mitmachen', defaults={'lang_code': 'de'})
-@reisesteine.route('/participate', defaults={'lang_code': 'en'})
+@reisesteine.route('/mitmachen', defaults={'lang_code': 'de'}, methods=['GET', 'POST'])
+@reisesteine.route('/participate', defaults={'lang_code': 'en'}, methods=['GET', 'POST'])
 @auth.login_required
 def mitmachen():
     form = MitmachenForm()
+    
+    if form.validate_on_submit():
+        print(len(form.bild_stein.data))
+
     return render_template('reisesteine/mitmachen.html', form=form)
+
+# Mitmachen Routes *************************************
+@reisesteine.route('/mitmachen/danke', defaults={'lang_code': 'de'})
+@reisesteine.route('/participate/thanks', defaults={'lang_code': 'en'})
+@auth.login_required
+def danke():
+    return render_template('reisesteine/danke.html')
 
 # Backend Routes *************************************
 @reisesteine.route('/listSteine')

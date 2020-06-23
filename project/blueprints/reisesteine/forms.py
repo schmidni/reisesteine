@@ -32,11 +32,55 @@ class MitmachenForm(FlaskForm):
     geo_geschichte =    TextAreaField(_l('Hinweise Fundort / Geologie'))
     bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
 
-    bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
-    bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+    bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+    bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
 
     recaptcha = RecaptchaField()
     submit = SubmitField(_l('Speichern'))
+
+    def validate_longitude(self, longitude):
+        try:
+            longitude.data = float(longitude.data)
+        except ValueError:
+            try:
+                deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data.replace(" ", ""))
+                longitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
+            except:
+                raise ValidationError(_l('Format ungültig.'))
+
+    def validate_latitude(self, latitude):
+        try:
+            latitude.data = float(latitude.data)
+        except ValueError:
+            try:
+                deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data.replace(" ", ""))
+                latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
+            except:
+                raise ValidationError(_l('Format ungültig.'))
+
+    def validate_bild_stein(self, bild_stein):
+        if len(bild_stein.data) > 3:
+            raise ValidationError(_l('Bitte nicht mehr als 3 Bilder einsenden.'))
+        # check image size
+        for bild in bild_stein.data:
+            bild.seek(0, os.SEEK_END)
+            if bild.tell() > 8*1024*1024:
+                raise ValidationError(_l('Eines der ausgewählten Bilder ist grösser als 8MB.'))
+            bild.seek(0)
+
+    def validate_bild_herkunft(self, bild_herkunft):
+        if len(bild_herkunft.data) > 3:
+            raise ValidationError(_l('Bitte nicht mehr als 3 Bilder einsenden.'))
+        # check image size
+        for bild in bild_herkunft.data:
+            bild.seek(0, os.SEEK_END)
+            if bild.tell() > 8*1024*1024:
+                raise ValidationError(_l('Eines der ausgewählten Bilder ist grösser als 8MB.'))
+            bild.seek(0)
+
+
+
+
 
 class EditSteinForm(FlaskForm):
     stein_id =          IntegerField(_l('Stein ID'), validators=[Optional()])
@@ -72,16 +116,21 @@ class EditSteinForm(FlaskForm):
         try:
             longitude.data = float(longitude.data)
         except ValueError:
-            deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data.replace(" ", ""))
-            longitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
+            try:
+                deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data.replace(" ", ""))
+                longitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
+            except:
+                raise ValidationError(_l('Format ungültig.'))
 
     def validate_latitude(self, latitude):
         try:
             latitude.data = float(latitude.data)
         except ValueError:
-            deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data.replace(" ", ""))
-            latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
-
+            try:
+                deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data.replace(" ", ""))
+                latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
+            except:
+                raise ValidationError(_l('Format ungültig.'))
 
     def validate_gestein(self, gestein):
         by_name = Gestein.query.filter_by(name=gestein.data).first()

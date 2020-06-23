@@ -1,0 +1,23 @@
+{% extends "layouts/base.html" %}
+
+{% block metadescription %}
+{{_('Haben Sie auf Ihrer Reisen einen Stein gefunden, den Sie interessant finden oder der Sie einfach an Ihre Reise oder ein Ereignis erinnert? Dann machen Sie mit!')}}
+{% endblock %}
+
+{% block canonical %}
+        <link rel="alternate" hreflang="de" href="{{ url_for(request.endpoint, _external=True, lang_code='de', **request.view_args) }}" />
+        <link rel="alternate" hreflang="en" href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
+{% endblock %}
+
+{% block body %}
+
+<div class="container mt-3 pt-3">
+    <h1>Vielen Dank</h1>
+    <p>
+        Ihr Reisestein wurde erfolgreich erfasst. Wir werden Sie kontaktieren sobald wir den Stein bearbeitet und online gestellt haben.
+    </p>
+    <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> Weiteren Stein einsenden</h4></a>
+    <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> Zurück zur Übersicht</h4></a>
+</div>
+
+{% endblock %}
