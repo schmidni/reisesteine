@@ -71,6 +71,14 @@ def stein(id):
     ste = ste.to_dict()
     return render_template('reisesteine/home.html', id=id, steine=steine, ste=ste)
 
+@reisesteine.route('/stein/vorschau/<id>', defaults={'lang_code': 'de'})
+@reisesteine.route('/stone/preview/<id>', defaults={'lang_code': 'en'})
+@auth.login_required
+def stein_vorschau(id):        
+    stein = Stein.query.filter_by(id=id).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    return render_template('reisesteine/home.html', steine=stein, ste=None)
+
+
 @reisesteine.route('/steine/<int:id>', methods=['GET'])
 def get_stein(id):
     ste = Stein.query.get(id)
@@ -169,13 +177,13 @@ def mitmachen():
         absender.telefon = form.telefon.data or absender.telefon
         absender.instagram = form.instagram.data or absender.instagram
         absender.twitter = form.twitter.data or absender.twitter
-        absender.facebook = form.facebook.data or absender.facebook 
+        absender.facebook = form.facebook.data or absender.facebook
+        absender.newsletter = form.newsletter.data or absender.newsletter
 
         # create new stone and populate
         stein = Stein()
         stein.populate(form)
         stein.absender = absender
-        db.session.add(stein)
 
         # create user images
         bilder = []
@@ -183,15 +191,19 @@ def mitmachen():
             for f_stein in form.bild_stein.data:
                 fn_stein = unique_filename('img/user_images', secure_filename(f_stein.filename))
                 f_stein.save(os.path.join(current_app.static_folder, 'img/user_images', fn_stein))
-                db.session.add(Bild(stein=stein.id, filename=fn_stein))
+                bilder.append(Bild(filename=fn_stein))
         if form.bild_herkunft.data:
             for f_stein in form.bild_herkunft.data:
                 fn_stein = unique_filename('img/user_images', secure_filename(f_stein.filename))
                 f_stein.save(os.path.join(current_app.static_folder, 'img/user_images', fn_stein))
-                db.session.add(Bild(stein=stein.id, filename=fn_stein))
+                bilder.append(Bild(filename=fn_stein))
+        for bild in bilder:
+            stein.user_bilder.append(bild)
 
+        db.session.add(stein)
         db.session.commit()
-        # return redirect(url_for('reisesteine.danke'))
+        
+        return redirect(url_for('reisesteine.danke'))
 
     return render_template('reisesteine/mitmachen.html', form=form)
 
@@ -212,10 +224,22 @@ def listSteine():
 @reisesteine.route('/deleteStein/<id>')
 @auth.login_required
 def deleteStein(id):
-    os.remove(os.path.join(current_app.static_folder, 'img/steine', Stein.query.get(id).bild_stein))
-    os.remove(os.path.join(current_app.static_folder, 'img/steine', Stein.query.get(id).bild_herkunft))
-    Stein.query.filter_by(id=id).delete()
+    stein = Stein.query.get(id)
+    if stein.bild_stein:
+        os.remove(os.path.join(current_app.static_folder, 'img/steine', stein.bild_stein))
+    if stein.bild_herkunft:
+        os.remove(os.path.join(current_app.static_folder, 'img/steine', stein.bild_herkunft))
+
+    for bild in stein.user_bilder:
+        os.remove(os.path.join(current_app.static_folder, 'img/user_images', bild.filename))
+        db.session.delete(bild)
+
+    if len(stein.absender.steine.all()) == 1:
+        db.session.delete(stein.absender)
+
+    db.session.delete(stein)
     db.session.commit()
+
     return redirect(url_for('reisesteine.listSteine'))
 
 @reisesteine.route('/newStein', methods=['POST'])
@@ -245,7 +269,7 @@ def editStein(id):
         absender.update(**form.data)
 
         # get or create gestein
-        gestein = Gestein.get_or_create(id = form.gestein_id.data)
+        gestein = Gestein.get_or_create(id = form.gestein_id.data, name = form.gestein.data)
         gestein.name = form.gestein.data
 
         # get or create stein
@@ -254,7 +278,7 @@ def editStein(id):
         # assign
         stein.populate(form)
         stein.absender = absender
-        stein.gesteinsart = gestein
+        gestein.steine.append(stein)
         stein.published = form.published.data
         stein.description = form.description.data
 
@@ -285,19 +309,26 @@ def editStein(id):
             stein.bild_herkunft = fn_her
 
         # save and redirect back to list
+        db.session.add(gestein)
         db.session.add(stein)
         db.session.commit()
-        return redirect(url_for('reisesteine.listSteine'))
+        if request.form['submit'] != "Erstellen" and request.form['submit'] != "Create":
+            if request.form['submit'] == "Vorschau" or request.form['submit'] == "Preview":
+                return redirect(url_for('reisesteine.stein_vorschau', id=stein.id))
+            return redirect(url_for('reisesteine.listSteine'))
+        else:
+            return redirect(url_for('reisesteine.editStein', id=stein.id))
 
     bild_stein = None
     bild_herkunft = None
-
+    user_bilder = []
     # edit an existing rock
     if id is not None:
         curr_stein = Stein.query.get(id)
         form.populate(curr_stein)
         bild_stein = curr_stein.bild_stein
         bild_herkunft = curr_stein.bild_herkunft
+        user_bilder = curr_stein.user_bilder.all()
 
     # new rock, fill in Absender
     if request.args.get('email'):
@@ -316,7 +347,7 @@ def editStein(id):
         else:
             form.gestein.data = request.args.get('gestein')
 
-    return render_template('reisesteine/backend/editStein.html', form=form, stein=bild_stein, herkunft=bild_herkunft)
+    return render_template('reisesteine/backend/editStein.html', form=form, stein=bild_stein, herkunft=bild_herkunft, user_bilder=user_bilder)
 
 
 # Helper Functions *************************************
@@ -330,19 +361,19 @@ def unique_filename(folder, filename):
     return f"{output_filename}{n}{file_extension}"
 
 def optimize_image(filename, width):
-    data = {
-        'auth': {
-            'api_key': current_app.config['KRAKEN_KEY'],
-            'api_secret': current_app.config['KRAKEN_SECRET']
-        },
-        'url': url_for('static', filename=filename, _external=True),
-        'wait': True,
-        'lossy': True,
-        'resize': {
-            'width': width,
-            'strategy': 'landscape'
-        }
-    }
+    # data = {
+    #     'auth': {
+    #         'api_key': current_app.config['KRAKEN_KEY'],
+    #         'api_secret': current_app.config['KRAKEN_SECRET']
+    #     },
+    #     'url': url_for('static', filename=filename, _external=True),
+    #     'wait': True,
+    #     'lossy': True,
+    #     'resize': {
+    #         'width': width,
+    #         'strategy': 'landscape'
+    #     }
+    # }
 
     # response = requests.post('https://api.kraken.io/v1/url', json=data)
     

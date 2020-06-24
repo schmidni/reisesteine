@@ -5,7 +5,7 @@
     <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="row">
-            <div class="col-6">
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header d-flex">
                         <h5>{{_('Absender')}}</h5>
@@ -31,41 +31,65 @@
                             {{ form.wohnort.label }}
                             {{ form.wohnort(class_="form-control rs-person", readonly=user) }}
                             {% for error in form.wohnort.errors %}
-                                <div class="invalid-feedback">
-                                    {{error}}
-                                </div>
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
                             {% endfor %}
                         </div>
                         <div class="form-group">
                             {{ form.email.label }}
                             {{ form.email(class_="form-control rs-person" + (" is-invalid" if form.email.errors else ""), readonly=user) }}
                             {% for error in form.email.errors %}
-                            <div class="invalid-feedback">
-                                {{error}}
-                            </div>
+                            <div class="invalid-feedback" style="display:block">{{error}}</div>
                             {% endfor %}
                         </div>
-                        <div class="form-group">
-                            {{ form.telefon.label }}
-                            {{ form.telefon(class_="form-control rs-person", readonly=user) }}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.telefon.label }}
+                                {{ form.telefon(class_="form-control rs-person", readonly=user) }}
+                            </div>
+
+                            <div class="form-group col-md-6">
+                                {{ form.instagram.label }}
+                                {{ form.instagram(class_="form-control rs-person", readonly=user) }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            {{ form.instagram.label }}
-                            {{ form.instagram(class_="form-control rs-person", readonly=user) }}
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.twitter.label }}
+                                {{ form.twitter(class_="form-control rs-person", readonly=user) }}
+                            </div>
+                            <div class="form-group col-md-6">
+                                {{ form.facebook.label }}
+                                {{ form.facebook(class_="form-control rs-person", readonly=user) }}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            {{ form.twitter.label }}
-                            {{ form.twitter(class_="form-control rs-person", readonly=user) }}
+                        <div class="form-row">
+                            <div class="form-check col-md-5 ml-4">
+                                {{ form.newsletter(class_="form-check-input", disabled="disabled") }}
+                                {{ form.newsletter.label(class_="form-check-label")}}
+                            </div>
+                            <div class="form-check col-md-5 ml-4">
+                                {{ form.newsletter_registered(class_="form-check-input") }}
+                                {{ form.newsletter_registered.label(class_="form-check-label")}}
+                            </div>
                         </div>
-                        <div class="form-group">
-                            {{ form.facebook.label }}
-                            {{ form.facebook(class_="form-control rs-person", readonly=user) }}
+                    </div>
+                </div>
+                <div class="card mt-4">
+                    <div class="card-header d-flex">
+                        <h5>{{_('Eingesendete Bilder')}}</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for bild in user_bilder %}
+                            <a download href="{{url_for('static', filename='img/user_images/{}'.format(bild.filename))}}">{{bild.filename}}</a><br>
+                        {% endfor %}
+                        <div class="form-group mt-4">
+                            {{ form.bemerkungen.label }}
+                            {{ form.bemerkungen(class_="form-control", rows=3) }}
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-6">
-
+            <div class="col-md-6">
                 <div class="card">
                     <div class="card-header d-flex">
                         <h5>{{_('Gestein')}}</h5>
@@ -83,13 +107,13 @@
 
                             <div class="form-group col-md-6">
                                 {{ form.gestein.label }}
-
                                 {{ form.gestein(class_="form-control  rs-gestein" + (" is-invalid" if form.gestein.errors else ""), readonly=gestein) }}
                                 {% for error in form.gestein.errors %}
-                                <div class="invalid-feedback">
-                                    {{error}}
-                                </div>
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
                                 {% endfor %}
+                            </div>
+                            <div class="col">
+                                <small id="gesteinHelp" class="form-text text-muted">{{_('ID Leer lassen um Gesteinsart zu wechseln oder neue zu erstellen. Bestehendes Gestein kann editiert werden falls eine ID verwendet wird.')}}</small>
                             </div>
                         </div>
                     </div>
@@ -108,19 +132,35 @@
                                 <div class="form-check ml-3">
                                     {{ form.published(class_="form-check-input") }}
                                     {{ form.published.label(class_="form-check-label")}}
+                                    {% for error in form.published.errors %}
+                                    <div class="invalid-feedback" style="display:block">{{error}}</div>
+                                    {% endfor %}
                                 </div>
-                                <a target="_blank" href="#" class="btn btn-primary mt-2 ml-3">{{_('Vorschau')}}</a>
+                                {% if form.stein_id.data %}
+                                <input type="submit" name="submit" formtarget="_blank" class="btn btn-primary mt-2 ml-3" value="{{_('Vorschau')}}" />
+                                <small id="gesteinHelp" class="form-text text-muted">{{_('Änderungen werden gespeichert für die Vorschau.')}}</small>
+                                {% else %}
+                                <input type="submit" name="submit" formtarget="_blank" class="btn btn-primary mt-2 ml-3" disabled value="{{_('Vorschau')}}" />
+                                <input type="submit" name="submit" class="btn btn-primary mt-2 ml-3" value="{{_('Erstellen')}}" />
+                                <small id="gesteinHelp" class="form-text text-muted">{{_('Stein muss zuerst erstellt werden.')}}</small>
+                                {% endif %}
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 {{ form.herkunft.label }}
-                                {{ form.herkunft(class_="form-control") }}
+                                {{ form.herkunft(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
+                                {% for error in form.herkunft.errors %}
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
+                                {% endfor %}
                             </div>
 
                             <div class="form-group col-md-6">
                                 {{ form.land.label }}
-                                {{ form.land(class_="form-control") }}
+                                {{ form.land(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
+                                {% for error in form.land.errors %}
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
+                                {% endfor %}
                             </div>
                         </div>
                         <div class="form-row">
@@ -129,9 +169,7 @@
                                 {{ form.latitude(class_="form-control" + (" is-invalid" if form.latitude.errors else "")) }}
                                 <small id="latitudeHelp" class="form-text text-muted">{{_('Koordinaten (11°11\'11.0"N) oder Dezimalzahl (11.1)')}}</small>
                                 {% for error in form.latitude.errors %}
-                                <div class="invalid-feedback">
-                                    {{error}}
-                                </div>
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
                                 {% endfor %}
                             </div>
                             <div class="form-group col-md-6">
@@ -139,42 +177,43 @@
                                 {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
                                 <small id="longitudeHelp" class="form-text text-muted">{{_('Koordinaten (11°11\'11.0"E) oder Dezimalzahl (11.1)')}}</small>
                                 {% for error in form.longitude.errors %}
-                                <div class="invalid-feedback">
-                                    {{error}}
-                                </div>
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
                                 {% endfor %}
                             </div>
                         </div>
-                        <div class="form-group">
-                            {{ form.titel.label }}
-                            {{ form.titel(class_="form-control", maxlength="25") }}
-                            <small id="titelhelp" class="form-text text-muted"><span id="current_titel">0</span>/ 25</small>
-                        </div>
-                        <div class="form-group">
-                            {{ form.bild_stein.label }}
-                            {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
-                            <small id="steinHelp" class="form-text text-muted">max. 1MB</small>
-                            {% for error in form.bild_stein.errors %}
-                            <div class="invalid-feedback">
-                                {{error}}
+                        <div class="form-row">
+                            <div class="form-group col-12">
+                                {{ form.titel.label }}
+                                {{ form.titel(class_="form-control" + (" is-invalid" if form.longitude.errors else ""), maxlength="25") }}
+                                {% for error in form.titel.errors %}
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
+                                {% endfor %}
+                                <small id="titelhelp" class="form-text text-muted"><span id="current_titel">0</span>/ 25</small>
+                            </div
+                        ></div>
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                {{ form.bild_stein.label }}
+                                {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
+                                <small id="steinHelp" class="form-text text-muted">max. 1MB</small>
+                                {% for error in form.bild_stein.errors %}
+                                <div class="invalid-feedback" style="display:block">{{error}}</div>
+                                {% endfor %}
+                                {% if stein %}
+                                    <img id="img_stein" src="{{ url_for('static', filename='img/steine/'+stein) }}">
+                                {% endif %}
                             </div>
-                            {% endfor %}
-                            {% if stein %}
-                                <img id="img_stein" src="{{ url_for('static', filename='img/steine/'+stein) }}">
-                            {% endif %}
-                        </div>
-                        <div class="form-group">
-                            {{ form.bild_herkunft.label }}
-                            {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
-                            <small id="herkunftHelp" class="form-text text-muted">max. 2MB</small>
-                            {% for error in form.bild_herkunft.errors %}
-                                <div class="invalid-feedback">
-                                    {{error}}
-                                </div>
-                            {% endfor %}
-                            {% if herkunft %}
-                                <img id="img_herkunft" src="{{ url_for('static', filename='img/steine/{}'.format(herkunft)) }}">
-                            {% endif %}
+                            <div class="form-group col-md-6">
+                                {{ form.bild_herkunft.label }}
+                                {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
+                                <small id="herkunftHelp" class="form-text text-muted">max. 2MB</small>
+                                {% for error in form.bild_herkunft.errors %}
+                                    <div class="invalid-feedback" style="display:block">{{error}}</div>
+                                {% endfor %}
+                                {% if herkunft %}
+                                    <img id="img_herkunft" src="{{ url_for('static', filename='img/steine/{}'.format(herkunft)) }}">
+                                {% endif %}
+                            </div>
                             <script>
                                 document.getElementById('bild_stein').addEventListener('change', function() {
                                     if ( this.files.length != 0)
@@ -200,6 +239,7 @@
                                 {% if gestein %}
                                 document.getElementById('gestein_edit').addEventListener('click', function() {
                                     document.getElementsByClassName('rs-gestein')[0].readOnly = false
+                                    document.getElementsByClassName('rs-gestein-id')[0].readOnly = false
                                 });
                                 {% endif %}
                             </script>
@@ -211,16 +251,26 @@
                 <div class="form-group">
                     {{ form.pers_geschichte.label }}
                     {{ form.pers_geschichte(class_="form-control", rows=10, maxlength="600") }}
+                    {% for error in form.pers_geschichte.errors %}
+                    <div class="invalid-feedback" style="display:block">{{error}}</div>
+                    {% endfor %}
                     <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 600</small>
                 </div>
                 <div class="form-group">
                     {{ form.geo_geschichte.label }}
                     {{ form.geo_geschichte(class_="form-control", rows=10, maxlength="600") }}
+                    {% for error in form.geo_geschichte.errors %}
+                    <div class="invalid-feedback" style="display:block">{{error}}</div>
+                    {% endfor %}
                     <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 600</small>
                 </div>
                 <div class="form-group">
-                    {{ form.description.label }} <small class="form-text text-muted mb-1">{{_('Beschreibung für Google Suchresultate')}}</small>
+                    {{ form.description.label }} 
+                    <small class="form-text text-muted mb-1">{{_('Beschreibung für Google Suchresultate')}}</small>
                     {{ form.description(class_="form-control", rows=5, maxlength="160") }}
+                    {% for error in form.description.errors %}
+                    <div class="invalid-feedback" style="display:block">{{error}}</div>
+                    {% endfor %}
                     <small id="descHelp" class="form-text text-muted"><span id="current_desc">0</span>/ 160</small>
                 </div>
             </div>

@@ -12,6 +12,8 @@ class Person(db.Model):
     twitter = db.Column(db.String(32))
     facebook = db.Column(db.String(32))
     steine = db.relationship('Stein', backref='absender', lazy='dynamic')
+    newsletter = db.Column(db.Boolean, default=False)
+    newsletter_registered = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return '{}, {}'.format(self.vorname, self.nachname) 
@@ -39,10 +41,12 @@ class Gestein(db.Model):
         return '{}'.format(self.name) 
 
     @classmethod
-    def get_or_create(cls, id = None):
+    def get_or_create(cls, id = None, name = None):
         gestein = None
         if id is not None:
             gestein = cls.query.get(id)
+        if gestein is None and name is not None:
+            gestein = cls.query.filter_by(name = name).first()
         if gestein is None:
             gestein = cls()
         return gestein
@@ -53,7 +57,7 @@ class Bild(db.Model):
     stein = db.Column(db.Integer, db.ForeignKey('stein.id'))
 
     def __repr__(self):
-        return '{}'.format(self.filename) 
+        return '{},{},{}'.format(self.id, self.filename, self.stein) 
 
 class Stein(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -71,11 +75,11 @@ class Stein(db.Model):
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     published = db.Column(db.Boolean, index=True)
     description = db.Column(db.String(1))
-    user_bilder = db.relationship('Bild', backref='bilder', lazy='dynamic')
+    user_bilder = db.relationship('Bild', backref='stein_ref', lazy='dynamic')
     bemerkungen = db.Column(db.String(1))
 
     def __repr__(self):
-        return '{}, {}, {}'.format(self.gestein, self.herkunft, self.bild_stein)
+        return '{}, {}'.format(self.gestein, self.herkunft)
 
     @classmethod
     def get_or_create(cls, id = None):

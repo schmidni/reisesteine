@@ -91,7 +91,7 @@
             <div class="col-md-6">
                 <h2>{{_('Stein')}}</h2>
                 <small class="form-text text-muted mb-3">
-                    <br/><br/>
+                    {{_('* Diese Felder werden benötigt')}}<br><br>
                 </small>
                 <div class="card">
                     <div class="card-body">
@@ -186,25 +186,26 @@
         <div class="row mt-3">
             <div class="col-12">
                 <div class="form-group">
-                    {{ form.titel.label }}
+                    {{ form.titel.label(class_="mb-0") }}
+                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Titel')}}</small>
                     {{ form.titel(class_="form-control", maxlength="25") }}
                     <small id="titelhelp" class="form-text text-muted"><span id="current_titel">0</span>/ 25</small>
                 </div>
                 <div class="form-group">
                     {{ form.pers_geschichte.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1">{{_('Hinweise persönliche Geschichte')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Geschichte')}}</small>
                     {{ form.pers_geschichte(class_="form-control", rows=5, maxlength="400") }}
                     <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 400</small>
                 </div>
                 <div class="form-group">
                     {{ form.geo_geschichte.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1">{{_('Hinweise Geologie')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Geologie')}}</small>
                     {{ form.geo_geschichte(class_="form-control", rows=5, maxlength="400") }}
                     <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 400</small>
                 </div>
                 <div class="form-group">
                     {{ form.bemerkungen.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1">{{_('Hinweise Bemerkungen')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Bemerkungen')}}</small>
                     {{ form.bemerkungen(class_="form-control", rows=5) }}
                 </div>
                 <div class="form-group">
@@ -217,13 +218,19 @@
                 </div>
             </div>
         </div>
-        <div class="row mt-5">
-            <div class="col">
+        <div class="row mt-2">
+            <div class="col-12">
                 <p>
                     {{_('Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an focusTerra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden.')}}
                 </p>
             </div>
             <div class="col-12">
+                <div class="form-check">
+                    {{ form.newsletter(class_="form-check-input") }}
+                    {{ form.newsletter.label(class_="form-check-label")}}
+                </div>
+            </div>
+            <div class="col-12 mt-4">
                 {{ form.submit(class_="btn btn-primary") }}
                 <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}">{{_('Verwerfen')}}</a>
             </div>

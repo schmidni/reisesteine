@@ -11,7 +11,7 @@ import re
 import os
 
 class MitmachenForm(FlaskForm):
-    vorname =           StringField(_l('Vorname*'), validators=[DataRequired()])
+    vorname =           StringField(_l('Vorname *'), validators=[DataRequired()])
     nachname =          StringField(_l('Nachname'))
     wohnort =           StringField(_l('Wohnort *'), validators=[DataRequired()])
     email =             EmailField(_l('Email *'), validators=[DataRequired(), Email()])
@@ -19,12 +19,13 @@ class MitmachenForm(FlaskForm):
     instagram =         StringField(_l('Instagram'))
     twitter =           StringField(_l('Twitter'))
     facebook =          StringField(_l('Facebook'))    
-    
+    newsletter =        BooleanField(_l('Ich möchte den focusTerra Newsletter erhalten.'), default=False)
+
     herkunft =          StringField(_l('Lokalität/Ort *'), validators=[DataRequired()])
     land =              StringField(_l('Land *'), validators=[DataRequired()])
 
-    longitude =         StringField(_l('Breitengrad *'), validators=[DataRequired()])
-    latitude =          StringField(_l('Längengrad *'), validators=[DataRequired()])
+    longitude =         StringField(_l('Längengrad *'), validators=[DataRequired()])
+    latitude =          StringField(_l('Breitengrad *'), validators=[DataRequired()])
 
     titel =             StringField(_l('Titel *'), validators=[DataRequired()])
 
@@ -32,8 +33,8 @@ class MitmachenForm(FlaskForm):
     geo_geschichte =    TextAreaField(_l('Hinweise Fundort / Geologie'))
     bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
 
-    bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[ FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
-    bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[ FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+    bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
+    bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
 
     # recaptcha = RecaptchaField()
     submit = SubmitField(_l('Speichern'))
@@ -80,6 +81,10 @@ class MitmachenForm(FlaskForm):
 
 
 
+def dataRequiredOnPublish(form, field):
+    if form.published.data == True:
+        if not field.data:
+            raise ValidationError('Dieses Feld wird benötigt.')
 
 
 class EditSteinForm(FlaskForm):
@@ -98,26 +103,29 @@ class EditSteinForm(FlaskForm):
 
     gestein =           StringField(_l('Gestein*'), validators=[DataRequired()])
     
-    herkunft =          StringField(_l('Lokalität/Ort *'), validators=[DataRequired()])
-    land =              StringField(_l('Land *'), validators=[DataRequired()])
-    longitude =         StringField(_l('Breitengrad *'), validators=[DataRequired()])
-    latitude =          StringField(_l('Längengrad *'), validators=[DataRequired()])
-    titel =             StringField(_l('Titel *'), validators=[DataRequired()])
+    herkunft =          StringField(_l('Lokalität/Ort *'), validators=[dataRequiredOnPublish])
+    land =              StringField(_l('Land *'), validators=[dataRequiredOnPublish])
+    longitude =         StringField(_l('Längengrad *'), validators=[dataRequiredOnPublish])
+    latitude =          StringField(_l('Breitengrad *'), validators=[dataRequiredOnPublish])
+    titel =             StringField(_l('Titel *'), validators=[dataRequiredOnPublish])
     
     bild_stein =        FileField(_l('Bilder Stein *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
     bild_herkunft =     FileField(_l('Bilder Fundort *'), validators=[FileAllowed(['jpg', 'png', 'gif'], _l('Bitte nur Bilder hochladen.'))])
     
     pers_geschichte =   TextAreaField(_l('Persönliche Geschichte'))
-    geo_geschichte =    TextAreaField(_l('Geologische Einschätzung *'), validators=[DataRequired()])
+    geo_geschichte =    TextAreaField(_l('Geologische Einschätzung *'), validators=[dataRequiredOnPublish])
     bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
-    description =       TextAreaField(_l('Meta Description *'), validators=[DataRequired()])
+    description =       TextAreaField(_l('Meta Description *'), validators=[dataRequiredOnPublish])
 
     published =         BooleanField(_l('Published'), default=False)
-    
+    newsletter =        BooleanField(_l('Will Newsletter'), default=False)
+    newsletter_registered =BooleanField(_l('Newsletter Registered'), default=False)
 
     submit = SubmitField(_l('Speichern'))
 
     def validate_longitude(self, longitude):
+        if not longitude.data:
+            longitude.data = 0
         try:
             longitude.data = float(longitude.data)
         except ValueError:
@@ -128,6 +136,8 @@ class EditSteinForm(FlaskForm):
                 raise ValidationError(_l('Format ungültig.'))
 
     def validate_latitude(self, latitude):
+        if not latitude.data:
+            latitude.data = 0
         try:
             latitude.data = float(latitude.data)
         except ValueError:
@@ -136,16 +146,6 @@ class EditSteinForm(FlaskForm):
                 latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
                 raise ValidationError(_l('Format ungültig.'))
-
-    def validate_gestein(self, gestein):
-        by_name = Gestein.query.filter_by(name=gestein.data).first()
-        
-        if self.gestein_id.data:
-            by_id = Gestein.query.get(self.gestein_id.data)
-        else:
-            by_id = None
-        if by_name is not None and by_name != by_id:
-            raise ValidationError(_l('Dieses Gestein gibt es bereits. Wert zurückgesetzt'))
 
     def validate_email(self, email):
         by_name = Person.query.filter_by(email=email.data).first()
@@ -206,9 +206,12 @@ class EditSteinForm(FlaskForm):
         self.instagram.data = curr_stein.absender.instagram
         self.twitter.data = curr_stein.absender.twitter
         self.facebook.data = curr_stein.absender.facebook
-
-        self.gestein_id.data = curr_stein.gesteinsart.id
-        self.gestein.data = curr_stein.gesteinsart.name
+        self.newsletter.data = curr_stein.absender.newsletter
+        self.newsletter_registered.data = curr_stein.absender.newsletter_registered
+    
+        if curr_stein.gesteinsart:
+            self.gestein_id.data = curr_stein.gesteinsart.id
+            self.gestein.data = curr_stein.gesteinsart.name
 
         self.stein_id.data = curr_stein.id
         self.herkunft.data = curr_stein.herkunft
@@ -220,6 +223,7 @@ class EditSteinForm(FlaskForm):
         self.geo_geschichte.data = curr_stein.geo_geschichte
         self.published.data = curr_stein.published
         self.description.data = curr_stein.description
+        self.bemerkungen.data = curr_stein.bemerkungen
 
     def populate_absender(self, absender):
         self.user_id.data = absender.id
@@ -231,3 +235,5 @@ class EditSteinForm(FlaskForm):
         self.instagram.data = absender.instagram
         self.twitter.data = absender.twitter
         self.facebook.data = absender.facebook
+        self.newsletter.data = absender.newsletter
+        self.newsletter_registered.data = absender.newsletter_registered
