@@ -138,11 +138,11 @@
                                 </div>
                                 {% if form.stein_id.data %}
                                 <input type="submit" name="submit" formtarget="_blank" class="btn btn-primary mt-2 ml-3" value="{{_('Vorschau')}}" />
-                                <small id="gesteinHelp" class="form-text text-muted">{{_('Änderungen werden gespeichert für die Vorschau.')}}</small>
+                                <small id="gesteinHelp" class="form-text text-muted ml-3">{{_('Änderungen werden gespeichert für die Vorschau.')}}</small>
                                 {% else %}
-                                <input type="submit" name="submit" formtarget="_blank" class="btn btn-primary mt-2 ml-3" disabled value="{{_('Vorschau')}}" />
+                                <input type="submit" name="submit" formtarget="_blank" class="btn btn-secondary mt-2 ml-3" disabled value="{{_('Vorschau')}}" />
                                 <input type="submit" name="submit" class="btn btn-primary mt-2 ml-3" value="{{_('Erstellen')}}" />
-                                <small id="gesteinHelp" class="form-text text-muted">{{_('Stein muss zuerst erstellt werden.')}}</small>
+                                <small id="gesteinHelp" class="form-text text-muted ml-3">{{_('Stein muss zuerst erstellt werden.')}}</small>
                                 {% endif %}
                             </div>
                         </div>

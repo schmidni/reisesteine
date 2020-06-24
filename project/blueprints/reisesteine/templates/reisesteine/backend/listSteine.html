@@ -34,6 +34,7 @@
             <th scope="col">{{_('Gestein')}}</th>
             <th scope="col">{{_('Herkunft')}}</th>
             <th scope="col">{{_('Einsender')}}</th>
+            <th scrope="col">{{_('Veröffentlicht')}}</th>
             <th scrope="col"></th>
             <th scrope="col"></th>
         </tr>
@@ -44,8 +45,19 @@
         <tr>
             <th scope="row">{{stein.id}}</th>
             <td>{{stein.gesteinsart}}</td>
-            <td>{{stein.herkunft}}</td>
+            <td>{{stein.herkunft}}, {{stein.land}}</td>
             <td>{{stein.absender}}</td>
+            <td>
+                {% if stein.published %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" height="24px">
+                        <polygon fill="#43A047" points="40.6,12.1 17,35.7 7.4,26.1 4.6,29 17,41.3 43.4,14.9"/>
+                    </svg>
+                {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" height="24px">
+                        <path fill="red" d="M38 12.83l-2.83-2.83-11.17 11.17-11.17-11.17-2.83 2.83 11.17 11.17-11.17 11.17 2.83 2.83 11.17-11.17 11.17 11.17 2.83-2.83-11.17-11.17z"/>
+                    </svg>
+                {% endif %}
+            </td>
             <td>
                 <a href="{{ url_for('reisesteine.editStein', id=stein.id) }}" class="btn btn-primary btn-sm">{{_('editiern')}}</a>
             </td>
@@ -57,5 +69,6 @@
 
         </tbody>
     </table>
+    <br/><br/><br/><br/>
 </div>
 {% endblock %}

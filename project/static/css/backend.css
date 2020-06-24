@@ -1,6 +1,40 @@
 
+html {
+    font-size: 16px;
+}
+
 body.rs-backend {
-    padding-top: 60px;
+    padding-top: 20px;
+}
+
+body.rs-backend .rs-mitmachen {
+    font-size: 1.1rem;
+    font-family: 'Sen', sans-serif;
+    font-weight: 400;
+    color: rgb(24, 38, 50);
+}
+
+.rs-mitmachen h1,
+.rs-mitmachen h2,
+.rs-mitmachen h3,
+.rs-mitmachen h4,
+.rs-mitmachen h5 {
+    font-family: 'Passion One', cursive;
+    font-weight: 400;
+    text-transform: uppercase;
+}
+
+.rs-mitmachen h1 {
+    font-size: 3.5rem;
+}
+
+.rs-mitmachen h2 {
+    font-size: 3rem;
+}
+
+.rs-mitmachen h5 {
+    font-size: 1.5rem;
+    text-transform: none;
 }
 
 /************************** BACKEND FORM ******************************************/
@@ -12,8 +46,8 @@ body.rs-backend {
 /************************** NAVIGATION ******************************************/
 #rs-backend-navigation {
     position: absolute;
-    top: 20px;
-    left: 0;
+    top: 60px;
+    left: 50px;
     width: 150px;
     height: 150px;
     padding-left: 25px;

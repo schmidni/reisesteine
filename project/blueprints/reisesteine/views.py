@@ -218,7 +218,7 @@ def danke():
 @reisesteine.route('/listSteine')
 @auth.login_required
 def listSteine():
-    steine = Stein.query.all()
+    steine = Stein.query.order_by(Stein.published).all()
     return render_template('reisesteine/backend/listSteine.html', steine=steine)
 
 @reisesteine.route('/deleteStein/<id>')

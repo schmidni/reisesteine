@@ -92,7 +92,7 @@ class EditSteinForm(FlaskForm):
     user_id =           IntegerField(_l('Absender ID'), validators=[Optional()])
     gestein_id =        IntegerField(_l('Gestein ID'), validators=[Optional()])
 
-    vorname =           StringField(_l('Vorname*'), validators=[DataRequired()])
+    vorname =           StringField(_l('Vorname *'), validators=[DataRequired()])
     nachname =          StringField(_l('Nachname'))
     wohnort =           StringField(_l('Wohnort *'), validators=[DataRequired()])
     email =             EmailField(_l('Email *'), validators=[DataRequired(), Email()])
@@ -101,7 +101,7 @@ class EditSteinForm(FlaskForm):
     twitter =           StringField(_l('Twitter'))
     facebook =          StringField(_l('Facebook'))
 
-    gestein =           StringField(_l('Gestein*'), validators=[DataRequired()])
+    gestein =           StringField(_l('Gestein *'), validators=[DataRequired()])
     
     herkunft =          StringField(_l('Lokalität/Ort *'), validators=[dataRequiredOnPublish])
     land =              StringField(_l('Land *'), validators=[dataRequiredOnPublish])
