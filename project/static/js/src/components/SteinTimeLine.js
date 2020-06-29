@@ -24,10 +24,10 @@ export default class SteinTimeLine {
             this.frame.navigate('full');
         }
         else if (this.current == 'fundort'){
+            this.closeFundort.style.display = 'none';
             await this.draggableImage.animateDown();
             this.geschichte.style.width = "auto";
             this.fundort.classList.remove('active');
-            this.closeFundort.style.display = 'none';
             this.closeAll.style.display = 'block';
         }
 
@@ -43,9 +43,10 @@ export default class SteinTimeLine {
         }
         
         else if (target == 'fundort'){
+            this.closeAll.style.display = 'none';
             if (this.current != 'geschichte')
                 await this.panTo('-100vw');
-            this.initFundort();
+            await this.initFundort();
             this.current = 'fundort';
         }
 
@@ -57,15 +58,16 @@ export default class SteinTimeLine {
     }
 
     async initFundort() {
-        this.closeAll.style.display = 'none';
         await this.rotate(this.fundort, [-10, 0]);
         this.geschichte.style.width = "200vw";
 
         this.draggableImage = new DraggableImage(this.fundort);
-        await this.draggableImage.init();
-
-        this.fundort.classList.add('active');
-        this.closeFundort.style.display = 'block';
+        let waitInit = this.draggableImage.init();
+        waitInit.then(() => {
+            this.fundort.classList.add('active');
+            this.closeFundort.style.display = 'block';
+        })
+        return waitInit;
     }
 
     panTo (vw) {

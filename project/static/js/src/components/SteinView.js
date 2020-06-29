@@ -1,4 +1,5 @@
 import m from 'mithril';
+import anime from 'animejs';
 import {convertDMS} from '../util/convertCoords.js';
 import SteinNavigation from './SteinNavigation.js';
 import SteinTimeLine from './SteinTimeLine';
@@ -20,9 +21,18 @@ export default class SteinView {
             this.SteinLine = new SteinTimeLine(ctrl.attrs.frame, this.coordinates, this.bild, this.geschichte, this.fundort, this.geologie, ctrl.attrs.goTo);
             m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine, startAt: ctrl.attrs.goTo}));
         } else {
-            document.querySelector('.rs-content').addEventListener('touchmove', () => {
+            let content = ctrl.dom;
+            content.addEventListener('touchmove', () => {
                 ctrl.attrs.frame.navigate('mobilefull');
-            })
+            });
+            anime({
+                targets: content.children,
+                opacity: [0, 1],
+                duration: 1000,
+                easing: "easeInOutQuad",
+                delay: 1000,
+                begin: () => {content.style.opacity = 1}
+            });
         }
     }
 
