@@ -3,17 +3,18 @@ import DraggableImage from '../util/draggableImage.js'
 
 export default class SteinTimeLine {
 
-    constructor(frame, coord, stein, geschichte, fundort, geologie) {
+    constructor(frame, coord, stein, geschichte, fundort, geologie, startAt) {
         this.coord = coord;
         this.stein = stein;
         this.geschichte = geschichte;
         this.fundort = fundort;
         this.geologie = geologie;
         this.frame = frame;
-
-        this.current = 'stein';
+        this.draggable = null;
+        this.startAt = startAt;
+        this.current = startAt;
         this.fundort_rect = null;
-        this.startAnimationCoords();
+        this.startTimelineAt();
     }
 
     async goTo (target) {
@@ -40,14 +41,7 @@ export default class SteinTimeLine {
         else if (target == 'fundort'){
             if (this.current != 'geschichte')
                 await this.panTo('-100vw');
-
-            await this.rotate(this.fundort, [-10, 0]);
-            this.geschichte.style.width = "200vw";
-
-            this.draggableImage = new DraggableImage(this.fundort);
-            await this.draggableImage.init();
-
-            this.fundort.classList.add('active');
+            this.initFundort();
             this.current = 'fundort';
         }
 
@@ -56,6 +50,16 @@ export default class SteinTimeLine {
             this.current = 'geologie';
         }
         return true;
+    }
+
+    async initFundort() {
+        await this.rotate(this.fundort, [-10, 0]);
+        this.geschichte.style.width = "200vw";
+
+        this.draggableImage = new DraggableImage(this.fundort);
+        await this.draggableImage.init();
+
+        this.fundort.classList.add('active');
     }
 
     panTo (vw) {
@@ -68,6 +72,18 @@ export default class SteinTimeLine {
         }).finished;
     }
 
+    startPanAt (vw) {
+        anime({
+            targets: '.rs-content>*',
+            translateX: vw,
+            translateZ: 0,
+            duration: 0,
+            easing: "linear"
+        }).finished.then(() => {
+            document.querySelector('.rs-content').style.opacity = 1;
+        });   
+    }
+
     rotate(target, deg) {
         return anime({
             targets: target,
@@ -77,16 +93,37 @@ export default class SteinTimeLine {
         }).finished;
     }
 
-    startAnimationCoords () {
+    startTimelineAt() {
+        let targets = [];
+        let fun = () => {};
+        if(this.startAt == 'stein'){
+            targets = [this.coord, this.stein, ".rs-svg"];
+            fun = () => {this.startPanAt('0vw');};
+        } else if (this.startAt == 'geschichte'){
+            targets = [this.geschichte, this.fundort, ".rs-svg"];
+            fun = () => {this.startPanAt('-100vw');};
+        } else if (this.startAt == 'fundort'){
+            targets = [this.geschichte, this.fundort, ".rs-svg"];
+            fun = () => {
+                this.startPanAt('-100vw');
+                this.initFundort();
+            }
+        } else if (this.startAt == 'geologie') {
+            targets = [this.geologie, ".rs-svg"];
+            fun = () => {this.startPanAt('-200vw')};
+        }
+
+        this.startAnimation(targets, fun);
+    }
+
+    startAnimation (targets, fun) {
         anime({
-            targets: [this.coord, this.stein, ".rs-svg"],
+            targets: targets,
             opacity: [0, 1],
             duration: 1000,
             easing: "easeInOutQuad",
             delay: 1000,
-            changeBegin: () => {
-                this.coord.style.opacity = 1;
-            }
+            changeBegin: fun
         });
     }
 };

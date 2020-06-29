@@ -72,7 +72,6 @@ export default class SteinIndex {
             view: () => m(SteinMain, {  'id': id, 
                                     'map':this.map, 
                                     'frame':this.frame,
-                                    // 'remove': e.target,
                                     'pushState': true,
                                     'overview': 'steine'
             })}

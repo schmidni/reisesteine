@@ -17,8 +17,8 @@ export default class SteinView {
         this.coordinates = ctrl.dom.querySelector('.rs-coordinates');
 
         if (!this.media.matches) {
-            this.SteinLine = new SteinTimeLine(ctrl.attrs.frame, this.coordinates, this.bild, this.geschichte, this.fundort, this.geologie);
-            ctrl.attrs.done.then(() => m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine})));
+            this.SteinLine = new SteinTimeLine(ctrl.attrs.frame, this.coordinates, this.bild, this.geschichte, this.fundort, this.geologie, ctrl.attrs.goTo);
+            m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine, startAt: ctrl.attrs.goTo}));
         } else {
             document.querySelector('.rs-content').addEventListener('touchmove', () => {
                 ctrl.attrs.frame.navigate('mobilefull');
@@ -28,7 +28,7 @@ export default class SteinView {
 
     view(ctrl) {
         return (
-        <div class="rs-content">
+        <div class="rs-content" style="opacity: 0">
             <div class="rs-coordinates">
                 <h3>{convertDMS(ctrl.attrs.info.latitude, null)}</h3>
                 <h3>{convertDMS(null, ctrl.attrs.info.longitude)}</h3>

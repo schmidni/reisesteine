@@ -1,12 +1,14 @@
 import m from 'mithril';
 
 export default class SteinNavigation {
-    constructor() {
+    constructor(ctrl) {
         this.active = 0;
         this.menu = [];
         this.slides = [];
-        this.SteinLine = null;
+        this.SteinLine = ctrl.attrs.SteinLine;
+        this.startAt = ctrl.attrs.startAt;
         this.navigating = false;
+
         let navStrings = document.getElementById('rs-nav-rock-strings');
         this.strings = [ 
                             navStrings.getAttribute('data-ste'),
@@ -29,7 +31,6 @@ export default class SteinNavigation {
     };
 
     oncreate(ctrl) {
-        this.SteinLine = ctrl.attrs.SteinLine;
         this.menu = [   ctrl.dom.querySelector('.rs-menu-stein'),
                         ctrl.dom.querySelector('.rs-menu-geschichte'),
                         ctrl.dom.querySelector('.rs-menu-fundort'),
@@ -42,6 +43,10 @@ export default class SteinNavigation {
                 item.addEventListener('click', () => {
                     this.switchIt(idx);
                 })
+                if(this.startAt == this.stop[idx]){
+                    this.active = idx;
+                    item.classList.add('active');
+                }
             })
     
             ctrl.dom.querySelector('.rs-menu-next').addEventListener('click', () => {
@@ -57,7 +62,7 @@ export default class SteinNavigation {
                 this.switchIt(2);
             });
 
-        }, 1000);
+        }, 2000);
     };
 
     view() {
@@ -71,7 +76,7 @@ export default class SteinNavigation {
                             <line class="a" x1="65.8" y1="29.45" x2="39.38" y2="58.92"/>
                         </svg>
                     </div>
-                    <h4 class="active rs-menu-stein">{this.strings[0]}</h4> 
+                    <h4 class="rs-menu-stein">{this.strings[0]}</h4> 
                     <h4 class="rs-menu-geschichte">{this.strings[1]}</h4> 
                     <h4 class="rs-menu-fundort">{this.strings[2]}</h4> 
                     <h4 class="rs-menu-geologie">{this.strings[3]}</h4>

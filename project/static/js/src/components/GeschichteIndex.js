@@ -55,7 +55,7 @@ export default class GeschichteIndex {
                                     'map':this.map, 
                                     'frame':this.frame,
                                     'pushState': true,
-                                    'overview': 'geschichte'
+                                    'goTo': 'geschichte'
             })}
         );
 
