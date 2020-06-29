@@ -62,6 +62,10 @@ export default class SteinNavigation {
                 this.switchIt(2);
             });
 
+            document.querySelector('#rs-closeFundort').addEventListener('click', () => {
+                this.switchIt(1);
+            })
+
         }, 2000);
     };
 

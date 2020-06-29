@@ -21,7 +21,7 @@ export default class GeschichteIndex {
         ctrl.attrs.frame.navigate('full')
         .then(() => {
             document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('rect'));
-            document.querySelector('.rs-close').style.display = "block";
+            document.querySelector('#rs-closeAll').style.display = "block";
         });
 
         m.request({
@@ -43,7 +43,7 @@ export default class GeschichteIndex {
 
         await this.IndexView.onClickEffect(e);
 
-        document.querySelector('.rs-close').style.display = "none";
+        document.querySelector('#rs-closeAll').style.display = "none";
 
         // replace overlay
         this.frame.paths.current = 'full';

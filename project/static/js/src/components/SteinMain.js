@@ -77,7 +77,7 @@ export default class SteinMain {
         m.render(document.getElementById('rs-info'), m(SteinView, {fadeIn: true, info: this.info, frame: this.frame, goTo: this.goTo}));
 
         // enable CLOSE
-        frameDone.then(() => {document.querySelector('.rs-close').style.display = "block"});
+        frameDone.then(() => {document.querySelector('#rs-closeAll').style.display = "block"});
     }
 
     onremove(ctrl) {

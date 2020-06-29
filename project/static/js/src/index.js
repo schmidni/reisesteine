@@ -16,7 +16,7 @@ var myMap = new worldMap(document.querySelector('#map'), frame, data_index);
 
 // NAVIGATION *************************************************************************************************************************
 // Close Icon
-document.querySelector('.rs-close').addEventListener('click', () => {
+document.querySelector('#rs-closeAll').addEventListener('click', () => {
     closeAll();
     history.pushState('home', 'Reisesteine', '/' + document.documentElement.lang);
 });
@@ -94,7 +94,7 @@ window.addEventListener('resize', debounce(() => {
 var closeAll = () => {
     m.render(document.getElementById('rs-body'), null);
     let frameDone = frame.navigate('initial');
-    document.querySelector('.rs-close').style.display = "none";
+    document.querySelector('#rs-closeAll').style.display = "none";
     document.title = 'Home - Reisesteine';
     return frameDone;
 }

@@ -23,7 +23,7 @@ export default class SteinIndex {
         ctrl.attrs.frame.navigate('full')
         .then(() => {
             document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('rect'));
-            document.querySelector('.rs-close').style.display = "block";
+            document.querySelector('#rs-closeAll').style.display = "block";
         });
 
         m.request({
@@ -61,7 +61,7 @@ export default class SteinIndex {
         await this.IndexView.onClickEffect(e);
 
         // stop navigation
-        document.querySelector('.rs-close').style.display = "none";
+        document.querySelector('#rs-closeAll').style.display = "none";
 
         // replace overlay
         this.frame.paths.current = 'full';

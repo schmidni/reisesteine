@@ -13,7 +13,7 @@ export default class About {
         window.addEventListener('resize', this.keepMarkerCentered);
         document.getElementById('rs-small-de').href = '/de/uber-uns';
         document.getElementById('rs-small-en').href = '/en/about';
-        document.querySelector('.rs-close').addEventListener('click', () => {
+        document.querySelector('#rs-close').addEventListener('click', () => {
             window.location.href = '/';
         })
         anime({

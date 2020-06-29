@@ -14,6 +14,8 @@ export default class SteinTimeLine {
         this.startAt = startAt;
         this.current = startAt;
         this.fundort_rect = null;
+        this.closeFundort = document.querySelector('#rs-closeFundort');
+        this.closeAll = document.querySelector('#rs-closeAll');
         this.startTimelineAt();
     }
 
@@ -25,6 +27,8 @@ export default class SteinTimeLine {
             await this.draggableImage.animateDown();
             this.geschichte.style.width = "auto";
             this.fundort.classList.remove('active');
+            this.closeFundort.style.display = 'none';
+            this.closeAll.style.display = 'block';
         }
 
         if (target == 'stein'){
@@ -53,6 +57,7 @@ export default class SteinTimeLine {
     }
 
     async initFundort() {
+        this.closeAll.style.display = 'none';
         await this.rotate(this.fundort, [-10, 0]);
         this.geschichte.style.width = "200vw";
 
@@ -60,6 +65,7 @@ export default class SteinTimeLine {
         await this.draggableImage.init();
 
         this.fundort.classList.add('active');
+        this.closeFundort.style.display = 'block';
     }
 
     panTo (vw) {
