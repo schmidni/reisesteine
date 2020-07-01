@@ -25,6 +25,7 @@ export default class Menu {
         
         if (id && id != undefined) {
             document.addEventListener('click', this.checkForClickTitle);
+            document.addEventListener('touchstart', this.checkForClickTitle);
             document.querySelector('#rs-title').style.display = 'block';
         }
         else
@@ -86,6 +87,7 @@ export default class Menu {
                 document.querySelector('#rs-title').style.display = 'none';
             })
             document.removeEventListener('click', this.checkForClickTitle)
+            document.removeEventListener('touchstart', this.checkForClickTitle)
         }
     }
 

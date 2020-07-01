@@ -9,9 +9,21 @@
         <link rel="alternate" hreflang="en" href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
 {% endblock %}
 
+{% block navigation %}
+<div id="rs-backend-navigation">
+    <a id="rs-backend-logo" href="{{ url_for('reisesteine.index') }}">
+        <img src="{{ url_for('static', filename='img/pfeil.svg') }}" style="transform: rotate(180deg);"/>
+    </a>
+    <span id="rs-backend-lang">
+        <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> / 
+        <a id="rs-small-en" href="{{ url_for(request.endpoint, lang_code='en') }}">en</a>
+    </span>
+</div>
+{% endblock %}
+
 {% block body %}
 
-<div class="container mt-3 pt-3 rs-mitmachen">
+<div class="container pt-3 rs-mitmachen">
     <form method="POST" enctype="multipart/form-data">
         {{ form.hidden_tag() }}
         <div class="row">
@@ -22,6 +34,9 @@
                 </p>
                 <p>
                     {{_('Wir freuen uns auf Ihre Reisesteine!')}}
+                </p>
+                <p class="mt-4">
+                    <small>{{_('* Diese Felder werden benötigt')}}</small>
                 </p>
             </div>
         </div>
@@ -91,7 +106,7 @@
             <div class="col-md-6">
                 <h2>{{_('Stein')}}</h2>
                 <small class="form-text text-muted mb-3">
-                    {{_('* Diese Felder werden benötigt')}}<br><br>
+                    <br><br>
                 </small>
                 <div class="card">
                     <div class="card-body">
@@ -145,10 +160,10 @@
                                         <div class="modal-body">
                                             <h5>{{_('Wie finde ich die korrekten Koordinaten?')}}</h5>
                                             <p>
-                                                {{_('Auf Google Maps können sie mit der rechten Maustaste auf den gewünschten Ort oder Bereich der Karte klicken. Danach wählen sie "Was ist hier?" aus. Die Koordinaten werden daraufhin im unteren Bildschirmbereich angezeigt.')}}
+                                                {{_('Auf <a href="https://www.google.ch/maps" target="_blank">Google Maps</a> können Sie mit der rechten Maustaste auf den gewünschten Ort oder Bereich der Karte klicken. Danach wählen Sie "Was ist hier?" aus. Die Koordinaten werden daraufhin im unteren Bildschirmbereich angezeigt.')}}
                                             </p>
                                             <p>
-                                                {{_('Mehr Informationen dazu finden sie <a href="https://support.google.com/maps/answer/18539?co=GENIE.Platform&percnt;3DDesktop&hl=de">hier</a>.')}}
+                                                {{_('Mehr Informationen dazu finden Sie <a href="https://support.google.com/maps/answer/18539?co=GENIE.Platform&percnt;3DDesktop&hl=de">hier</a>.')}}
                                             </p>
                                             <h5>{{_('Schreibweise')}}</h5>
                                             <p>
@@ -161,7 +176,7 @@
                             <div class="form-group">
                                 {{ form.bild_stein.label }}
                                 {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
-                                <small id="steinHelp" class="form-text text-muted">max. 3 files à 8MB</small>
+                                <small id="steinHelp" class="form-text text-muted">max. 3 Files à 8MB</small>
                                 {% for error in form.bild_stein.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
@@ -171,7 +186,7 @@
                             <div class="form-group">
                                 {{ form.bild_herkunft.label }}
                                 {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
-                                <small id="herkunftHelp" class="form-text text-muted">max. 3 files à 8MB</small>
+                                <small id="herkunftHelp" class="form-text text-muted">max. 3 Files à 8MB</small>
                                 {% for error in form.bild_herkunft.errors %}
                                     <div class="invalid-feedback">
                                         {{error}}
@@ -200,8 +215,7 @@
                 <div class="form-group">
                     {{ form.geo_geschichte.label(class_="mb-0") }}
                     <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Geologie')}}</small>
-                    {{ form.geo_geschichte(class_="form-control", rows=5, maxlength="400") }}
-                    <small id="geoHelp" class="form-text text-muted"><span id="current_geologie">0</span>/ 400</small>
+                    {{ form.geo_geschichte(class_="form-control", rows=5) }}
                 </div>
                 <div class="form-group">
                     {{ form.bemerkungen.label(class_="mb-0") }}
@@ -221,7 +235,7 @@
         <div class="row mt-2">
             <div class="col-12">
                 <p>
-                    {{_('Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an focusTerra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden.')}}
+                    {{_('Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an <i>focus</i>&#8239;Terra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden.')}}
                 </p>
             </div>
             <div class="col-12">
@@ -245,10 +259,6 @@
     document.getElementById('current_geschichte').innerHTML = document.getElementById('pers_geschichte').value.length;
     document.getElementById('pers_geschichte').addEventListener('keyup', function(e){
         document.getElementById('current_geschichte').innerHTML = this.value.length;
-    });
-    document.getElementById('current_geologie').innerHTML = document.getElementById('geo_geschichte').value.length;
-    document.getElementById('geo_geschichte').addEventListener('keyup', function(e){
-        document.getElementById('current_geologie').innerHTML = this.value.length;
     });
     document.getElementById('current_titel').innerHTML = document.getElementById('titel').value.length;
     document.getElementById('titel').addEventListener('keyup', function(e){

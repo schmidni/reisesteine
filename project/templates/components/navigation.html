@@ -7,7 +7,7 @@
 
 <div id="rs-title">
     <p>{{_('Reisesteine')}}</p>
-    <p>{{_('Eine interaktive virtuelle Ausstellung von')}} <b><i>focus</i>Terra</b></p>
+    <p>{{_('Eine interaktive virtuelle Ausstellung von')}} <b><i>focus</i>&#8239;Terra</b></p>
 </div>
 
 <div id="rs-nav-background">
@@ -34,15 +34,15 @@
         <span class="rs-title">{{_('Reisesteine')}}</span>
 
         <div class="rs-nav-indexpages">
-            <a id="rs-nav-steine" href="#"><small>{{_('Alle')}}</small> {{_('Steine')}}</a>
-            <a id="rs-nav-geschichten" href="#"><small>{{_('Alle')}}</small> {{_('Geschichten')}}</a>
-            <a id="rs-nav-fundorte" href="#"><small>{{_('Alle')}}</small> {{_('Fundorte')}}</a>
-            <a id="rs-nav-geologie" href="#"><small>{{_('Alle')}}</small> {{_('Geologie')}}</a>
+            <a id="rs-nav-steine" href="#">{{_('Alle')}} {{_('Steine')}}</a>
+            <a id="rs-nav-geschichten" href="#">{{_('Alle')}} {{_('Geschichten')}}</a>
+            <a id="rs-nav-fundorte" href="#">{{_('Alle')}} {{_('Fundorte')}}</a>
+            <a id="rs-nav-geologie" href="#">{{_('Alle')}} {{_('Gesteinsarten')}}</a>
         </div>
 
         <div class="rs-nav-impressum">
             <a id="rs-nav-participate"href="{{ url_for('reisesteine.mitmachen') }}">{{_('Mitmachen')}}</a>
-            <a id="rs-nav-about"href="{{ url_for('reisesteine.about') }}">{{_('Über Uns')}}</a>
+            <a id="rs-nav-about"href="{{ url_for('reisesteine.about') }}">{{_('Über REISESTEINE')}}</a>
         </div>
     </div>
     <div class="rs-nav-controls">

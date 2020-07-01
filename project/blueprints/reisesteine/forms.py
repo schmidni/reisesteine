@@ -19,7 +19,7 @@ class MitmachenForm(FlaskForm):
     instagram =         StringField(_l('Instagram'))
     twitter =           StringField(_l('Twitter'))
     facebook =          StringField(_l('Facebook'))    
-    newsletter =        BooleanField(_l('Ich möchte den focusTerra Newsletter erhalten.'), default=False)
+    newsletter =        BooleanField(_l('Ich möchte den <i>focus</i>&#8239;Terra Newsletter erhalten.'), default=False)
 
     herkunft =          StringField(_l('Lokalität/Ort *'), validators=[DataRequired()])
     land =              StringField(_l('Land *'), validators=[DataRequired()])
@@ -37,7 +37,7 @@ class MitmachenForm(FlaskForm):
     bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
 
     # recaptcha = RecaptchaField()
-    submit = SubmitField(_l('Speichern'))
+    submit = SubmitField(_l('Absenden'))
 
     def validate_longitude(self, longitude):
         try:

@@ -17,93 +17,6 @@
         }
     </style>
 </noscript>
-<style>
-    #rs-small-menu {
-        display: none;
-    }
-    #rs-small-navigation span {
-        display: block!important;
-    }
-    #rs-closeAll {
-        display: block!important;
-    }
-    .overlay path {
-        fill: rgba(256,256,256,0.85);
-    }
-
-    #rs-about-wrapper>* {
-        opacity: 0;
-    }
-
-    #rs-about-impressum {
-        position: absolute;
-        top: 20vh;
-        left: 60vw;
-        width: 20vw;
-        padding-top: 20vw;
-        z-index: 3;
-        text-align: center;
-    }
-
-    #rs-about {
-        z-index: 3;
-        width: 40vw;
-        height: 30vh;
-
-        position: absolute;
-        top: 20vh;
-        left: 15vw;
-
-        font-family: 'Sen', sans-serif;
-        font-weight: 400;
-        font-size: 1.2rem;
-    }
-
-    #rs-about a {
-        text-decoration: none;
-        color: rgb(180, 30, 30);
-    }
-    #rs-about a:hover {
-        text-decoration: none;
-        color: rgb(180, 30, 30);
-        font-weight: 700;
-    }
-
-    
-    @media only screen and (max-width: 1025px) {
-        #rs-about-wrapper {
-            display: flex;
-            flex-direction: column;
-            height:100vh;
-            overflow: scroll;
-        }
-        #rs-about {
-            position:static;
-            margin: 50px auto 50px auto;
-            top: auto;
-            left: auto;
-            width: 90vw;
-            height: auto;
-        }
-        #rs-about-impressum {
-            position:static;
-            margin-top: 30vh;
-            top: auto;
-            left: auto;
-            width: 90vw;
-            height: auto;
-        }
-        #rs-small-navigation>* {
-            transform: translate(-30px, -30px);
-        }
-        #rs-closeAll {
-            top: 15px!important;
-        }
-        .rs-about-logos {
-            flex-direction: column;
-        }
-    }
-</style>
 
 <div id="map"></div>
 
@@ -114,12 +27,13 @@
 <div id="rs-body" data-stein="{{id}}"></div>
 <div id="rs-about-wrapper">
     <div id="rs-about-impressum">
-        <h2><i>focus</i>Terra</h2>
+        <h2><i>focus</i>&#8239;Terra</h2>
         <h3>ETH Zürich</h3>
         <h3>Sonneggstrasse 5</h3>
         <h3>8092 Zürich</h3>
         <h3>Schweiz</h3>
         <h3>+41 44 632 62 81</h3>
+        <h3><a href="{{ url_for('reisesteine.focusTerra') }}">Email</a></h3>
     </div>
 
     <div id="rs-about">
@@ -128,21 +42,36 @@
             {{_('Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.')}}
         </p>
         <p>
-            {{_('Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von <i>focus</i>Terra weiterentwickelt. Die Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid.')}} 
+            {{_('Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan und wurde von <i>focus</i>&#8239;Terra weiterentwickelt. Die Umsetzung erfolgte gemeinsam mit Marion Deichmann und Nicolas Schmid.')}} 
         </p>
         <p>
-            <b>{{_('Konzeptentwicklerin, Herausgeberin & Redaktion:')}}</b> <a href="{{ url_for('reisesteine.focusTerra') }}"><i>focus</i>Terra</a><br/>
+            <b>{{_('Konzeptentwicklerin, Herausgeberin & Redaktion:')}}</b> <a href="https://focusterra.ethz.ch" target="_blank"><i>focus</i>&#8239;Terra</a><br/>
             <b>{{_('Gestaltung & technische Umsetzung:')}}</b> <a href="{{ url_for('reisesteine.marion') }}">Marion Deichmann</a> und <a href="{{ url_for('reisesteine.nicolas') }}">Nicolas Schmid</a>
         </p>
-        <p class="rs-about-logos" style="display: flex; margin-top: 50px;">
-            <a href="https://ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/eth_logo.svg') }} " width="300"/></a>
-            <a href="https://focusterra.ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/focusTerra_logo.svg') }} " width="300"/></a>
+        <p class="rs-about-logos">
+            <a href="https://ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/eth_logo.svg') }} "/></a>
+            <a href="https://focusterra.ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/focusTerra_logo.svg') }} "/></a>
+        </p>
+        <p>
+            <a href="https://focusterra.ethz.ch/footer/copyright.html" target="_blank">© 2020, focusTerra – ETH Zürich</a>
+        </p>
+        <p class="rs-copyright">
+            {{_('Copyright
+            Diese Webseite sowie ihre Teile sind urheberrechtlich geschützt und dürfen nur zum privaten, wissenschaftlichen und nicht gewerblichen Gebrauch kopiert und ausgedruckt werden. 
+            Ohne vorgängige schriftliche Erlaubnis von focusTerra – ETH Zürich dürfen die Webseite sowie ihre Teile weder vervielfältigt noch auf anderen Servern gespeichert, in Newsgroups oder Online-Dienste eingespeist oder auf einer CD-ROM oder anderen Datenträgern gespeichert werden. Dies gilt insbesondere für das Logo von focusTerra. Die Zwischenspeicherung in einem Cache oder auf einem Proxy-Server zur Optimierung der Zugriffsgeschwindigkeit ist gestattet.')}}
+            <br><br>
+            {{_('Das Zitieren der Webseiteninhalte unter korrekten Quellenangaben sowie das Setzen von Links auf unsere Website ist ausdrücklich erlaubt.')}}
+            <br><br>
+            {{_('Die Urheberrechte sind nicht übertragbar.')}}
         </p>
     </div>
 </div>
 
-
-<div id="rs-site-content" style="margin-left: 150px;">
+<div id="rs-site-content" style="margin-left: 150px;">^
+    <div id="rs-stein-site-content">
+    </div>
+    <div id="rs-stein-site-index">
+    </div>
 </div>
 
 <script>
@@ -154,4 +83,6 @@
     var data_stein = {{ {} if not ste else ste|tojson|safe }};
 
 </script>
+<div id="rs-nav-rock-strings" style="display: none" data-ste="{{_('Stein')}}" data-gesch="{{_('Geschichte')}}" data-fund="{{_('Fundort')}}" data-geo="{{_('Geologie')}}">
+</div>
 {% endblock %}

@@ -32,21 +32,24 @@ export default class worldMap {
                             .addTo(this.map)
                             .on('click', () => m.mount(document.getElementById('rs-body'), {view: () => 
                                 m(SteinMain, {'id': el[0], 'map':this, 'frame':this.frame, 'pushState': true})
-                            }))
-                            .bindTooltip(
-                                `<div>
-                                ${convertDMS(el[1], null)} <br>
-                                 ${convertDMS(null, el[2])} <br>
-                                 ${el[3]} <br>
-                                 <span>'${el[4]}'<span>
-                                 </div>`
-                                , {direction:'top', offset:[0,-40], className:'rs-tooltip'});
+                            }));
+            if (!this.media.matches){
+                marker.bindTooltip(
+                    `<div>
+                    ${convertDMS(el[1], null)} <br>
+                        ${convertDMS(null, el[2])} <br>
+                        ${el[3]} <br>
+                        <span>${el[4]}<span>
+                        </div>`
+                    , {direction:'top', offset:[0,-40], className:'rs-tooltip'});
+            }
+
             this.marker.push(marker);
         });
     }
 
     addMarker = (el_coord) => {
-        L.marker(el_coord, {icon: this.redIcon})
+        return L.marker(el_coord, {icon: this.redIcon})
                             .addTo(this.map)
     }
 
@@ -57,8 +60,10 @@ export default class worldMap {
     }
 
     init = (el) => {
-        var mymap = L.map(el, {zoomSnap: 0.1}).setView([30,0], 3).setMaxBounds([[-90, -180],[90, 180]]);
-        mymap.zoomControl.setPosition('bottomleft');
+        this.media = window.matchMedia("(max-width: 1025px)")
+        var mymap = L.map(el, {zoomSnap: 0.1, zoomControl: !this.media.matches}).setView([30,0], 3).setMaxBounds([[-90, -180],[90, 180]]);
+        if(!this.media.matches)
+            mymap.zoomControl.setPosition('bottomleft');
         this.initMap(mymap);
         return mymap;
     }

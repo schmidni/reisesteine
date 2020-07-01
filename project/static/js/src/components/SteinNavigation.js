@@ -21,6 +21,14 @@ export default class SteinNavigation {
     switchIt = async (target_in) => {
         if (this.active == target_in || this.navigating)
             return;
+        document.querySelector('.rs-chevron-right').style.display = 'block';
+        document.querySelector('.rs-chevron-left').style.display = 'block';
+
+        if (target_in == this.menu.length-1)
+            document.querySelector('.rs-chevron-right').style.display = 'none';
+
+        if (target_in == 0)
+            document.querySelector('.rs-chevron-left').style.display = 'none';
 
         this.navigating = true;
         this.menu[this.active].classList.remove('active');
@@ -47,12 +55,17 @@ export default class SteinNavigation {
                     this.active = idx;
                     item.classList.add('active');
                 }
+            if (this.active != this.menu.length-1)
+                document.querySelector('.rs-chevron-right').style.display = 'block';
+    
+            if (this.active != 0)
+                document.querySelector('.rs-chevron-left').style.display = 'block';
             })
     
-            ctrl.dom.querySelector('.rs-menu-next').addEventListener('click', () => {
-                let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
-                this.switchIt(next); 
-            });
+            // ctrl.dom.querySelector('.rs-menu-next').addEventListener('click', () => {
+            //     let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
+            //     this.switchIt(next); 
+            // });
 
             document.querySelector('.rs-geologie-bild').addEventListener('click', () => {
                 this.switchIt(0);
@@ -64,27 +77,49 @@ export default class SteinNavigation {
 
             document.querySelector('#rs-closeFundort').addEventListener('click', () => {
                 this.switchIt(1);
-            })
+            });
+
+            document.querySelector('.rs-chevron-right').addEventListener('click', (e) => {
+                let next = this.active + 1 < this.menu.length ? this.active + 1 : 0;
+                this.switchIt(next);
+            });
+            document.querySelector('.rs-chevron-left').addEventListener('click', (e) => {
+                let prev = this.active - 1 >= 0 ? this.active - 1 : this.menu.length-1;
+                this.switchIt(prev); 
+            });
 
         }, 2000);
     };
 
     view() {
         return(
-            <div class="rs-footer circle">
-                <div class="rs-footer-content">
-                    <div class="rs-menu-next" style="cursor: pointer">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 67.29 60.26">
-                            <line class="a" y1="30.13" x2="65.04" y2="30.13"/>
-                            <line class="a" x1="65.8" y1="30.81" x2="39.38" y2="1.34"/>
-                            <line class="a" x1="65.8" y1="29.45" x2="39.38" y2="58.92"/>
-                        </svg>
-                    </div>
-                    <h4 class="rs-menu-stein">{this.strings[0]}</h4> 
-                    <h4 class="rs-menu-geschichte">{this.strings[1]}</h4> 
-                    <h4 class="rs-menu-fundort">{this.strings[2]}</h4> 
-                    <h4 class="rs-menu-geologie">{this.strings[3]}</h4>
+            <div>
+                <div class="rs-chevron rs-chevron-right">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.94 61.52">
+                        <polyline class="a" points="2.12 60.1 31.11 31.11 1.41 1.41"/>
+                    </svg>
                 </div>
+                <div class="rs-chevron rs-chevron-left">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.94 61.52">
+                        <polyline class="a" points="2.12 60.1 31.11 31.11 1.41 1.41"/>
+                    </svg>
+                </div>
+                <div class="rs-footer circle">
+                    <div class="rs-footer-content">
+                        {/* <div class="rs-menu-next" style="cursor: pointer">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 67.29 60.26">
+                                <line class="a" y1="30.13" x2="65.04" y2="30.13"/>
+                                <line class="a" x1="65.8" y1="30.81" x2="39.38" y2="1.34"/>
+                                <line class="a" x1="65.8" y1="29.45" x2="39.38" y2="58.92"/>
+                            </svg>
+                        </div> */}
+                        <h4 class="rs-menu-stein">{this.strings[0]}</h4> 
+                        <h4 class="rs-menu-geschichte">{this.strings[1]}</h4> 
+                        <h4 class="rs-menu-fundort">{this.strings[2]}</h4> 
+                        <h4 class="rs-menu-geologie">{this.strings[3]}</h4>
+                    </div>
+                </div>
+                
             </div>
         )
     };

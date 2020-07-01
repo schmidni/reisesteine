@@ -150,7 +150,10 @@ export default class IndexView {
         interact(this.linkSelector).on('tap', (e) => {
             e.preventDefault();
             linkMethod(e);
-        });
+        })
+        .on('hold', (e) => {
+            return false;
+        })
     }
 
 

@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
+    <head profile="http://www.w3.org/2005/10/profile">
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="{% block metadescription %}{% endblock %}">
 
         <title>Reisesteine</title>
 
+        <link rel="icon" 
+            type="image/svg" 
+            href="{{ url_for('static', filename='img/favicon.svg')}}">
+            
         {% block canonical %}{% endblock %}
         
         <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Passion+One:wght@400;700&family=Sen&display=swap" rel="stylesheet">
@@ -16,15 +20,7 @@
     </head>
 
     <body class="rs-backend"> 
-        <div id="rs-backend-navigation">
-            <a id="rs-backend-logo" href="{{ url_for('reisesteine.index') }}">
-                <img src="{{ url_for('static', filename='img/logo.svg') }}"/>
-            </a>
-            <span id="rs-backend-lang">
-                <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> / 
-                <a id="rs-small-en" href="{{ url_for(request.endpoint, lang_code='en') }}">en</a>
-            </span>
-        </div>
+        {% block navigation %}{% endblock %}
         {% block body %}{% endblock %}
         <script type="text/javascript" src="{{ url_for('static', filename='js/ext/jquery-3.3.1.slim.min.js') }}"></script>
         <script type="text/javascript" src="{{ url_for('static', filename='js/ext/bootstrap.min.js') }}"></script>

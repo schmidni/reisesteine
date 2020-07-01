@@ -44,7 +44,9 @@ export default class SteinView {
                 <h3>{convertDMS(null, ctrl.attrs.info.longitude)}</h3>
                 <h2>{ctrl.attrs.info.herkunft}, <br></br>{ctrl.attrs.info.land}</h2>
             </div>
-            <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
+            <div class="rs-bild-wrapper">
+                <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
+            </div>
             <div class="rs-geschichte">    
                 <div class="rs-text">        
                     <h1>{ctrl.attrs.info.titel}</h1>
@@ -63,23 +65,20 @@ export default class SteinView {
             </div>
 
             <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">
-                <path class="rs-path" d="M523.74,870.86q-5.06,5.7-10.29,10.91"/>
-                <path class="rs-path" d="M506.17,888.71c-103.72,94.67-251.7,53.74-310.26,10.11-76.85-57.26-115.4-188.23-54.25-345,32.74-83.92,13.47-153.29-121.74-159.4"/>
-                <path class="rs-path" d="M14.89,394.2Q7.61,394-.1,394"/>
-                <path class="rs-path-dot" d="M516.27,865a9.4,9.4,0,1,1,.88,13.26A9.39,9.39,0,0,1,516.27,865Z"/>
+                <path class="rs-path" d="M353.07,778.8a92,92,0,0,1-14.55,3.62"/>
+                <path class="rs-path" d="M328.66,783.42c-74.73,3-123-99.42-135.3-157-18.13-84.63,7.51-217.1-173.72-230.69"/>
+                <path class="rs-path" d="M14.7,395.38q-7.27-.45-15-.64"/>
+                <circle class="rs-path-dot" cx="352.53" cy="778.96" r="11.28"/>
             </svg>
             
             <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">
-                <path class="rs-path" d="M1915.84,676.18q-5.1,5.43-10.37,10.85"/>
-                <path class="rs-path" d="M1898.35,694.28c-103.5,104.21-250.93,205.5-306,228.64-151.26,63.55-407-118.61-559.28,59.91"/>
-                <path class="rs-path" d="M1029.81,986.72q-4.66,5.7-9.2,11.85"/>
+                <path class="rs-path" d="M1054.37,862.29c60.83,50.21,320.7,168.53,489.41,44.57,57.74-42.42,104.58-85.38,157.9-172,56.57-91.91,134.34-124.91,217.22-57.27"/>
+                <path class="rs-path-dot" d="M1047.26,871a11.28,11.28,0,1,1,15.93-.75A11.27,11.27,0,0,1,1047.26,871Z"/>
             </svg>
 
             <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">
-                <path class="rs-path rs-path-green" d="M1388.27,163.8a145,145,0,0,1,2.11-14.85"/>
-                <path class="rs-path rs-path-green" d="M1392.59,139.28C1403.7,96.62,1440.9,25.53,1564.93,1.94"/>
-                <path class="rs-path rs-path-green" d="M1569.82,1Q1577-.24,1584.64-1.3"/>
-                <path class="rs-path-dot rs-path-green" d="M1397.75,163.81a9.4,9.4,0,1,1-8.91-9.87A9.42,9.42,0,0,1,1397.75,163.81Z"/>
+                <path class="rs-path rs-path-green" d="M899.82,1.94c49.28,44.31,81.35,123.22,55.73,208.92"/>
+                <path class="rs-path-dot rs-path-green" d="M944.93,206.87a11.28,11.28,0,1,0,14.18-7.31A11.28,11.28,0,0,0,944.93,206.87Z"/>
             </svg>
 
             <svg class="rs-svg rs-geschichte-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">    

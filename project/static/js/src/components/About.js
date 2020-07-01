@@ -13,9 +13,12 @@ export default class About {
         window.addEventListener('resize', this.keepMarkerCentered);
         document.getElementById('rs-small-de').href = '/de/uber-uns';
         document.getElementById('rs-small-en').href = '/en/about';
-        document.querySelector('#rs-close').addEventListener('click', () => {
-            window.location.href = '/';
-        })
+        // document.querySelector('#rs-closeAll').addEventListener('click', () => {
+        //     window.location.href = '/';
+        // })
+        
+        document.getElementById('svg-path').style.fill = 'rgba(256, 256, 256, 0.9)';
+
         anime({
             targets: '#rs-about-wrapper>*',
             opacity: [0, 1],
@@ -35,24 +38,28 @@ export default class About {
             frameDone = this.frame.navigate('offset');
 
         this.keepMarkerCentered();
-        this.myMap.addMarker([47.378600, 8.547214]);
+
+        this.myMarker = this.myMap.addMarker([47.378600, 8.547214]);
         document.addEventListener('touchmove', () => {
             this.frame.navigate('mobilefull');
-        })
+        });
+        frameDone.then(() => {document.querySelector('#rs-closeAll').style.display = "block"});
     }
     
     onremove(ctrl) {
         document.querySelector('#rs-nav-background').classList.remove('active');
         window.removeEventListener('resize', this.keepMarkerCentered);
-        document.querySelector('#rs-alternating').remove();
+        document.getElementById('rs-about-wrapper').remove();
+        this.myMap.map.removeLayer(this.myMarker);
+        document.getElementById('svg-path').style.fill = 'rgba(256, 256, 256, 0.7)';
     }
 
     keepMarkerCentered = debounce(() => {
         let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.2) + (this.myMap.map.getSize().x * 0.09);
         if( this.media.matches)
-            this.myMap.flyToOffset([47.378600, 8.547214], [0, -this.myMap.map.getSize().y*0.275], 18);
+            this.myMap.flyToOffset([47.378600, 8.547214], [0, -this.myMap.map.getSize().y*0.275], 17);
         else
-            this.myMap.flyToOffset([47.378600, 8.547214], [this.myMap.map.getSize().x*0.2, h], 18);
+            this.myMap.flyToOffset([47.378600, 8.547214], [this.myMap.map.getSize().x*0.2, h], 17);
     }, 500);
 
     view() {

@@ -38,6 +38,11 @@ body.rs-frontend {
     }
 }
 
+#rs-site-content, #rs-site-content a {
+    color: white;
+}
+
+
 /************************** MAP ******************************************/
 #map {
     position: absolute;
@@ -169,22 +174,31 @@ h4.active {
 .rs-content .rs-coordinates {
     position: absolute;
     top: 20vh;
-    left: 60vw;
+    left: 63vw;
     width: 20vw;
-    padding-top: 20vw;
+    padding-top: 18vw;
     z-index: 3;
     text-align: center;
 }
 
-.rs-content .rs-bild {
-    max-width: 30vw;
+.rs-content .rs-bild-wrapper {
+    width: 40vw;
     min-width: 200px;
-    max-height: 50vh;
+    height: 60vh;
     z-index: 3;
     position: absolute;
-    top: 20vh;
-    left: 17vw;
+    top: 22vh;
+    right: 45vw;
     filter: drop-shadow(5px 5px 75px #222);
+
+}
+
+.rs-content .rs-bild {
+    max-height: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
 
 .rs-content .rs-text {
@@ -313,9 +327,9 @@ h4.active {
 
 .rs-footer {
     position: absolute;
-    bottom: -50px;
+    bottom: -90px;
     right: -70px;
-    width:250px;
+    width: 250px;
     height: 250px;
     z-index: 4;
     display: flex;
@@ -348,6 +362,31 @@ h4.active {
     width: 200px;
     margin-left: -50px;
     margin-top: 10px;
+}
+
+
+.rs-chevron {
+    position: absolute;
+    top: 40%;
+    z-index: 3;
+    cursor: pointer;
+    display:none;
+}
+.rs-chevron-right {
+    right: 60px;
+}
+
+.rs-chevron-left {
+    left: 60px;
+    transform: rotate(180deg);
+}
+
+.rs-chevron svg {
+    height: 50px;
+    fill:none;
+    stroke:#b41e1e;
+    stroke-miterlimit:10;
+    stroke-width:5px;
 }
 
 @media only screen and (max-width: 1025px) {
@@ -465,7 +504,7 @@ h4.active {
 }
 
 #rs-nav-background.active.open {
-    background-color: rgba(256, 256, 256, 0.65);
+    background-color: rgba(256, 256, 256, 0.85);
 }
 
 #rs-nav {
@@ -489,7 +528,7 @@ h4.active {
 
 #rs-nav .rs-logo img{
     height: 50px;
-    margin-top: 35px;
+    margin-top: 4vh;
 }
 #rs-nav .rs-title {
     font-family: 'Passion One', cursive;
@@ -578,8 +617,8 @@ h4.active {
     top: 0;
     left: 0;
     touch-action: none;
-    user-select: none;
     -ms-user-select: none;
+    user-select: none;
     cursor: grab;
     padding: 200px;
     will-change: transform;
@@ -592,6 +631,16 @@ h4.active {
 .rs-index>div {
     cursor: pointer;
     background-color: rgba(0,0,0,0);
+}
+
+.rs-index div:active {
+    -webkit-touch-callout:none;
+    -webkit-user-select:none;
+    -khtml-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none;
+    -webkit-tap-highlight-color:rgba(0,0,0,0);
 }
 
 .rs-index-reisesteine>div {
@@ -687,7 +736,7 @@ h4.active {
     white-space: normal;
     font-family: 'Sen', sans-serif;
     font-size: 1.2rem;
-    line-height: 1.5rem;
+    line-height: 1.6rem;
     letter-spacing: -1px;
     color: rgb(180, 30, 30);
     text-align: center;
@@ -695,8 +744,12 @@ h4.active {
 
 .leaflet-tooltip.rs-tooltip span {
     font-family: 'Passion one', cursive;
-    font-weight: 700;
-    font-size: 1.3rem;
+    font-weight: 400;
+    font-size: 1.4rem;
+    letter-spacing: normal;
+    display: block;
+    line-height: 1.3rem;
+    margin-top: 0.3rem;
 }
 
 .leaflet-tooltip.rs-tooltip div{
@@ -752,5 +805,152 @@ h4.active {
     
     #rs-title p:first-child{
         font-size: 4rem;
+    }
+}
+
+
+/************************** About ******************************************/
+
+#rs-about-wrapper>* {
+    opacity: 0;
+}
+
+#rs-about-impressum {
+    position: absolute;
+    top: 20vh;
+    left: 60vw;
+    width: 20vw;
+    padding-top: 20vw;
+    z-index: 3;
+    text-align: center;
+}
+#rs-about-impressum h3 {
+    font-size: 1.7rem;
+    line-height: 1.3;
+}
+
+#rs-about {
+    z-index: 3;
+    width: 40vw;
+    height: 80vh;
+
+    position: absolute;
+    top: 20vh;
+    left: 15vw;
+
+    font-family: 'Sen', sans-serif;
+    font-weight: 400;
+    font-size: 1.1rem;
+}
+
+#rs-about-wrapper a {
+    text-decoration: none;
+    color: rgb(180, 30, 30);
+}
+#rs-about-wrapper a:hover {
+    text-decoration: none;
+    color: rgb(180, 30, 30);
+    font-weight: 700;
+}
+
+.rs-about-logos {
+    display: flex; 
+    flex-wrap: wrap;
+    margin-top: 20px;
+ }
+ .rs-about-logos img {
+     width: 200px;
+ }
+
+#rs-about .rs-copyright {
+    font-size: 0.6rem;
+    color: grey;
+}
+
+
+@media only screen and (min-width: 1025px) and (max-height: 900px) {
+    #rs-about {
+        top:40px;
+    }
+}
+
+@media only screen and (min-width: 1025px) and (max-width: 1280px) {
+    #rs-about-impressum h3 {
+        font-size: 1.6rem;
+        line-height: 1.2;
+        white-space: nowrap;
+    }
+
+    #rs-about-impressum {
+        padding-top: 18vw;
+    }
+
+    #rs-about {
+        width: 45vw;
+        height: 95vh;
+        overflow-y: scroll;
+        overflow-x: hidden;
+    }
+
+    .rs-about-logos img {
+        width: 150px;
+    }
+
+    /* width */
+    #rs-about::-webkit-scrollbar {
+        width: 10px;
+    }
+    
+    /* Track */
+    #rs-about::-webkit-scrollbar-track {
+        background: #f1f1f1; 
+    }
+    
+    /* Handle */
+    #rs-about::-webkit-scrollbar-thumb {
+        background: #888; 
+    }
+    
+    /* Handle on hover */
+    #rs-about::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+    }
+    
+    #rs-about .rs-copyright {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 1025px) {
+    #rs-about-wrapper {
+        display: flex;
+        flex-direction: column;
+        height:100vh;
+        overflow: scroll;
+    }
+    #rs-about {
+        position:static;
+        margin: 50px auto 50px auto;
+        top: auto;
+        left: auto;
+        width: 90vw;
+        height: auto;
+    }
+    #rs-about-impressum {
+        position:static;
+        margin-top: 25vh;
+        top: auto;
+        left: auto;
+        width: 100vw;
+        height: auto;
+    }
+    #rs-small-navigation>* {
+        transform: translate(-30px, -30px);
+    }
+    #rs-closeAll {
+        top: 15px!important;
+    }
+    .rs-about-logos {
+        flex-direction: column;
     }
 }

@@ -9,6 +9,18 @@
         <link rel="alternate" hreflang="en" href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
 {% endblock %}
 
+{% block navigation %}
+<div id="rs-backend-navigation">
+    <a id="rs-backend-logo" href="{{ url_for('reisesteine.index') }}">
+        <img src="{{ url_for('static', filename='img/pfeil.svg') }}" style="transform: rotate(180deg);"/>
+    </a>
+    <span id="rs-backend-lang">
+        <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> / 
+        <a id="rs-small-en" href="{{ url_for(request.endpoint, lang_code='en') }}">en</a>
+    </span>
+</div>
+{% endblock %}
+
 {% block body %}
 
 <div class="container mt-3 pt-3">
@@ -17,7 +29,7 @@
         {{_('Ihr Reisestein wurde erfolgreich erfasst. Wir werden Sie kontaktieren sobald wir den Stein bearbeitet und online gestellt haben.')}}
     </p>
     <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> {{_('Weiteren Stein einsenden')}}</h4></a>
-    <a href="{{ url_for('reisesteine.mitmachen') }}"><h4>> {{_('Zurück zur Übersicht')}}</h4></a>
+    <a href="{{ url_for('reisesteine.index') }}"><h4>> {{_('Zurück zur Übersicht')}}</h4></a>
 </div>
 
 {% endblock %}

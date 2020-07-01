@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang={{g.lang_code}}>
 
-    <head>
+    <head profile="http://www.w3.org/2005/10/profile">
         <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="{% block metadescription %}{% endblock %}">
 
         <title>Home - Reisesteine</title>
-
+        <link rel="icon" 
+            type="image/svg" 
+            href="{{ url_for('static', filename='img/favicon.svg')}}">
         {% block canonical %}{% endblock %}
 
         <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}" />

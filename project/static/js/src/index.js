@@ -68,6 +68,8 @@ function navBack(e) {
             m.mount(document.getElementById('rs-body'), {view: () => m(FundortIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
         else if ( e.state == 'geologie' || (e.state == null && id == 'geologie'))
             m.mount(document.getElementById('rs-body'), {view: () => m(GeologieIndex, {'map': myMap, 'frame':frame, 'pushState': false})});
+        else if ( e.state == 'about' || (e.state == null && id == 'about'))
+            location.reload();
         // render rock state there is any
         else if ( e.state != null )
             m.mount(document.getElementById('rs-body'), {view: () => m(SteinMain, {'id': e.state, 'map':myMap, 'frame':frame, 'pushState': false})});
