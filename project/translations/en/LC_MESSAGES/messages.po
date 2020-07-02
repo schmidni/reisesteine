@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-06-30 15:57+0200\n"
+"POT-Creation-Date: 2020-07-02 10:28+0200\n"
 "PO-Revision-Date: 2020-05-04 16:26+0200\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language: en\n"
@@ -218,12 +218,12 @@ msgstr ""
 "The idea for the exhibition is based on the project \"Nowhere - The Trace"
 " of Stones\" by Anna Sullivan and was further developed by focusTerra."
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:126
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:40
 #: project/templates/components/navigation.html:45
 msgid "Über REISESTEINE"
 msgstr "About"
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:128
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:42
 msgid ""
 "Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in "
 "die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt "
@@ -241,7 +241,7 @@ msgstr ""
 "jointly created stone collection, its locations and learn about the "
 "personal and geological stories associated with it. "
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:131
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:45
 msgid ""
 "Die Idee zur Ausstellung basiert auf dem Projekt «Nowhere – Die Spur der "
 "Steine» von Anna Sullivan und wurde von <i>focus</i>&#8239;Terra "
@@ -253,13 +253,60 @@ msgstr ""
 "<i>focus</i>&#8239;Terra. The exhibition was designed and set up together"
 " with Marion Deichmann and Nicolas Schmid."
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:134
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:48
 msgid "Konzeptentwicklerin, Herausgeberin & Redaktion:"
 msgstr "Concept developer, publisher & editor:"
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:135
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:49
 msgid "Gestaltung & technische Umsetzung:"
 msgstr "Design & technical implementation:"
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:59
+msgid ""
+"Copyright\n"
+"            Diese Webseite sowie ihre Teile sind urheberrechtlich "
+"geschützt und dürfen nur zum privaten, wissenschaftlichen und nicht "
+"gewerblichen Gebrauch kopiert und ausgedruckt werden. \n"
+"            Ohne vorgängige schriftliche Erlaubnis von focusTerra – ETH "
+"Zürich dürfen die Webseite sowie ihre Teile weder vervielfältigt noch auf"
+" anderen Servern gespeichert, in Newsgroups oder Online-Dienste "
+"eingespeist oder auf einer CD-ROM oder anderen Datenträgern gespeichert "
+"werden. Dies gilt insbesondere für das Logo von focusTerra. Die "
+"Zwischenspeicherung in einem Cache oder auf einem Proxy-Server zur "
+"Optimierung der Zugriffsgeschwindigkeit ist gestattet."
+msgstr ""
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:63
+msgid ""
+"Das Zitieren der Webseiteninhalte unter korrekten Quellenangaben sowie "
+"das Setzen von Links auf unsere Website ist ausdrücklich erlaubt."
+msgstr ""
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:65
+msgid "Die Urheberrechte sind nicht übertragbar."
+msgstr ""
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:86
+#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:123
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:107
+msgid "Stein"
+msgstr "Stone"
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:86
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
+msgid "Geschichte"
+msgstr "Story"
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:86
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
+msgid "Fundort"
+msgstr "Place"
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:86
+#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
+msgid "Geologie"
+msgstr "Geology"
 
 #: project/blueprints/reisesteine/templates/reisesteine/danke.html:4
 #: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:4
@@ -300,25 +347,6 @@ msgid ""
 msgstr ""
 "Discover more about our jointly created stone collection, its locations "
 "and learn about the personal and geological stories associated with it."
-
-#: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:123
-#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:107
-msgid "Stein"
-msgstr "Stone"
-
-#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
-msgid "Geschichte"
-msgstr "Story"
-
-#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
-msgid "Fundort"
-msgstr "Place"
-
-#: project/blueprints/reisesteine/templates/reisesteine/home.html:77
-#: project/templates/components/navigation.html:40
-msgid "Geologie"
-msgstr "Geology"
 
 #: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:31
 #: project/templates/components/navigation.html:44
@@ -542,4 +570,8 @@ msgstr "Stories"
 #: project/templates/components/navigation.html:39
 msgid "Fundorte"
 msgstr "Places"
+
+#: project/templates/components/navigation.html:40
+msgid "Gesteinsarten"
+msgstr "Rock Types"
 

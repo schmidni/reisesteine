@@ -526,6 +526,13 @@ h4.active {
     text-transform: uppercase;
 }
 
+#rs-nav .rs-nav-wrapper {
+    justify-content: space-between;
+    height: 100%;
+    max-height: 780px;
+    margin-bottom: 10vh;
+}
+
 #rs-nav .rs-logo img{
     height: 50px;
     margin-top: 4vh;
@@ -539,10 +546,6 @@ h4.active {
     margin-top: 10vh;
 }
 
-#rs-nav .rs-nav-indexpages {
-    margin-top: 60px;
-}
-
 #rs-nav .rs-nav-indexpages a{
     color: rgb(180, 30, 30);
     text-decoration: none;
@@ -550,9 +553,7 @@ h4.active {
     font-weight: 700;
     margin-top: 20px;
 }
-#rs-nav .rs-nav-impressum {
-    margin-top: 60px;
-}
+
 #rs-nav .rs-nav-impressum a {
     color: rgb(180, 30, 30);
     text-decoration: none;
@@ -606,6 +607,49 @@ h4.active {
 #rs-nav .rs-nav-line .rs-nav-dot {
     stroke-dasharray: none;
     fill: #b41e1e;
+}
+
+
+@media only screen and (max-width: 500px) {
+    #rs-nav .rs-nav-wrapper>* {
+        max-width: 90vw;
+    }
+    #rs-nav {
+        padding-left: 5px;
+        max-width: 90vw;
+    }
+
+    #rs-nav>* {
+        max-width: 90vw;
+    }
+    #rs-nav-background {
+        width: 100%!important;
+        padding: 0!important;
+    }
+}
+@media only screen and (max-height: 750px) {
+    #rs-nav .rs-nav-line {
+        display: none;
+    }
+    #rs-nav .rs-title {
+        margin-top: 5vh;
+    }
+    #rs-nav .rs-logo img{
+        margin-top: 0;
+    }
+    #rs-nav .rs-nav-wrapper {
+        margin-bottom: 0;
+    }
+}
+
+
+@media only screen and (max-height: 590px) {
+    #rs-nav .rs-title {
+        display: none;
+    }
+    #rs-nav .rs-logo img{
+        display: none;
+    }
 }
 
 /************************** REISESTEINE DRAGGABLE ******************************************/

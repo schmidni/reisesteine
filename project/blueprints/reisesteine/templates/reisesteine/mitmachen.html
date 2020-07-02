@@ -173,26 +173,48 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 {{ form.bild_stein.label }}
                                 {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
                                 <small id="steinHelp" class="form-text text-muted">max. 3 Files à 8MB</small>
+                                <div id="fileListStein">
+                                </div>
                                 {% for error in form.bild_stein.errors %}
                                 <div class="invalid-feedback">
                                     {{error}}
                                 </div>
                                 {% endfor %}
                             </div>
+
                             <div class="form-group">
                                 {{ form.bild_herkunft.label }}
                                 {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
                                 <small id="herkunftHelp" class="form-text text-muted">max. 3 Files à 8MB</small>
+                                <div id="fileListHerkunft">
+                                </div>
                                 {% for error in form.bild_herkunft.errors %}
                                     <div class="invalid-feedback">
                                         {{error}}
                                     </div>
                                 {% endfor %}
                             </div>
+
+                            
+                            <script>
+                                function updateList (inputSel, fileList) {
+                                    var input = document.getElementById(inputSel);
+                                    var output = document.getElementById(fileList);
+                                    var children = "";
+                                    console.log(input.files);
+                                    for (var i=0; i<input.files.length; ++i) {
+                                        children += '<li>' + input.files.item(i).name + ' (' + Math.round(input.files.item(i).size/1024/1024*100)/100 + 'MB)</li>';
+                                    }
+                                    output.innerHTML = '<ul>'+children+'</ul>';
+                                }
+                                document.getElementById('bild_stein').addEventListener('change', function() {updateList('bild_stein', 'fileListStein');});
+                                document.getElementById('bild_herkunft').addEventListener('change', function() {updateList('bild_herkunft', 'fileListHerkunft');});
+                            </script>
                         </div>
                     </div>
                 </div>
