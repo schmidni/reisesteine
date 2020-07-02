@@ -7,7 +7,7 @@ import SteinTimeLine from './SteinTimeLine';
 
 export default class SteinView {
     constructor () {
-        this.media = window.matchMedia("(max-width: 960px)")
+        this.media = window.matchMedia("(max-width: 1025px)")
     }
 
     oncreate(ctrl) {

@@ -18,20 +18,6 @@
 {% endblock %}
 
 {% block body %}
-<noscript>
-    <style>
-        body.rs-frontend {
-            overflow: visible!important;
-        }
-        #rs-site-content {
-            color: black!important;
-        }
-        #rs-site-content a {
-            color: blue!important;
-        }
-    </style>
-</noscript>
-
 <div id="map"></div>
 
 <svg id="svg" class="overlay" width="100%" height="100%">
@@ -76,4 +62,18 @@
 </script>
 <div id="rs-nav-rock-strings" style="display: none" data-ste="{{_('Stein')}}" data-gesch="{{_('Geschichte')}}" data-fund="{{_('Fundort')}}" data-geo="{{_('Geologie')}}">
 </div>
+
+<noscript>
+    <style>
+        body.rs-frontend {
+            overflow: visible!important;
+        }
+        #rs-site-content {
+            color: black!important;
+        }
+        #rs-site-content a {
+            color: blue!important;
+        }
+    </style>
+</noscript>
 {% endblock %}

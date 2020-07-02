@@ -31,6 +31,7 @@ export default class Menu {
         else
             document.querySelector('#rs-title').style.display = 'none';
 
+        this.settings = {};
     }
 
     openMenu = (e) => {
@@ -42,12 +43,15 @@ export default class Menu {
 
         anime({
             targets: this.navBackground,
-            // translateY: [0, -vh * 0.25 + 100],
             translateX: [0, -300],
             height: vh*1.2 + 'px',
             width: '800px',
             easing: 'easeInQuad',
-            duration: 500
+            duration: 500,
+            changeBegin: (anim) => {
+                this.settings.height = anim.animations[1].currentValue;
+                this.settings.width = anim.animations[2].currentValue;
+            }
         }).finished.then(() => {
             anime({
                 targets:this.navBackground,
@@ -99,10 +103,8 @@ export default class Menu {
             targets: this.navBackground,
             translateX: 0,
             translateY: 0,
-            height: '230px',
-            width: '230px',
-            paddingTop: '30px',
-            paddingBottom: '30px',
+            height: this.settings.height,
+            width: this.settings.width,
             easing: 'easeOutQuad',
             duration: 750,
             delay: 500
@@ -123,7 +125,6 @@ export default class Menu {
         this.menuButton.addEventListener('click', this.openMenu);
         this.menuClose.addEventListener('click', this.closeMenu);
 
-        
         // Stein Index
         this.steine.addEventListener('click', (e) => {
             e.preventDefault();

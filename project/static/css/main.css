@@ -7,7 +7,7 @@ body.rs-frontend {
     position: absolute;
     top: 0;
     left: 0;
-    height:100vh;
+    height:100%;
     width:100vw;
     margin: 0;
     padding: 0;
@@ -40,6 +40,7 @@ body.rs-frontend {
 
 #rs-site-content, #rs-site-content a {
     color: white;
+    overflow: hidden;
 }
 
 
@@ -49,8 +50,7 @@ body.rs-frontend {
     top: 0;
     left: 0;
     height: 100%;
-    width: 100%;
-    z-index: -1;
+    width: 100vw;
 }
 
 /************************** CAPTIONS ******************************************/
@@ -482,17 +482,35 @@ h4.active {
     fill: rgb(180, 30, 30);
 }
 
+@media only screen and (max-width: 1025px) {
+
+    #rs-small-navigation a:first-child {
+        margin-top: 50px;
+    }
+
+    #rs-small-home img {
+        height: 25px;
+    }
+    #rs-small-menu img {
+        height: 15px;
+    }
+    #rs-small-navigation span a {
+        font-size: 1rem;
+    }
+}
+
 /************************** NAVIGATION ******************************************/
 #rs-nav-background{
     position: absolute;
     top: -70px;
     left: -80px;
-    width:230px;
-    height:230px;
+    width: 230px;
+    height: 230px;
     border-radius: 0 50% 50% 50%;
     padding: 30px;
     z-index: 4;
     background-color: rgba(256, 256, 256, 0.75);
+
 }
 
 #rs-nav-background.active {
@@ -507,13 +525,25 @@ h4.active {
     background-color: rgba(256, 256, 256, 0.85);
 }
 
+#rs-nav-background-wrapper {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: 100% !important;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 #rs-nav {
     position: absolute;
     left: -600px;
     top: 5vh;
     height: 95vh;
     width: 450px;
-    padding-left: 50px;
+    max-width: 100%;
     display: flex;
     flex-direction: column;
     z-index: 4;
@@ -531,6 +561,10 @@ h4.active {
     height: 100%;
     max-height: 780px;
     margin-bottom: 10vh;
+}
+
+#rs-nav-home, #rs-nav-controls, #rs-nav .rs-nav-wrapper {
+    margin-left: 50px;
 }
 
 #rs-nav .rs-logo img{
@@ -610,23 +644,40 @@ h4.active {
 }
 
 
-@media only screen and (max-width: 500px) {
-    #rs-nav .rs-nav-wrapper>* {
-        max-width: 90vw;
-    }
-    #rs-nav {
-        padding-left: 5px;
-        max-width: 90vw;
-    }
-
-    #rs-nav>* {
-        max-width: 90vw;
-    }
+@media only screen and (max-width: 1025px) {
     #rs-nav-background {
-        width: 100%!important;
-        padding: 0!important;
+        width: 150px;
+        height: 150px;
+    }
+    #rs-nav-home, #rs-nav .rs-nav-controls, #rs-nav .rs-nav-wrapper {
+        margin-left: 25px;
     }
 }
+
+@media only screen and (max-width: 600px) {
+    #rs-nav .rs-nav-line {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 500px), (max-height: 630px) {
+    #rs-nav .rs-title {
+        font-size: 2.925rem;
+    }
+    
+    #rs-nav .rs-nav-indexpages a{
+        font-size: 1.5rem;
+    }
+    
+    #rs-nav .rs-nav-impressum a {
+        font-size: 1.5rem;
+    }
+    
+    #rs-nav .rs-nav-controls a, #rs-nav .rs-nav-controls span {
+        font-size: 1.35rem;
+    }
+}
+
 @media only screen and (max-height: 750px) {
     #rs-nav .rs-nav-line {
         display: none;
@@ -638,17 +689,20 @@ h4.active {
         margin-top: 0;
     }
     #rs-nav .rs-nav-wrapper {
-        margin-bottom: 0;
+        margin-bottom: 5vh;
     }
 }
 
 
-@media only screen and (max-height: 590px) {
+@media only screen and (max-height: 550px) {
     #rs-nav .rs-title {
         display: none;
     }
     #rs-nav .rs-logo img{
         display: none;
+    }
+    #rs-nav .rs-nav-wrapper {
+        margin-bottom: 0;
     }
 }
 
@@ -815,6 +869,7 @@ h4.active {
     text-align: right;
     margin-top: 25px;
     margin-right: 50px;
+    overflow: hidden;
 }
 
 #rs-title p{
@@ -838,9 +893,10 @@ h4.active {
 @media only screen and (max-width: 1025px) {
     #rs-title {
         top: auto;
-        bottom: 20px;
-        width: 80vw;
-        margin-right: 10px
+        bottom: 50px;
+        width: 90vw;
+        margin-right: 30px;
+        overflow: hidden;
     }
 
     #rs-title p {
@@ -849,6 +905,16 @@ h4.active {
     
     #rs-title p:first-child{
         font-size: 4rem;
+    }
+}
+
+@media only screen and (max-width: 350px) {
+    #rs-title p {
+        font-size: 1.05rem;
+    }
+    
+    #rs-title p:first-child{
+        font-size: 3rem;
     }
 }
 
@@ -988,9 +1054,7 @@ h4.active {
         width: 100vw;
         height: auto;
     }
-    #rs-small-navigation>* {
-        transform: translate(-30px, -30px);
-    }
+
     #rs-closeAll {
         top: 15px!important;
     }

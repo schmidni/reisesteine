@@ -10,15 +10,17 @@
     <p>{{_('Eine interaktive virtuelle Ausstellung von')}} <b><i>focus</i>&#8239;Terra</b></p>
 </div>
 
-<div id="rs-nav-background">
-    <div id="rs-small-navigation">
-            <a id="rs-small-home" href="{{ url_for('reisesteine.index') }}"><img src="{{ url_for('static', filename='img/logo.svg') }}"/></a>
-            <a id="rs-small-menu" href="#" >
-                <img src="{{ url_for('static', filename='img/sandwich_button.svg') }}"/>
-            </a>
-            <span>
-                <a id="rs-small-de" href="/de">de</a> / <a id="rs-small-en" href="/en">en</a>
-            </span>
+<div id="rs-nav-background-wrapper">
+    <div id="rs-nav-background">
+        <div id="rs-small-navigation">
+                <a id="rs-small-home" href="{{ url_for('reisesteine.index') }}"><img src="{{ url_for('static', filename='img/logo.svg') }}"/></a>
+                <a id="rs-small-menu" href="#" >
+                    <img src="{{ url_for('static', filename='img/sandwich_button.svg') }}"/>
+                </a>
+                <span>
+                    <a id="rs-small-de" href="/de">de</a> / <a id="rs-small-en" href="/en">en</a>
+                </span>
+        </div>
     </div>
 </div>
 
