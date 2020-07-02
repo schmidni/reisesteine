@@ -2,6 +2,7 @@ import m from 'mithril';
 import L from 'leaflet';
 import SteinMain from './SteinMain.js';
 import {convertDMS} from '../util/convertCoords.js';
+import debounce from '../util/debounce.js';
 
 export default class worldMap {
     constructor(el, frame, data) {
@@ -65,6 +66,12 @@ export default class worldMap {
         if(!this.media.matches)
             mymap.zoomControl.setPosition('bottomleft');
         this.initMap(mymap);
+
+        window.addEventListener('touchend', debounce(() => {
+            console.log('scroll');
+            mymap.invalidateSize();
+        }, 20));
+
         return mymap;
     }
 
