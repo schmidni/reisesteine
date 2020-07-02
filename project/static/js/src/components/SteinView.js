@@ -3,6 +3,7 @@ import anime from 'animejs';
 import {convertDMS} from '../util/convertCoords.js';
 import SteinNavigation from './SteinNavigation.js';
 import SteinTimeLine from './SteinTimeLine';
+import GLightbox from 'glightbox';
 
 
 export default class SteinView {
@@ -33,6 +34,15 @@ export default class SteinView {
                 delay: 1000,
                 begin: () => {content.style.opacity = 1}
             });
+
+            const lightbox = GLightbox({
+                selector: '.rs-bild-lightbox',
+                touchNavigation: true
+            });
+            const lightbox2 = GLightbox({
+                selector: '.rs-fundort-lightbox',
+                touchNavigation: true
+            });
         }
     }
 
@@ -45,7 +55,13 @@ export default class SteinView {
                 <h2>{ctrl.attrs.info.herkunft}, <br></br>{ctrl.attrs.info.land}</h2>
             </div>
             <div class="rs-bild-wrapper">
-                <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
+                {!this.media.matches ? 
+                    <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} />
+                    :
+                    <a href={"/static/img/steine/" + ctrl.attrs.info.bild_stein} class="rs-bild-lightbox">
+                        <img class="rs-bild" src={"/static/img/steine/" + ctrl.attrs.info.bild_stein} /> 
+                    </a>
+                }
             </div>
             <div class="rs-geschichte">    
                 <div class="rs-text">        
@@ -53,7 +69,13 @@ export default class SteinView {
                     <p>{ctrl.attrs.info.pers_geschichte}</p>
                     <p>{ctrl.attrs.info.absender}, {ctrl.attrs.info.wohnort}</p>
                 </div>
-                <img style="will-change: transform, width, height" class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
+                {!this.media.matches ? 
+                    <img style="will-change: transform, width, height" class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
+                :
+                    <a href={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} class="rs-fundort-lightbox">
+                        <img style="will-change: transform, width, height" class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
+                    </a>
+                }
             </div>
             <div class="rs-geologie rs-text">
                 <div class="rs-text">

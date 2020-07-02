@@ -91,6 +91,29 @@ h4.active {
     font-weight: 700;
 }
 
+
+@media only screen and (max-width: 1025px) {
+    h1 {
+        font-size: 2.55rem;
+    }
+    h2 {
+        font-size: 2.25rem;
+    }
+    h3 {
+        font-size: 1.5rem;
+    }
+    h4 {
+        font-size: 1.275rem
+    }
+}
+
+
+@media only screen and (max-width: 450px) {
+    h1 {
+        font-size: 2rem;
+    }
+}
+
 /************************** REISELINIEN ******************************************/
 .rs-svg {
     position: absolute;
@@ -190,7 +213,6 @@ h4.active {
     top: 22vh;
     right: 45vw;
     filter: drop-shadow(5px 5px 75px #222);
-
 }
 
 .rs-content .rs-bild {
@@ -219,6 +241,7 @@ h4.active {
 .rs-geschichte .rs-text {
     width: 35vw;
     margin-right: 10vw;
+    hyphens: auto;
 }
 .rs-geschichte .rs-fundort {
     width: 20vw;
@@ -289,11 +312,11 @@ h4.active {
         margin-top: 30vh;
     }
 
-    .rs-content .rs-bild {
+    .rs-content .rs-bild-wrapper {
         position: static;
         top: auto;
         left: auto;
-        width: 60vw;
+        width: 80vw;
         margin: 50px auto 25px auto;
         min-width: auto;
     }
@@ -307,7 +330,7 @@ h4.active {
         align-items: center;
     }
 
-    .rs-content .rs-geschichte>* , .rs-content .rs-geologie>* {
+    .rs-content .rs-geschichte>div, .rs-geschichte>a>img , .rs-content .rs-geologie>* {
         margin: 50px 0;
         width: 90%;
     }
@@ -320,6 +343,10 @@ h4.active {
 
     .rs-geologie-bild {
         display: none;
+    }
+
+    .rs-content .rs-text {
+        font-size: 1.1rem;
     }
 }
 
@@ -355,7 +382,6 @@ h4.active {
     fill: none;
     stroke: rgb(180, 30, 30);
     stroke-width: 4px;
-    
 }
 
 .rs-footer-content {
@@ -453,10 +479,6 @@ h4.active {
     margin-top: 75px;
 }
 
-#rs-nav-background.active #rs-small-navigation a:first-child {
-    margin-top: 90px;
-}
-
 #rs-nav-background.active #rs-small-navigation span {
     display: none;
 }
@@ -496,6 +518,12 @@ h4.active {
     }
     #rs-small-navigation span a {
         font-size: 1rem;
+    }
+    .rs-close {
+        top: 10px;
+        right: 20px;
+        width: 30px;
+        height: 30px;
     }
 }
 
@@ -563,7 +591,7 @@ h4.active {
     margin-bottom: 10vh;
 }
 
-#rs-nav-home, #rs-nav-controls, #rs-nav .rs-nav-wrapper {
+#rs-nav-home, .rs-nav-controls, #rs-nav .rs-nav-wrapper {
     margin-left: 50px;
 }
 
@@ -1055,9 +1083,6 @@ h4.active {
         height: auto;
     }
 
-    #rs-closeAll {
-        top: 15px!important;
-    }
     .rs-about-logos {
         flex-direction: column;
     }
