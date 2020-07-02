@@ -68,7 +68,9 @@ export default class worldMap {
         this.initMap(mymap);
 
         window.addEventListener('touchend', debounce(() => {
-            console.log('scroll');
+            const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
+            document.getElementById('map').style.height = vh + 'px';
+            console.log(vh);
             mymap.invalidateSize();
         }, 20));
 
