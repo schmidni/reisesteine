@@ -29,6 +29,9 @@ export default class svgFrame {
         window.addEventListener('resize', debounce(() => {
             this.updateFrame();
         }, 20));
+        window.addEventListener('touchend', debounce(() => {
+            this.updateFrame();
+        }, 200));
     }
 
     createFrame = () => {

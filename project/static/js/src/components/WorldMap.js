@@ -70,15 +70,8 @@ export default class worldMap {
         // window.addEventListener('touchend', debounce(() => {
         //     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
         //     document.getElementById('map').style.height = vh + 'px';
-        //     mymap.invalidateSize();
-        //     this.frame.updateFrame();
         // }, 20));
-        // window.addEventListener('resize', debounce(() => {
-        //     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        //     document.getElementById('map').style.height = vh + 'px';
-        //     mymap.invalidateSize();
-        //     this.frame.updateFrame();
-        // }, 20));
+
         return mymap;
     }
 
