@@ -27,14 +27,7 @@ export default class svgFrame {
         this.createFrame();
 
         window.addEventListener('resize', debounce(() => {
-            this.rect = this.DOM.el.getBoundingClientRect();
             this.updateFrame();
-        }, 20));
-
-        window.addEventListener('touchend', debounce(() => {
-            this.rect = this.DOM.el.getBoundingClientRect();
-            this.updateFrame();
-            console.log('touchend');
         }, 20));
     }
 
@@ -53,9 +46,11 @@ export default class svgFrame {
     }
 
     updateFrame =() => {
+        this.rect = this.DOM.el.getBoundingClientRect();
         this.DOM.svg.setAttribute('viewbox',`0 0 ${this.rect.width} ${this.rect.height}`);
         this.DOM.shape.setAttribute('d', this.calculatePath(this.paths.current));
     }
+
     calculatePath = (path = 'initial') => {
         const r = Math.sqrt(Math.pow(this.rect.height,2) + Math.pow(this.rect.width,2))+this.rect.width*0.1;
         const rInitialOuter = r;
