@@ -116,8 +116,8 @@ h4.active {
 
 /************************** REISELINIEN ******************************************/
 .rs-svg {
-    position: absolute;
-    height: 100vh;
+    position: fixed;
+    height: 100%;
     width: 100vw;
     z-Index: 2;
     opacity: 1;
