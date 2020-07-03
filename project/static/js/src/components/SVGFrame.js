@@ -30,7 +30,7 @@ export default class svgFrame {
             this.updateFrame();
         }, 20));
         window.addEventListener('touchend', debounce(() => {
-            alert('test');
+            // alert('test');
         }, 20));
     }
 
