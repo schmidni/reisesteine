@@ -52,7 +52,8 @@ export default class svgFrame {
         this.rect = this.DOM.el.getBoundingClientRect();
         this.DOM.svg.setAttribute('viewbox',`0 0 ${this.rect.width} ${this.rect.height}`);
         this.DOM.shape.setAttribute('d', this.calculatePath(this.paths.current));
-        this.DOM.svg.style.height = this.rect.height + 'px';
+        this.DOM.svg.style.height = this.rect.height/2 + 'px';
+        alert("touchend");
     }
 
     calculatePath = (path = 'initial') => {
