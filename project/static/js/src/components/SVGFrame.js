@@ -30,6 +30,11 @@ export default class svgFrame {
             this.rect = this.DOM.el.getBoundingClientRect();
             this.updateFrame();
         }, 20));
+        
+        window.addEventListener('touchend', debounce(() => {
+            this.rect = this.DOM.el.getBoundingClientRect();
+            this.updateFrame();
+        }, 20));
     }
 
     createFrame = () => {

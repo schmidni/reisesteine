@@ -70,7 +70,6 @@ export default class worldMap {
         window.addEventListener('touchend', debounce(() => {
             const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
             document.getElementById('map').style.height = vh + 'px';
-            console.log(vh);
             mymap.invalidateSize();
         }, 20));
 
