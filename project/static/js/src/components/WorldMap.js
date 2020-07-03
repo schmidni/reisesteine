@@ -67,11 +67,6 @@ export default class worldMap {
             mymap.zoomControl.setPosition('bottomleft');
         this.initMap(mymap);
 
-        // window.addEventListener('touchend', debounce(() => {
-        //     const vh = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0);
-        //     document.getElementById('map').style.height = vh + 'px';
-        // }, 20));
-
         return mymap;
     }
 
