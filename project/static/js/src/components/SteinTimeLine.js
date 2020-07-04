@@ -21,7 +21,8 @@ export default class SteinTimeLine {
 
     async goTo (target) {
         if (this.current == 'stein'){
-            this.frame.navigate('full');
+            this.closeAll.style.display = 'none';
+            this.frame.navigate('full').then(() => {this.closeAll.style.display = 'block'});
         }
         else if (this.current == 'fundort'){
             this.closeFundort.style.display = 'none';
@@ -33,8 +34,10 @@ export default class SteinTimeLine {
 
         if (target == 'stein'){
             await this.panTo('0vw');
+            this.closeAll.style.display = 'none';
             await this.frame.navigate('offset');
             this.current = 'stein';
+            this.closeAll.style.display = 'block';
         }
 
         else if (target == 'geschichte'){

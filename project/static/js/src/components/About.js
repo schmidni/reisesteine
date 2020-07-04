@@ -13,9 +13,6 @@ export default class About {
         window.addEventListener('resize', this.keepMarkerCentered);
         document.getElementById('rs-small-de').href = '/de/uber-uns';
         document.getElementById('rs-small-en').href = '/en/about';
-        // document.querySelector('#rs-closeAll').addEventListener('click', () => {
-        //     window.location.href = '/';
-        // })
         
         document.getElementById('svg-path').style.fill = 'rgba(256, 256, 256, 0.9)';
 
@@ -40,18 +37,24 @@ export default class About {
         this.keepMarkerCentered();
 
         this.myMarker = this.myMap.addMarker([47.378600, 8.547214]);
-        document.addEventListener('touchmove', () => {
-            this.frame.navigate('mobilefull');
-        });
+        document.addEventListener('touchmove', this.frameMobileFull);
         frameDone.then(() => {document.querySelector('#rs-closeAll').style.display = "block"});
     }
     
-    onremove(ctrl) {
-        document.querySelector('#rs-nav-background').classList.remove('active');
+    frameMobileFull = () => {
+        document.getElementById('rs-closeAll').style.display = 'none';
+        this.frame.navigate('mobilefull').then(() => {
+            document.getElementById('rs-closeAll').style.display = 'block';
+        });
+        document.removeEventListener('touchmove', this.frameMobileFull);
+    }
+
+    onremove() {
         window.removeEventListener('resize', this.keepMarkerCentered);
+        document.getElementById('rs-nav-background').classList.remove('active');
         document.getElementById('rs-about-wrapper').remove();
-        this.myMap.map.removeLayer(this.myMarker);
         document.getElementById('svg-path').style.fill = 'rgba(256, 256, 256, 0.7)';
+        this.myMap.map.removeLayer(this.myMarker);
     }
 
     keepMarkerCentered = debounce(() => {

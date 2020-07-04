@@ -11,21 +11,27 @@ export default class SteinView {
         this.media = window.matchMedia("(max-width: 1025px)")
     }
 
+    frameMobileFull = () => {
+        let close = document.getElementById('rs-closeAll');
+        close.style.display = 'none';
+        this.frame.navigate('mobilefull').then(() => {close.style.display='block'});
+        document.removeEventListener('touchmove', this.frameMobileFull)
+    }
+
     oncreate(ctrl) {
         this.bild = ctrl.dom.querySelector('.rs-bild');
         this.fundort = ctrl.dom.querySelector('.rs-fundort');
         this.geschichte = ctrl.dom.querySelector('.rs-geschichte');
         this.geologie = ctrl.dom.querySelector('.rs-geologie');
         this.coordinates = ctrl.dom.querySelector('.rs-coordinates');
+        this.frame = ctrl.attrs.frame;
 
         if (!this.media.matches) {
             this.SteinLine = new SteinTimeLine(ctrl.attrs.frame, this.coordinates, this.bild, this.geschichte, this.fundort, this.geologie, ctrl.attrs.goTo);
             m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine, startAt: ctrl.attrs.goTo}));
         } else {
             let content = ctrl.dom;
-            content.addEventListener('touchmove', () => {
-                ctrl.attrs.frame.navigate('mobilefull');
-            });
+            document.addEventListener('touchmove', this.frameMobileFull);
             anime({
                 targets: content.children,
                 opacity: [0, 1],
