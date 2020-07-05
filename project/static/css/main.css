@@ -521,6 +521,18 @@ h4.active {
 
     #rs-small-menu img {
         height: 18px;
+        margin-top: 10px;
+    }
+
+    #rs-small-navigation span {
+        padding-top: 7px;
+        padding-left: 50px!important;
+    }
+    #rs-small-home {
+        padding-left: 50px!important;
+    }
+    #rs-small-menu {
+        padding-left: 50px!important;
     }
 
     #rs-small-navigation span a {
