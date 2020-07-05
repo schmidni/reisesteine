@@ -142,29 +142,16 @@ export default class svgFrame {
                 this.paths.current = 'full';
             });
         }
-        else if (dir === 'leftout') {
+        else if (dir === 'fullFast') {
             this.animateShape = anime({
                 targets: this.DOM.shape,
-                duration: this.settings.animation.shape.duration,
+                duration: 100,
                 easing: this.settings.animation.shape.easing.out,
-                d: this.calculatePath('leftout'),
+                d: this.calculatePath('full'),
                 translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
-                this.paths.current = 'leftout';
-            });
-        }
-        else if (dir === 'rightin') {
-            this.DOM.shape.setAttribute('d', this.calculatePath('rightout'));
-            this.animateShape = anime({
-                targets: this.DOM.shape,
-                duration: this.settings.animation.shape.duration,
-                easing: this.settings.animation.shape.easing.out,
-                d: this.calculatePath('offset'),
-                translateZ: 0
-            }).finished.then( () => {
-                this.isAnimating = false
-                this.paths.current = 'offset';
+                this.paths.current = 'full';
             });
         }
         else if (dir === 'initial'){

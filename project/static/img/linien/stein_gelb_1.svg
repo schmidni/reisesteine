@@ -1,9 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000">
-    <defs>
-        <style>.a,.b{fill:none;stroke:#966e28;stroke-width:5px;}.b{stroke-dasharray:29.74 9.91;}.c{fill:#966e28;}</style>
-    </defs>
-    <path class="a" d="M353.07,778.8a92,92,0,0,1-14.55,3.62"/>
-    <path class="b" d="M328.66,783.42c-74.73,3-123-99.42-135.3-157-18.13-84.63,7.51-217.1-173.72-230.69"/>
-    <path class="a" d="M14.7,395.38q-7.27-.45-15-.64"/>
-    <circle class="c" cx="352.53" cy="778.96" r="11.28"/>
+    <defs><style>.a,.b{fill:none;stroke:#966e28;stroke-width:5px;}.b{stroke-dasharray:29.41 9.8;}.c{fill:#966e28;}</style></defs>
+    <path class="a" d="M326.07,755.48c-5.13.71-10.1,1.16-14.94,1.37"/>
+    <path class="b" d="M301.33,756.94c-98.6-2.46-133-108.85-145.69-168.24-17.87-83.42-10.77-183.87-136-193.25"/>
+    <path class="a" d="M14.71,395.13q-7.22-.39-15-.39"/>
+    <path class="c" d="M323.67,744.42a11.28,11.28,0,1,1-9.28,13A11.28,11.28,0,0,1,323.67,744.42Z"/>
 </svg>

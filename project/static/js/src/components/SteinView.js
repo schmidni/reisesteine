@@ -11,13 +11,6 @@ export default class SteinView {
         this.media = window.matchMedia("(max-width: 1025px)")
     }
 
-    frameMobileFull = () => {
-        let close = document.getElementById('rs-closeAll');
-        close.style.display = 'none';
-        this.frame.navigate('mobilefull').then(() => {close.style.display='block'});
-        document.removeEventListener('touchmove', this.frameMobileFull)
-    }
-
     oncreate(ctrl) {
         this.bild = ctrl.dom.querySelector('.rs-bild');
         this.fundort = ctrl.dom.querySelector('.rs-fundort');
@@ -31,7 +24,6 @@ export default class SteinView {
             m.render(document.getElementById('rs-rocknav'), m(SteinNavigation, { SteinLine: this.SteinLine, startAt: ctrl.attrs.goTo}));
         } else {
             let content = ctrl.dom;
-            document.addEventListener('touchmove', this.frameMobileFull);
             anime({
                 targets: content.children,
                 opacity: [0, 1],
@@ -50,6 +42,10 @@ export default class SteinView {
                 touchNavigation: true
             });
         }
+    }
+
+    onremove(ctrl) {
+        document.removeEventListener('touchmove', this.frameMobileFull)
     }
 
     view(ctrl) {
@@ -93,20 +89,20 @@ export default class SteinView {
             </div>
 
             <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">
-                <path class="rs-path" d="M353.07,778.8a92,92,0,0,1-14.55,3.62"/>
-                <path class="rs-path" d="M328.66,783.42c-74.73,3-123-99.42-135.3-157-18.13-84.63,7.51-217.1-173.72-230.69"/>
-                <path class="rs-path" d="M14.7,395.38q-7.27-.45-15-.64"/>
-                <circle class="rs-path-dot" cx="352.53" cy="778.96" r="11.28"/>
+                <path class="rs-path" d="M326.07,755.48c-5.13.71-10.1,1.16-14.94,1.37"/>
+                <path class="rs-path" d="M301.33,756.94c-98.6-2.46-133-108.85-145.69-168.24-17.87-83.42-10.77-183.87-136-193.25"/>
+                <path class="rs-path" d="M14.71,395.13q-7.22-.39-15-.39"/>
+                <path class="rs-path-dot" d="M323.67,744.42a11.28,11.28,0,1,1-9.28,13A11.28,11.28,0,0,1,323.67,744.42Z"/>
             </svg>
             
             <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">
-                <path class="rs-path" d="M1054.37,862.29c60.83,50.21,320.7,168.53,489.41,44.57,57.74-42.42,104.58-85.38,157.9-172,56.57-91.91,134.34-124.91,217.22-57.27"/>
-                <path class="rs-path-dot" d="M1047.26,871a11.28,11.28,0,1,1,15.93-.75A11.27,11.27,0,0,1,1047.26,871Z"/>
+                <path class="rs-path" d="M961.61,883.24c20.8,55.85,203.16,104.48,387,72.46,201-35,275.73-147.12,368-258,89.61-107.68,114,69,202.26-20.15"/>
+                <path class="rs-path-dot" d="M950.75,886A11.28,11.28,0,1,1,964,894.84,11.29,11.29,0,0,1,950.75,886Z"/>
             </svg>
 
             <svg class="rs-svg rs-stein-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">
-                <path class="rs-path rs-path-green" d="M899.82,1.94c49.28,44.31,81.35,123.22,55.73,208.92"/>
-                <path class="rs-path-dot rs-path-green" d="M944.93,206.87a11.28,11.28,0,1,0,14.18-7.31A11.28,11.28,0,0,0,944.93,206.87Z"/>
+                <path class="rs-path rs-path-green" d="M739.82,1.94c64.26,27.66,84.71,81.8,58.21,165.6"/>
+                <path class="rs-path-dot rs-path-green" d="M787.37,163.51a11.28,11.28,0,1,0,14.2-7.27A11.27,11.27,0,0,0,787.37,163.51Z"/>
             </svg>
 
             <svg class="rs-svg rs-geschichte-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000" preserveAspectRatio="none">    

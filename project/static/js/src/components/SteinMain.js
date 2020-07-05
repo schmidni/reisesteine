@@ -25,6 +25,13 @@ export default class SteinMain {
         document.querySelector('#rs-nav-background').classList.add('active');
     }
 
+    frameMobileFull = () => {
+        let close = document.getElementById('rs-closeAll');
+        close.style.display = 'none';
+        this.frame.navigate('mobilefull').then(() => {close.style.display='block'});
+        document.removeEventListener('touchmove', this.frameMobileFull);
+    }
+
     oncreate (ctrl) {
         // direct navigation, data is already in dom
         if (ctrl.attrs.data) {
@@ -69,6 +76,8 @@ export default class SteinMain {
         else if (this.goTo == 'stein')
             frameDone = this.frame.navigate('offset');
         
+        document.addEventListener('touchmove', this.frameMobileFull);
+
         // zoom in
         this.keepMarkerCentered();
         window.addEventListener('resize', this.keepMarkerCentered);
@@ -88,6 +97,8 @@ export default class SteinMain {
         document.querySelector("meta[name='description']").setAttribute('content', 'Entdecken Sie in der Ausstellung unsere Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.');
 
         document.querySelector('#rs-closeFundort').style.display = 'none';
+
+        document.removeEventListener('touchmove', this.frameMobileFull)
     }
 
     view() {

@@ -1,7 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1000">
-    <defs>
-        <style>.a{fill:none;stroke:#14501e;stroke-width:5px;stroke-dasharray:30 10;}.b{fill:#14501e;}</style>
-    </defs>
-    <path class="a" d="M899.82,1.94c49.28,44.31,81.35,123.22,55.73,208.92"/>
-    <path class="b" d="M944.93,206.87a11.28,11.28,0,1,0,14.18-7.31A11.28,11.28,0,0,0,944.93,206.87Z"/>
+    <defs><style>.a{fill:none;stroke:#14501e;stroke-width:5px;stroke-dasharray:30 10;}.b{fill:#14501e;}</style></defs>
+    <path class="a" d="M739.82,1.94c64.26,27.66,84.71,81.8,58.21,165.6"/>
+    <path class="b" d="M787.37,163.51a11.28,11.28,0,1,0,14.2-7.27A11.27,11.27,0,0,0,787.37,163.51Z"/>
 </svg>

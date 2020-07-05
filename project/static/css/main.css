@@ -747,6 +747,15 @@ h4.active {
         margin-bottom: 0;
     }
 }
+@media only screen and (max-height:400px) {
+    #rs-nav .rs-nav-indexpages a{
+        margin-top: 10px;
+    }
+    
+    #rs-nav .rs-nav-impressum a {
+        margin-top: 10px;
+    }
+}
 
 /************************** REISESTEINE DRAGGABLE ******************************************/
 .rs-index {
@@ -863,6 +872,29 @@ h4.active {
     .rs-index-reisesteine>div {
         width: 150px;
         height: 150px;
+    }
+
+    
+    .rs-index-geschichten>div {
+        height: 150px;
+        width: 200px;
+    }
+
+    .rs-index-geschichten a {
+        font-size: 2rem;
+    }
+
+    .rs-index-geologie>div {
+        height: 150px;
+        width: 200px;
+    }
+
+    .rs-index-geologie a {
+        font-size: 1.5rem;
+    }
+
+    .rs-index-geologie a b{
+        font-size: 2rem;
     }
 }
 

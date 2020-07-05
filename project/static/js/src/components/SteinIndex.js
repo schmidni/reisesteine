@@ -20,7 +20,7 @@ export default class SteinIndex {
     }
 
     oncreate (ctrl) {
-        ctrl.attrs.frame.navigate('full')
+        ctrl.attrs.frame.navigate('fullFast')
         .then(() => {
             document.getElementById('svg-path').setAttribute('d', ctrl.attrs.frame.calculatePath('rect'));
             document.querySelector('#rs-closeAll').style.display = "block";
