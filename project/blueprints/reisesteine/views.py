@@ -1,5 +1,6 @@
 from flask import jsonify, json, render_template, Blueprint, g, redirect, request, current_app, abort, url_for, make_response
 from project.blueprints.reisesteine.forms import EditSteinForm, MitmachenForm
+from project.blueprints.reisesteine.email import send_email
 from project import db
 from project.models import Gestein, Stein, Person, Bild
 from werkzeug.utils import secure_filename
@@ -49,7 +50,7 @@ def verify_password(username, password):
 @reisesteine.route('/')
 @auth.login_required
 def index():
-    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     return render_template('reisesteine/home.html', steine=steine, ste=None)
 
 @reisesteine.route('/uber-uns', defaults={'lang_code': 'de'})
@@ -203,6 +204,9 @@ def mitmachen():
         db.session.add(stein)
         db.session.commit()
         
+        send_email('New Submission', ['nicolas.schmid@asvz.ch'], text_body=render_template('reisesteine/email/new_submission.txt'), html_body=render_template('reisesteine/email/new_submission.txt'))
+        send_email('Thanks for your submission', [form.email.data], text_body=render_template('reisesteine/email/stone_submitted.txt'), html_body=render_template('reisesteine/email/stone_submitted.txt'))
+
         return redirect(url_for('reisesteine.danke'))
 
     return render_template('reisesteine/mitmachen.html', form=form)
@@ -256,6 +260,11 @@ def newStein():
 
     return redirect(url_for('reisesteine.editStein', email=email, gestein=gestein))
 
+@reisesteine.route('/sendMail')
+def sendMail():
+    send_email('Submitted', ['nicolas@breiten.ch'], text_body=render_template('reisesteine/email/stone_submitted.txt'), html_body=render_template('reisesteine/email/stone_submitted.txt'))
+    return redirect(url_for('reisesteine.index'))
+
 @reisesteine.route('/editStein/<id>', methods=['GET', 'POST'])
 @reisesteine.route('/editStein', defaults={'id': None}, methods=['GET', 'POST'])
 @auth.login_required
@@ -288,9 +297,6 @@ def editStein(id):
             f_stein = form.bild_stein.data
             fn_stein = unique_filename('img/steine', secure_filename(f_stein.filename))
             f_stein.save(os.path.join(current_app.static_folder, 'img/steine', fn_stein))
-            with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_stein)) as img:
-                width, height = img.size
-            optimize_image(os.path.join('img/steine', fn_stein), min(width, 1000))
             if stein.bild_stein:
                 os.remove(os.path.join(current_app.static_folder, 'img/steine', stein.bild_stein))
             stein.bild_stein = fn_stein
@@ -301,17 +307,20 @@ def editStein(id):
             f_her = form.bild_herkunft.data
             fn_her = unique_filename('img/steine', secure_filename(f_her.filename))
             f_her.save(os.path.join(current_app.static_folder, 'img/steine', fn_her))
-            with Image.open(os.path.join(current_app.static_folder, 'img/steine', fn_her)) as img:
-                width, height = img.size
-            optimize_image(os.path.join('img/steine', fn_her), min(width, 1980))
             if stein.bild_herkunft:
                 os.remove(os.path.join(current_app.static_folder, 'img/steine', stein.bild_herkunft))
             stein.bild_herkunft = fn_her
+
+        # send confirmation email if stone is published for the first time
+        if stein.published and not stein.emailSent:
+            send_email('Your Stone has been Published', [stein.absender.email], text_body=render_template('reisesteine/email/stone_published.txt'), html_body=render_template('reisesteine/email/stone_published.txt'))
+            stein.emailSent = True
 
         # save and redirect back to list
         db.session.add(gestein)
         db.session.add(stein)
         db.session.commit()
+
         if request.form['submit'] != "Erstellen" and request.form['submit'] != "Create":
             if request.form['submit'] == "Vorschau" or request.form['submit'] == "Preview":
                 return redirect(url_for('reisesteine.stein_vorschau', id=stein.id))
@@ -359,28 +368,3 @@ def unique_filename(folder, filename):
             n = -1
         n += 1
     return f"{output_filename}{n}{file_extension}"
-
-def optimize_image(filename, width):
-    # data = {
-    #     'auth': {
-    #         'api_key': current_app.config['KRAKEN_KEY'],
-    #         'api_secret': current_app.config['KRAKEN_SECRET']
-    #     },
-    #     'url': url_for('static', filename=filename, _external=True),
-    #     'wait': True,
-    #     'lossy': True,
-    #     'resize': {
-    #         'width': width,
-    #         'strategy': 'landscape'
-    #     }
-    # }
-
-    # response = requests.post('https://api.kraken.io/v1/url', json=data)
-    
-    # if response:
-    #     json_response = response.json()
-    #     urllib.request.urlretrieve(json_response.get('kraked_url'), os.path.join(current_app.static_folder, filename))
-    # else:
-    #     print(response.json().get('message'))
-
-    return 'success'

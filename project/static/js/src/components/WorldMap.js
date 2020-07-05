@@ -23,13 +23,22 @@ export default class worldMap {
             popupAnchor: [1, -34],
             shadowSize: [41, 41]
         });
+        this.whiteIcon = new L.Icon({
+            iconUrl: '/static/img/marker_white.png',
+            shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
         this.mapCoordinates();
     }
 
     mapCoordinates = async () => {
         this.data.forEach(el => {
+            let mrk = el[6] == 'de' ? this.redIcon : this.whiteIcon;
             let el_coord = [el[1], el[2]];
-            let marker = L.marker(el_coord, {icon: this.redIcon})
+            let marker = L.marker(el_coord, {icon: mrk})
                             .addTo(this.map)
                             .on('click', () => m.mount(document.getElementById('rs-body'), {view: () => 
                                 m(SteinMain, {'id': el[0], 'map':this, 'frame':this.frame, 'pushState': true})
@@ -71,28 +80,18 @@ export default class worldMap {
     }
 
     initMap = (mymap) => {
-        // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
-        //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-        //     maxZoom: 18,
-        //     minZoom: 3,
-        //     id: this.style,
-        //     tileSize: 512,
-        //     zoomOffset: -1,
-        //     bounds: [
-        //         [-90, -220],
-        //         [90, 220]
-        //     ],
-        //     accessToken: 'pk.eyJ1Ijoic2NobWlkbmkiLCJhIjoiY2thODNqaWZhMDk1cTMycXdpbTdtMXMwZSJ9.kWgF03PRqN68LpUFC7UAdw'
-        // }).addTo(mymap);
-        // add the OpenStreetMap tiles
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
             maxZoom: 18,
             minZoom: 3,
-            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>',
+            id: this.style,
+            tileSize: 512,
+            zoomOffset: -1,
             bounds: [
                 [-90, -220],
                 [90, 220]
             ],
+            accessToken: 'pk.eyJ1IjoicmVpc2VzdGVpbmUiLCJhIjoiY2tjOTZhZmJ3MTFqdjJ5cDg1cGo1MWNxbSJ9.K55g5LHcD8BPRVid5xzUTA'
         }).addTo(mymap);
     }
 }

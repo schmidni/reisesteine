@@ -77,6 +77,8 @@ class Stein(db.Model):
     description = db.Column(db.String(1))
     user_bilder = db.relationship('Bild', backref='stein_ref', lazy='dynamic')
     bemerkungen = db.Column(db.String(1))
+    language = db.Column(db.String(2))
+    emailSent = db.Column(db.Boolean, default=False)
 
     def __repr__(self):
         return '{}, {}'.format(self.gestein, self.herkunft)
@@ -99,6 +101,7 @@ class Stein(db.Model):
         self.pers_geschichte = form.pers_geschichte.data
         self.geo_geschichte = form.geo_geschichte.data
         self.bemerkungen = form.bemerkungen.data
+        self.language = form.language.data
 
     def to_dict(self):
         data = {
@@ -115,6 +118,7 @@ class Stein(db.Model):
             'bild_herkunft': self.bild_herkunft,
             'absender': self.absender.vorname,
             'wohnort': self.absender.wohnort,
-            'description': self.description
+            'description': self.description,
+            'language': self.language
         }
         return data

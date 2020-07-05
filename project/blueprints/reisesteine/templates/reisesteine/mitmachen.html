@@ -110,6 +110,11 @@
                 </small>
                 <div class="card">
                     <div class="card-body">
+                        <div class="form-group">
+                            <small class="form-text text-muted">
+                                {{_('Geben Sie den Namen des Ortes, an dem Sie den Stein gefunden haben, möglichst genau ein: unter Lokalität/Ort z.B. Ätna, Sizilien; unter Land Italien.')}}
+                            </small>
+                        </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
                                 {{ form.herkunft.label }}
@@ -173,7 +178,13 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <div class="form-group">
+                                <small class="form-text text-muted">
+                                    {{_('Laden Sie bis zu drei Nahaufnahmen des Steins hoch. Das Bild sollte scharf und so hoch aufgelöst wie möglich sein. Bitte benutzen Sie einen weissen oder hellen Hintergrund, z.B. ein Blatt Papier. ')}}
+                                    <br><br>
+                                    {{_('Für eine bessere Einschätzung, um was für einen Stein es sich handelt, hilft es, mehrere Fotos des Steins zu haben. ')}}
+                                </small>
+                            </div>
                             <div class="form-group">
                                 {{ form.bild_stein.label }}
                                 {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
@@ -186,7 +197,11 @@
                                 </div>
                                 {% endfor %}
                             </div>
-
+                            <div class="form-group">
+                                <small class="form-text text-muted">
+                                    {{_('Laden Sie bis zu drei Naturaufnahmen des Fundortes hoch, gerne mit Horizont und wenn möglich im Querformat. Die Landschaft sollte erkennbar sein, z.B. ein Strand, Berg oder Ihr Garten; mit oder ohne Personen. ')}}
+                                </small>
+                            </div>
                             <div class="form-group">
                                 {{ form.bild_herkunft.label }}
                                 {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
@@ -198,6 +213,11 @@
                                         {{error}}
                                     </div>
                                 {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                <small class="form-text text-danger">
+                                    {{_('Bitte laden Sie nur Bilder hoch, über deren Verwendungsrechte Sie verfügen. Bei einer Urheberrechtsverletzung lehnt focusTerra jegliche Verantwortung ab. ')}}
+                                </small>
                             </div>
 
                             
@@ -224,24 +244,28 @@
             <div class="col-12">
                 <div class="form-group">
                     {{ form.titel.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Titel')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">{{_('Geben Sie einen möglichst kurzen, kreativen und aussagekräftigen Titel für Ihre persönliche Geschichte ein.')}}</small>
                     {{ form.titel(class_="form-control", maxlength="25") }}
                     <small id="titelhelp" class="form-text text-muted"><span id="current_titel">0</span>/ 25</small>
                 </div>
                 <div class="form-group">
                     {{ form.pers_geschichte.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Geschichte')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">
+                        {{_('Schreiben Sie Ihre persönliche Geschichte zum Stein und zum Fundort oder zur Reise: Wieso haben Sie den Stein mitgenommen und für die Ausstellung ausgewählt? Warum und mit wem waren Sie an den Fundort? Woran erinnern Sie sich gerne, wenn Sie an die Reise denken? Was bedeutet die Erinnerung für Sie? Was machen Sie mit dem Stein?')}}
+                    </small>
                     {{ form.pers_geschichte(class_="form-control", rows=5, maxlength="400") }}
                     <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 400</small>
                 </div>
                 <div class="form-group">
                     {{ form.geo_geschichte.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Geologie')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">
+                        {{_('Wenn Sie die Geologie des Steines kennen, können Sie hier den Text dazu schreiben. Oder teilen Sie uns mögliche Hinweise oder Vermutungen mit, um was für einen Stein es sich handeln könnte.')}}
+                    </small>
                     {{ form.geo_geschichte(class_="form-control", rows=5) }}
                 </div>
                 <div class="form-group">
                     {{ form.bemerkungen.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1 mt-0">{{_('Hinweise Bemerkungen')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">{{_('Haben Sie noch weitere Informationen für uns? ')}}</small>
                     {{ form.bemerkungen(class_="form-control", rows=5) }}
                 </div>
                 <div class="form-group">

@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm, RecaptchaField
 from flask_babel import lazy_gettext as _l
 from flask_wtf.file import FileField, FileAllowed, FileRequired
-from wtforms import StringField, BooleanField, SubmitField, DecimalField, TextAreaField, IntegerField, MultipleFileField
+from wtforms import StringField, BooleanField, SubmitField, DecimalField, TextAreaField, IntegerField, MultipleFileField, SelectField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Optional
 from wtforms.fields.html5 import EmailField
 from project.models import Gestein, Stein, Person
@@ -30,9 +30,10 @@ class MitmachenForm(FlaskForm):
     titel =             StringField(_l('Titel *'), validators=[DataRequired()])
 
     pers_geschichte =   TextAreaField(_l('Persönliche Geschichte *'), validators=[DataRequired()])
-    geo_geschichte =    TextAreaField(_l('Hinweise Fundort / Geologie'))
-    bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
+    geo_geschichte =    TextAreaField(_l('Fundort / Geologie'))
+    bemerkungen =       TextAreaField(_l('Bemerkungen'))
 
+    language =          SelectField(_l('Sprache'), choices=[('', ''), ('de', 'de'), ('en', 'en')], validators=[Optional()])
     bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
     bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
 
@@ -117,6 +118,7 @@ class EditSteinForm(FlaskForm):
     bemerkungen =       TextAreaField(_l('Weitere Hinweise oder Bemerkungen'))
     description =       TextAreaField(_l('Meta Description *'), validators=[dataRequiredOnPublish])
 
+    language =          SelectField(_l('Sprache *'), choices=[('', ''), ('de', 'de'), ('en', 'en')], validators=[dataRequiredOnPublish])
     published =         BooleanField(_l('Published'), default=False)
     newsletter =        BooleanField(_l('Will Newsletter'), default=False)
     newsletter_registered =BooleanField(_l('Newsletter Registered'), default=False)
@@ -198,32 +200,33 @@ class EditSteinForm(FlaskForm):
     def populate(self, curr_stein):
 
         self.user_id.data = curr_stein.absender.id
-        self.vorname.data = curr_stein.absender.vorname
-        self.nachname.data = curr_stein.absender.nachname
-        self.wohnort.data = curr_stein.absender.wohnort
-        self.email.data = curr_stein.absender.email
-        self.telefon.data = curr_stein.absender.telefon
-        self.instagram.data = curr_stein.absender.instagram
-        self.twitter.data = curr_stein.absender.twitter
-        self.facebook.data = curr_stein.absender.facebook
+        self.vorname.data = self.vorname.data or curr_stein.absender.vorname
+        self.nachname.data = self.nachname.data or curr_stein.absender.nachname
+        self.wohnort.data = self.wohnort.data or curr_stein.absender.wohnort
+        self.email.data = self.email.data or curr_stein.absender.email
+        self.telefon.data = self.telefon.data or curr_stein.absender.telefon
+        self.instagram.data = self.instagram.data or curr_stein.absender.instagram
+        self.twitter.data = self.twitter.data or curr_stein.absender.twitter
+        self.facebook.data = self.facebook.data or curr_stein.absender.facebook
         self.newsletter.data = curr_stein.absender.newsletter
-        self.newsletter_registered.data = curr_stein.absender.newsletter_registered
+        self.newsletter_registered.data = self.newsletter_registered.data or curr_stein.absender.newsletter_registered
     
         if curr_stein.gesteinsart:
             self.gestein_id.data = curr_stein.gesteinsart.id
             self.gestein.data = curr_stein.gesteinsart.name
 
         self.stein_id.data = curr_stein.id
-        self.herkunft.data = curr_stein.herkunft
-        self.land.data = curr_stein.land
-        self.longitude.data = curr_stein.longitude
-        self.latitude.data = curr_stein.latitude
-        self.titel.data = curr_stein.titel
-        self.pers_geschichte.data = curr_stein.pers_geschichte
-        self.geo_geschichte.data = curr_stein.geo_geschichte
+        self.herkunft.data = self.herkunft.data or curr_stein.herkunft
+        self.land.data = self.land.data or curr_stein.land
+        self.longitude.data = self.longitude.data or curr_stein.longitude
+        self.latitude.data = self.latitude.data or curr_stein.latitude
+        self.titel.data = self.titel.data or curr_stein.titel
+        self.pers_geschichte.data = self.pers_geschichte.data or curr_stein.pers_geschichte
+        self.geo_geschichte.data = self.geo_geschichte.data or curr_stein.geo_geschichte
         self.published.data = curr_stein.published
-        self.description.data = curr_stein.description
-        self.bemerkungen.data = curr_stein.bemerkungen
+        self.description.data = self.description.data or curr_stein.description
+        self.bemerkungen.data = self.bemerkungen.data or curr_stein.bemerkungen
+        self.language.data = self.language.data or curr_stein.language
 
     def populate_absender(self, absender):
         self.user_id.data = absender.id

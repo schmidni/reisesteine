@@ -3,7 +3,7 @@ from flask_babel import Babel
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-
+from flask_mail import Mail
 import logging
 import os
 
@@ -25,6 +25,9 @@ if not app.debug:
 
     app.logger.setLevel(logging.INFO)
     app.logger.info('Portfolio startup')
+
+# init mail
+mail = Mail(app)
 
 # database
 db = SQLAlchemy(app)

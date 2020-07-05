@@ -58,11 +58,11 @@ export default class About {
     }
 
     keepMarkerCentered = debounce(() => {
-        let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.2) + (this.myMap.map.getSize().x * 0.09);
+        let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.19) + (this.myMap.map.getSize().x * 0.09);
         if( this.media.matches)
             this.myMap.flyToOffset([47.378600, 8.547214], [0, -this.myMap.map.getSize().y*0.275], 17);
         else
-            this.myMap.flyToOffset([47.378600, 8.547214], [this.myMap.map.getSize().x*0.2, h], 17);
+            this.myMap.flyToOffset([47.378600, 8.547214], [this.myMap.map.getSize().x*0.23, h], 17);
     }, 500);
 
     view() {
