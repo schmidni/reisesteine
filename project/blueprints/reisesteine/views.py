@@ -204,7 +204,7 @@ def mitmachen():
         db.session.add(stein)
         db.session.commit()
         
-        send_email('New Submission', ['nicolas.schmid@asvz.ch'], text_body=render_template('reisesteine/email/new_submission.txt'), html_body=render_template('reisesteine/email/new_submission.txt'))
+        send_email('New Submission', ['reisesteine@ethz.ch'], text_body=render_template('reisesteine/email/new_submission.txt'), html_body=render_template('reisesteine/email/new_submission.txt'))
         send_email('Thanks for your submission', [form.email.data], text_body=render_template('reisesteine/email/stone_submitted.txt'), html_body=render_template('reisesteine/email/stone_submitted.txt'))
 
         return redirect(url_for('reisesteine.danke'))
