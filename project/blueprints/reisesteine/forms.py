@@ -37,7 +37,7 @@ class MitmachenForm(FlaskForm):
     bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
     bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
 
-    # recaptcha = RecaptchaField()
+    recaptcha = RecaptchaField()
     submit = SubmitField(_l('Absenden'))
 
     def validate_longitude(self, longitude):
