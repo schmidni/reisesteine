@@ -2,7 +2,6 @@ import m from 'mithril';
 import L from 'leaflet';
 import SteinMain from './SteinMain.js';
 import {convertDMS} from '../util/convertCoords.js';
-import debounce from '../util/debounce.js';
 
 export default class worldMap {
     constructor(el, frame, data) {
@@ -63,10 +62,10 @@ export default class worldMap {
                             .addTo(this.map)
     }
 
-    flyToOffset = (coords, pos, zoom=8) => {
+    flyToOffset = (coords, pos, zoom=8, dur=2) => {
         var targetPoint = this.map.project(coords, zoom).subtract(pos);
         var targetLatLng = this.map.unproject(targetPoint, zoom);
-        this.map.flyTo(targetLatLng, zoom, {duration: 2});
+        this.map.flyTo(targetLatLng, zoom, {duration: dur});
     }
 
     init = (el) => {

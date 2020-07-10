@@ -1,1 +1,16 @@
-your stone has been published
+{{_('Liebe/r Reisefreund/in')}}
+
+{{_('Dein Stein ist nun Teil unserer Reisesteinsammlung und auf unserer Weltkarte zu finden (www.reisesteine.ethz.ch).')}}
+
+{{_('Herzliche Grüsse')}},
+{{_('Die focusTerra-Reiseleitung')}}
+------------------------------------------------
+ETH Zürich
+focusTerra
+Sonneggstrasse 5
+8092 Zürich
+Tel. +41 44 632 62 81
+info_focusterra@erdw.ethz.ch  
+www.focusterra.ethz.ch   
+{{_('Wir sind auch auf facebook zu finden!')}}
+www.facebook.com/focusTerra

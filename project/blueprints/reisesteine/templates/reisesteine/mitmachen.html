@@ -112,7 +112,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <small class="form-text text-muted">
-                                {{_('Geben Sie den Namen des Ortes, an dem Sie den Stein gefunden haben, möglichst genau ein: unter Lokalität/Ort z.B. Ätna, Sizilien; unter Land Italien.')}}
+                                {{_('Geben Sie den Namen des Ortes, an dem Sie den Stein gefunden haben, möglichst genau an: z.B. unter Lokalität/Ort: Ätna, Sizilien; unter Land: Italien.')}}
                             </small>
                         </div>
                         <div class="form-row">
@@ -168,11 +168,11 @@
                                                 {{_('Auf <a href="https://www.google.ch/maps" target="_blank">Google Maps</a> können Sie mit der rechten Maustaste auf den gewünschten Ort oder Bereich der Karte klicken. Danach wählen Sie "Was ist hier?" aus. Die Koordinaten werden daraufhin im unteren Bildschirmbereich angezeigt.')}}
                                             </p>
                                             <p>
-                                                {{_('Mehr Informationen dazu finden Sie <a href="https://support.google.com/maps/answer/18539?co=GENIE.Platform&percnt;3DDesktop&hl=de">hier</a>.')}}
+                                                {{_('Mehr Informationen dazu finden Sie <a href="https://support.google.com/maps/answer/18539?co=GENIE.Platform&percnt;3DDesktop&hl=de" target="_blank">hier</a>.')}}
                                             </p>
                                             <h5>{{_('Schreibweise')}}</h5>
                                             <p>
-                                                {{_('Zur Eingabe kann entweder die Koordinatenschreibweise mit <span class="font-italic">11°11\'11.0\"N 11°11\'11.0\"E</span> verwendet werden, oder die Schreibweise in Dezimalzahlen <span class="font-italic">11.123456789.</span>')}}
+                                                {{_('Zur Eingabe kann entweder die Koordinatenschreibweise mit <span class="font-italic">11°11\'11.0\"N, 11°11\'11.0\"E</span> verwendet werden, oder die Schreibweise in Dezimalzahlen <span class="font-italic">11.123456789, 11.123456789.</span>')}}
                                             </p>
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@
                                 <small class="form-text text-muted">
                                     {{_('Laden Sie bis zu drei Nahaufnahmen des Steins hoch. Das Bild sollte scharf und so hoch aufgelöst wie möglich sein. Bitte benutzen Sie einen weissen oder hellen Hintergrund, z.B. ein Blatt Papier. ')}}
                                     <br><br>
-                                    {{_('Für eine bessere Einschätzung, um was für einen Stein es sich handelt, hilft es, mehrere Fotos des Steins zu haben. ')}}
+                                    {{_('Für eine bessere Einschätzung, um was für einen Stein es sich handelt, hilft es uns, mehrere Fotos des Steins zu haben. ')}}
                                 </small>
                             </div>
                             <div class="form-group">
@@ -216,7 +216,7 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-text text-danger">
-                                    {{_('Bitte laden Sie nur Bilder hoch, über deren Verwendungsrechte Sie verfügen. Bei einer Urheberrechtsverletzung lehnt focusTerra jegliche Verantwortung ab. ')}}
+                                    {{_('Bitte laden Sie nur Bilder hoch, über deren Verwendungsrechte Sie verfügen. Bei einer Urheberrechtsverletzung lehnt <i>focus</i>&#8239;Terra jegliche Verantwortung ab. ')}}
                                 </small>
                             </div>
 
@@ -244,14 +244,17 @@
             <div class="col-12">
                 <div class="form-group">
                     {{ form.titel.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1 mt-0">{{_('Geben Sie einen möglichst kurzen, kreativen und aussagekräftigen Titel für Ihre persönliche Geschichte ein.')}}</small>
+                    <small class="form-text text-muted mb-1 mt-0">
+                        {{_('Geben Sie einen möglichst kurzen, kreativen und aussagekräftigen Titel für Ihre persönliche Geschichte ein. Ideen finden Sie unter ')}}
+                        <a href="{{url_for('reisesteine.geschichten')}}" target="_blank">{{_('Geschichten')}}</a>.
+                    </small>
                     {{ form.titel(class_="form-control", maxlength="25") }}
                     <small id="titelhelp" class="form-text text-muted"><span id="current_titel">0</span>/ 25</small>
                 </div>
                 <div class="form-group">
                     {{ form.pers_geschichte.label(class_="mb-0") }}
                     <small class="form-text text-muted mb-1 mt-0">
-                        {{_('Schreiben Sie Ihre persönliche Geschichte zum Stein und zum Fundort oder zur Reise: Wieso haben Sie den Stein mitgenommen und für die Ausstellung ausgewählt? Warum und mit wem waren Sie an den Fundort? Woran erinnern Sie sich gerne, wenn Sie an die Reise denken? Was bedeutet die Erinnerung für Sie? Was machen Sie mit dem Stein?')}}
+                        {{_('Schreiben Sie Ihre persönliche Geschichte zum Stein und zum Fundort oder zur Reise. Ideen: Wieso haben Sie den Stein mitgenommen und für die Ausstellung ausgewählt? Warum und mit wem waren Sie an dem Fundort? Woran erinnern Sie sich gerne, wenn Sie an die Reise denken? Was bedeutet die Erinnerung für Sie? Was machen Sie mit dem Stein?')}}
                     </small>
                     {{ form.pers_geschichte(class_="form-control", rows=5, maxlength="400") }}
                     <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 400</small>
@@ -268,18 +271,20 @@
                     <small class="form-text text-muted mb-1 mt-0">{{_('Haben Sie noch weitere Informationen für uns? ')}}</small>
                     {{ form.bemerkungen(class_="form-control", rows=5) }}
                 </div>
+                {#
                 <div class="form-group">
                     {{ form.recaptcha }}
                     {% if form.recaptcha.errors|length > 0 %}
                         <p class="uk-text-danger">reCaptcha verification Failed</p>
                     {% endif %}
                 </div>
+                #}
             </div>
         </div>
         <div class="row mt-2">
             <div class="col-12">
                 <p>
-                    {{_('Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an <i>focus</i>&#8239;Terra und erklären sich mit einer Veröffentlichung Ihrer Bilder und Geschichten einverstanden.')}}
+                    {{_('Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren Bildern und Geschichten an <i>focus</i>&#8239;Terra und erklären sich mit ihrer Veröffentlichung einverstanden.')}}
                 </p>
             </div>
             <div class="col-12">
@@ -290,7 +295,7 @@
             </div>
             <div class="col-12 mt-4">
                 {{ form.submit(class_="btn btn-primary") }}
-                <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}">{{_('Verwerfen')}}</a>
+                <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}" onclick="return confirm('{{_('Möchten Sie die Änderungen Verwerfen?')}}')">{{_('Verwerfen')}}</a>
             </div>
         </div>
     </form>

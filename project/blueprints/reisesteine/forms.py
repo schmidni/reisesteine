@@ -37,14 +37,15 @@ class MitmachenForm(FlaskForm):
     bild_stein =        MultipleFileField(_l('Bild Stein *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
     bild_herkunft =     MultipleFileField(_l('Bild Fundort *'), validators=[DataRequired(), FileAllowed(['jpg', 'png', 'gif', 'jpeg', 'raw', 'dng'], _l('Bitte nur Bilder hochladen.'))])
 
-    recaptcha = RecaptchaField()
-    submit = SubmitField(_l('Absenden'))
+    # recaptcha = RecaptchaField()
+    submit = SubmitField(_l('Einreichen'))
 
     def validate_longitude(self, longitude):
         try:
             longitude.data = float(longitude.data)
         except ValueError:
             try:
+                longitude.data = longitude.data.replace("''", "\"")
                 deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data.replace(" ", ""))
                 longitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
@@ -55,6 +56,7 @@ class MitmachenForm(FlaskForm):
             latitude.data = float(latitude.data)
         except ValueError:
             try:
+                latitude.data = latitude.data.replace("''", "\"")
                 deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data.replace(" ", ""))
                 latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
@@ -132,6 +134,7 @@ class EditSteinForm(FlaskForm):
             longitude.data = float(longitude.data)
         except ValueError:
             try:
+                longitude.data = longitude.data.replace("''", "\"")
                 deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data.replace(" ", ""))
                 longitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
@@ -144,6 +147,7 @@ class EditSteinForm(FlaskForm):
             latitude.data = float(latitude.data)
         except ValueError:
             try:
+                latitude.data = latitude.data.replace("''", "\"")
                 deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data.replace(" ", ""))
                 latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:

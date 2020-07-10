@@ -245,6 +245,8 @@ h4.active {
 .rs-geschichte .rs-text {
     width: 35vw;
     margin-right: 10vw;
+    -webkit-hyphens: auto;
+    -ms-hyphens: auto;
     hyphens: auto;
 }
 .rs-geschichte .rs-fundort {

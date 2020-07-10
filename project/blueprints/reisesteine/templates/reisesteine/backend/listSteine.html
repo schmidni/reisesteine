@@ -62,7 +62,7 @@
                 <a href="{{ url_for('reisesteine.editStein', id=stein.id) }}" class="btn btn-primary btn-sm">{{_('editiern')}}</a>
             </td>
             <td>
-                <a href="{{ url_for('reisesteine.deleteStein', id=stein.id) }}" class="btn btn-danger btn-sm">{{_('löschen')}}</a>
+                <a href="{{ url_for('reisesteine.deleteStein', id=stein.id) }}" onclick="return confirm('{{_('Eintrag Löschen?')}}')" class="btn btn-danger btn-sm">{{_('löschen')}}</a>
             </td>
         </tr>
         {% endfor %}

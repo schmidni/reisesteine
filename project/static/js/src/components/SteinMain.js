@@ -42,12 +42,16 @@ export default class SteinMain {
 
     // keep marker zoomed to center of circle when resizing
     keepMarkerCentered = debounce(() => {
-            let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.19) + (this.myMap.map.getSize().x * 0.09);
-            if( this.media.matches)
-                this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275]);
-            else
-                this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.23, h]);
-        }, 100);
+        this.flyTo(0.2);
+    }, 100);
+
+    flyTo = (duration) => {
+        let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.19) + (this.myMap.map.getSize().x * 0.09);
+        if( this.media.matches)
+            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [0, -this.myMap.map.getSize().y*0.275], 8, duration);
+        else
+            this.myMap.flyToOffset([this.info.latitude, this.info.longitude], [this.myMap.map.getSize().x*0.23, h], 8, duration);
+    }
 
         
     onupdate (ctrl) {
@@ -79,7 +83,7 @@ export default class SteinMain {
         document.addEventListener('touchmove', this.frameMobileFull);
 
         // zoom in
-        this.keepMarkerCentered();
+        this.flyTo(2);
         window.addEventListener('resize', this.keepMarkerCentered);
 
         // CONTENT

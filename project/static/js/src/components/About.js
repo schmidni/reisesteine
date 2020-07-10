@@ -34,10 +34,11 @@ export default class About {
         else
             frameDone = this.frame.navigate('offset');
 
-        this.keepMarkerCentered();
+        this.flyTo(2);
 
         this.myMarker = this.myMap.addMarker([47.378600, 8.547214]);
         document.addEventListener('touchmove', this.frameMobileFull);
+        document.getElementById('rs-body').addEventListener('scroll', this.frameMobileFull);
         frameDone.then(() => {document.querySelector('#rs-closeAll').style.display = "block"});
     }
     
@@ -51,6 +52,7 @@ export default class About {
 
     onremove() {
         window.removeEventListener('resize', this.keepMarkerCentered);
+        document.removeEventListener('touchmove', this.frameMobileFull);
         document.getElementById('rs-nav-background').classList.remove('active');
         document.getElementById('rs-about-wrapper').remove();
         document.getElementById('svg-path').style.fill = 'rgba(256, 256, 256, 0.7)';
@@ -58,12 +60,17 @@ export default class About {
     }
 
     keepMarkerCentered = debounce(() => {
+        this.flyTo(0.1);
+    }, 500);
+
+    flyTo = (dur) => {
         let h = - (this.myMap.map.getSize().y/2) + (this.myMap.map.getSize().y*0.19) + (this.myMap.map.getSize().x * 0.09);
         if( this.media.matches)
-            this.myMap.flyToOffset([47.378600, 8.547214], [0, -this.myMap.map.getSize().y*0.275], 17);
+            this.myMap.flyToOffset([47.378600, 8.547214], [0, -this.myMap.map.getSize().y*0.275], 17, dur);
         else
-            this.myMap.flyToOffset([47.378600, 8.547214], [this.myMap.map.getSize().x*0.23, h], 17);
-    }, 500);
+            this.myMap.flyToOffset([47.378600, 8.547214], [this.myMap.map.getSize().x*0.23, h], 17, dur);
+    }
+
 
     view() {
         return (

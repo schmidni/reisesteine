@@ -7,6 +7,7 @@ from werkzeug.utils import secure_filename
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_wtf.file import FileRequired
 from sqlalchemy.sql import exists
+from flask_babel import _
 
 from flask_httpauth import HTTPBasicAuth
 auth = HTTPBasicAuth()
@@ -57,7 +58,7 @@ def index():
 @reisesteine.route('/about', defaults={'lang_code': 'en'})
 @auth.login_required
 def about():
-    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     return render_template('reisesteine/about.html', steine=steine, id='about')
 
 
@@ -68,7 +69,7 @@ def stein(id):
     ste = Stein.query.get(id)
     if not ste or not ste.published:
         return redirect(url_for('reisesteine.index'))
-    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     ste = ste.to_dict()
     return render_template('reisesteine/home.html', id=id, steine=steine, ste=ste)
 
@@ -76,7 +77,7 @@ def stein(id):
 @reisesteine.route('/stone/preview/<id>', defaults={'lang_code': 'en'})
 @auth.login_required
 def stein_vorschau(id):        
-    stein = Stein.query.filter_by(id=id).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    stein = Stein.query.filter_by(id=id).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     return render_template('reisesteine/home.html', steine=stein, ste=None)
 
 
@@ -93,7 +94,7 @@ def get_stein(id):
 @reisesteine.route('/stones', defaults={'lang_code': 'en'})
 @auth.login_required
 def steine():
-    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     return render_template('reisesteine/home.html', id='steine', steine=steine, ste=None)
 
 
@@ -101,7 +102,7 @@ def steine():
 @reisesteine.route('/stories', defaults={'lang_code': 'en'})
 @auth.login_required
 def geschichten():
-    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     return render_template('reisesteine/home.html', id='geschichten', steine=steine, ste=None)
 
 
@@ -109,7 +110,7 @@ def geschichten():
 @reisesteine.route('/geology', defaults={'lang_code': 'en'})
 @auth.login_required
 def geologie():
-    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     return render_template('reisesteine/home.html', id='geologie', steine=steine, ste=None)
 
 
@@ -117,7 +118,7 @@ def geologie():
 @reisesteine.route('/places', defaults={'lang_code': 'en'})
 @auth.login_required
 def fundorte():
-    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft).all()
+    steine = Stein.query.filter_by(published=True).join(Gestein.steine).with_entities(Stein.id, Stein.latitude, Stein.longitude, Gestein.name, Stein.titel, Stein.herkunft, Stein.language).all()
     return render_template('reisesteine/home.html', id='fundorte', steine=steine, ste=None)
 
 @reisesteine.route('/steine/coordinates/all', methods=['GET'])
@@ -204,8 +205,8 @@ def mitmachen():
         db.session.add(stein)
         db.session.commit()
         
-        send_email('New Submission', ['reisesteine@ethz.ch'], text_body=render_template('reisesteine/email/new_submission.txt'), html_body=render_template('reisesteine/email/new_submission.txt'))
-        send_email('Thanks for your submission', [form.email.data], text_body=render_template('reisesteine/email/stone_submitted.txt'), html_body=render_template('reisesteine/email/stone_submitted.txt'))
+        send_email('New Submission', ['reisesteine@ethz.ch'], text_body=render_template('reisesteine/email/new_submission.txt'), html_body=render_template('reisesteine/email/new_submission.html'))
+        send_email(_('Vielen Dank für deinen Stein'), [form.email.data], text_body=render_template('reisesteine/email/stone_submitted.txt'), html_body=render_template('reisesteine/email/stone_submitted.html'))
 
         return redirect(url_for('reisesteine.danke'))
 
@@ -260,11 +261,6 @@ def newStein():
 
     return redirect(url_for('reisesteine.editStein', email=email, gestein=gestein))
 
-@reisesteine.route('/sendMail')
-def sendMail():
-    send_email('Submitted', ['nicolas@breiten.ch'], text_body=render_template('reisesteine/email/stone_submitted.txt'), html_body=render_template('reisesteine/email/stone_submitted.txt'))
-    return redirect(url_for('reisesteine.index'))
-
 @reisesteine.route('/editStein/<id>', methods=['GET', 'POST'])
 @reisesteine.route('/editStein', defaults={'id': None}, methods=['GET', 'POST'])
 @auth.login_required
@@ -313,7 +309,7 @@ def editStein(id):
 
         # send confirmation email if stone is published for the first time
         if stein.published and not stein.emailSent:
-            send_email('Your Stone has been Published', [stein.absender.email], text_body=render_template('reisesteine/email/stone_published.txt'), html_body=render_template('reisesteine/email/stone_published.txt'))
+            send_email(_('Dein Stein wurde veröffentlicht'), [stein.absender.email], text_body=render_template('reisesteine/email/stone_published.txt'), html_body=render_template('reisesteine/email/stone_published.html'))
             stein.emailSent = True
 
         # save and redirect back to list
