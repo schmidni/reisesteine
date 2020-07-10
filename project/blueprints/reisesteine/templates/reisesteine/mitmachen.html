@@ -271,14 +271,14 @@
                     <small class="form-text text-muted mb-1 mt-0">{{_('Haben Sie noch weitere Informationen für uns? ')}}</small>
                     {{ form.bemerkungen(class_="form-control", rows=5) }}
                 </div>
-                {#
+
                 <div class="form-group">
                     {{ form.recaptcha }}
                     {% if form.recaptcha.errors|length > 0 %}
                         <p class="uk-text-danger">reCaptcha verification Failed</p>
                     {% endif %}
                 </div>
-                #}
+
             </div>
         </div>
         <div class="row mt-2">
