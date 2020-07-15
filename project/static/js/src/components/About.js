@@ -37,8 +37,10 @@ export default class About {
         this.flyTo(2);
 
         this.myMarker = this.myMap.addMarker([47.378600, 8.547214]);
+
         document.addEventListener('touchmove', this.frameMobileFull);
-        document.getElementById('rs-body').addEventListener('scroll', this.frameMobileFull);
+        document.getElementById('rs-about-wrapper').addEventListener('scroll', this.frameMobileFull);
+
         frameDone.then(() => {document.querySelector('#rs-closeAll').style.display = "block"});
     }
     
@@ -48,11 +50,13 @@ export default class About {
             document.getElementById('rs-closeAll').style.display = 'block';
         });
         document.removeEventListener('touchmove', this.frameMobileFull);
+        document.getElementById('rs-about-wrapper').removeEventListener('scroll', this.frameMobileFull);
     }
 
     onremove() {
         window.removeEventListener('resize', this.keepMarkerCentered);
         document.removeEventListener('touchmove', this.frameMobileFull);
+        document.getElementById('rs-about-wrapper').removeEventListener('scroll', this.frameMobileFull);
         document.getElementById('rs-nav-background').classList.remove('active');
         document.getElementById('rs-about-wrapper').remove();
         document.getElementById('svg-path').style.fill = 'rgba(256, 256, 256, 0.7)';

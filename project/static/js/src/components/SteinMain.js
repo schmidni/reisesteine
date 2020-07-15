@@ -30,6 +30,7 @@ export default class SteinMain {
         close.style.display = 'none';
         this.frame.navigate('mobilefull').then(() => {close.style.display='block'});
         document.removeEventListener('touchmove', this.frameMobileFull);
+        document.getElementById('rs-body').removeEventListener('scroll', this.frameMobileFull);
     }
 
     oncreate (ctrl) {
@@ -81,7 +82,7 @@ export default class SteinMain {
             frameDone = this.frame.navigate('offset');
         
         document.addEventListener('touchmove', this.frameMobileFull);
-
+        document.getElementById('rs-body').addEventListener('scroll', this.frameMobileFull);
         // zoom in
         this.flyTo(2);
         window.addEventListener('resize', this.keepMarkerCentered);
@@ -102,7 +103,8 @@ export default class SteinMain {
 
         document.querySelector('#rs-closeFundort').style.display = 'none';
 
-        document.removeEventListener('touchmove', this.frameMobileFull)
+        document.removeEventListener('touchmove', this.frameMobileFull);
+        document.getElementById('rs-body').removeEventListener('scroll', this.frameMobileFull);
     }
 
     view() {
