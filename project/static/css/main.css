@@ -1061,6 +1061,10 @@ h4.active {
      width: 200px;
  }
 
+ .rs-about-logos #rs-eth-logo {
+    margin-left:-20px;
+}
+
 #rs-about .rs-copyright {
     font-size: 0.6rem;
     color: grey;

@@ -76,13 +76,14 @@ export default class SteinMain {
 
         // keep Close and Navigation disabled during animation
         let frameDone = new Promise((res, rej) => {return res()});
-        if( this.media.matches)
+        if (this.media.matches) {
             frameDone = this.frame.navigate('mobile');
+            document.addEventListener('touchmove', this.frameMobileFull);
+            document.getElementById('rs-body').addEventListener('scroll', this.frameMobileFull);
+        }
         else if (this.goTo == 'stein')
             frameDone = this.frame.navigate('offset');
         
-        document.addEventListener('touchmove', this.frameMobileFull);
-        document.getElementById('rs-body').addEventListener('scroll', this.frameMobileFull);
         // zoom in
         this.flyTo(2);
         window.addEventListener('resize', this.keepMarkerCentered);

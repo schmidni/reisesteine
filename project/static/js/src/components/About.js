@@ -29,17 +29,17 @@ export default class About {
         let frameDone = new Promise(res => {return res()});
 
         // Zoom in
-        if( this.media.matches)
+        if (this.media.matches) {
             frameDone = this.frame.navigate('mobile');
+            document.addEventListener('touchmove', this.frameMobileFull);
+            document.getElementById('rs-about-wrapper').addEventListener('scroll', this.frameMobileFull);
+        }
         else
             frameDone = this.frame.navigate('offset');
 
         this.flyTo(2);
 
         this.myMarker = this.myMap.addMarker([47.378600, 8.547214]);
-
-        document.addEventListener('touchmove', this.frameMobileFull);
-        document.getElementById('rs-about-wrapper').addEventListener('scroll', this.frameMobileFull);
 
         frameDone.then(() => {document.querySelector('#rs-closeAll').style.display = "block"});
     }

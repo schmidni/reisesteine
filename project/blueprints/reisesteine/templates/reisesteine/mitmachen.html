@@ -30,10 +30,15 @@
             <div class="col">
                 <h1>{{_('Mitmachen')}}</h1>
                 <p>
-                    {{_('Haben Sie auf einer Ihrer Reisen einen Stein gefunden, der Ihnen gefällt, den Sie interessant finden oder der Sie einfach an Ihre Reise oder ein Ereignis erinnert? Dann machen Sie mit! Je mehr Menschen mitmachen, desto reicher wird unsere Sammlung. Bitte laden Sie Freunde und Familie überall auf der Welt ein, gemeinsam mit uns auf Reisen zu gehen.')}}<br>
+                    {{_('Hat Ihnen auf einer Reise oder einem Spaziergang ein Stein gefallen, den Sie interessant oder einfach nur schön fanden? Dann machen Sie mit! Schicken Sie uns ein Foto Ihres Steins und teilen Sie Ihre gemeinsame Geschichte mit uns. Je mehr Menschen mitmachen, desto reicher wird unsere Sammlung. Laden Sie Freunde und Familie überall auf der Welt ein, gemeinsam mit uns auf Reisen zu gehen.')}}<br>
                 </p>
                 <p>
                     {{_('Wir freuen uns auf Ihre Reisesteine!')}}
+                </p>
+                <p>
+                    <small class="text-muted form-text">
+                        {{_('Bitte beachten Sie, dass in einigen Ländern und an einigen Orten die Mitnahme von Steinen aus der Natur verboten ist und unter Strafe steht. Bitte informieren Sie sich über die lokalen rechtlichen Vorgaben. Und auch dort, wo es erlaubt ist, darf dies nur in geringen Mengen und für den eigenen Gebrauch geschehen. Idealerweise nehmen Sie nur schöne Steinfotos mit. Die Mitnahme von bearbeiteten, antiken Gesteinen ist grundsätzlich untersagt.')}}
+                    </small>
                 </p>
                 <p class="mt-4">
                     <small>{{_('* Diese Felder werden benötigt')}}</small>
@@ -180,7 +185,7 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-text text-muted">
-                                    {{_('Laden Sie bis zu drei Nahaufnahmen des Steins hoch. Das Bild sollte scharf und so hoch aufgelöst wie möglich sein. Bitte benutzen Sie einen weissen oder hellen Hintergrund, z.B. ein Blatt Papier. ')}}
+                                    {{_('Laden Sie bis zu drei Nahaufnahmen des Steins hoch. Das Bild sollte scharf und so hoch aufgelöst wie möglich sein. Idealerweise benutzen Sie einen weissen oder hellen Hintergrund (z.B. heller Sand, weisser Stoff oder Papier).')}}
                                     <br><br>
                                     {{_('Für eine bessere Einschätzung, um was für einen Stein es sich handelt, hilft es uns, mehrere Fotos des Steins zu haben. ')}}
                                 </small>
@@ -188,7 +193,7 @@
                             <div class="form-group">
                                 {{ form.bild_stein.label }}
                                 {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
-                                <small id="steinHelp" class="form-text text-muted">max. 3 Files à 8MB</small>
+                                <small id="steinHelp" class="form-text text-muted">{{_('Für das Hochladen mehrerer Bilder (max. 3 Files à 8 MB) wählen Sie bitte alle Files gleichzeitig aus.')}}</small>
                                 <div id="fileListStein">
                                 </div>
                                 {% for error in form.bild_stein.errors %}
@@ -205,7 +210,7 @@
                             <div class="form-group">
                                 {{ form.bild_herkunft.label }}
                                 {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
-                                <small id="herkunftHelp" class="form-text text-muted">max. 3 Files à 8MB</small>
+                                <small id="herkunftHelp" class="form-text text-muted">{{_('Für das Hochladen mehrerer Bilder (max. 3 Files à 8 MB) wählen Sie bitte alle Files gleichzeitig aus.')}}</small>
                                 <div id="fileListHerkunft">
                                 </div>
                                 {% for error in form.bild_herkunft.errors %}
