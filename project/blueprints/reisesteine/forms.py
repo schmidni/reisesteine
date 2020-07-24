@@ -45,8 +45,8 @@ class MitmachenForm(FlaskForm):
             longitude.data = float(longitude.data)
         except ValueError:
             try:
-                longitude.data = longitude.data.replace("''", "\"")
-                deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data.replace(" ", ""))
+                longitude.data = replaceCoordChars(longitude.data)
+                deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data)
                 longitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
                 raise ValidationError(_l('Format ungültig.'))
@@ -56,8 +56,8 @@ class MitmachenForm(FlaskForm):
             latitude.data = float(latitude.data)
         except ValueError:
             try:
-                latitude.data = latitude.data.replace("''", "\"")
-                deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data.replace(" ", ""))
+                latitude.data = replaceCoordChars(latitude.data)
+                deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data)
                 latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
                 raise ValidationError(_l('Format ungültig.'))
@@ -82,7 +82,12 @@ class MitmachenForm(FlaskForm):
                 raise ValidationError(_l('Eines der ausgewählten Bilder ist grösser als 8MB.'))
             bild.seek(0)
 
-
+def replaceCoordChars(data):
+    data = data.replace(" ", "")
+    data = data.replace("`", "'")
+    data = data.replace("´", "'")
+    data = data.replace("''", "\"")
+    return data
 
 def dataRequiredOnPublish(form, field):
     if form.published.data == True:
@@ -134,8 +139,8 @@ class EditSteinForm(FlaskForm):
             longitude.data = float(longitude.data)
         except ValueError:
             try:
-                longitude.data = longitude.data.replace("''", "\"")
-                deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data.replace(" ", ""))
+                longitude.data = replaceCoordChars(longitude.data)
+                deg, minutes, seconds, direction =  re.split('[°\'"]', longitude.data)
                 longitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
                 raise ValidationError(_l('Format ungültig.'))
@@ -147,7 +152,7 @@ class EditSteinForm(FlaskForm):
             latitude.data = float(latitude.data)
         except ValueError:
             try:
-                latitude.data = latitude.data.replace("''", "\"")
+                latitude.data = replaceCoordChars(latitude.data)
                 deg, minutes, seconds, direction =  re.split('[°\'" ]', latitude.data.replace(" ", ""))
                 latitude.data = (float(deg) + float(minutes)/60 + float(seconds)/(60*60)) * (-1 if direction in ['W', 'S'] else 1)
             except:
