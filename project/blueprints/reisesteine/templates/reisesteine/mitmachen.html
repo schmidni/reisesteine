@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 {% block metadescription %}
-{{_('Haben Sie auf Ihrer Reisen einen Stein gefunden, den Sie interessant finden oder der Sie einfach an Ihre Reise oder ein Ereignis erinnert? Dann machen Sie mit!')}}
+{{_('Hat Ihnen auf einer Reise oder einem Spaziergang ein Stein gefallen, den Sie interessant oder einfach nur schön fanden? Dann machen Sie mit!')}}
 {% endblock %}
 
 {% block canonical %}
@@ -185,7 +185,7 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-text text-muted">
-                                    {{_('Laden Sie bis zu drei Nahaufnahmen des Steins hoch. Das Bild sollte scharf und so hoch aufgelöst wie möglich sein. Idealerweise benutzen Sie einen weissen oder hellen Hintergrund (z.B. heller Sand, weisser Stoff oder Papier).')}}
+                                    {{_('Laden Sie bis zu drei <b>Nah</b>aufnahmen des Steins hoch. Das Bild sollte scharf und so hoch aufgelöst wie möglich sein. Idealerweise benutzen Sie einen weissen oder hellen Hintergrund (z.B. heller Sand, weisser Stoff oder Papier).')}}
                                     <br><br>
                                     {{_('Für eine bessere Einschätzung, um was für einen Stein es sich handelt, hilft es uns, mehrere Fotos des Steins zu haben. ')}}
                                 </small>
@@ -204,7 +204,7 @@
                             </div>
                             <div class="form-group">
                                 <small class="form-text text-muted">
-                                    {{_('Laden Sie bis zu drei Naturaufnahmen des Fundortes hoch, gerne mit Horizont und wenn möglich im Querformat. Die Landschaft sollte erkennbar sein, z.B. ein Strand, Berg oder Ihr Garten; mit oder ohne Personen. ')}}
+                                    {{_('Laden Sie bis zu drei <b>Natur</b>aufnahmen des Fundortes hoch, gerne mit Horizont und wenn möglich im Querformat. Die Landschaft sollte erkennbar sein, z.B. ein Strand, Berg oder Ihr Garten; mit oder ohne Personen. ')}}
                                 </small>
                             </div>
                             <div class="form-group">
@@ -259,7 +259,7 @@
                 <div class="form-group">
                     {{ form.pers_geschichte.label(class_="mb-0") }}
                     <small class="form-text text-muted mb-1 mt-0">
-                        {{_('Schreiben Sie Ihre persönliche Geschichte zum Stein und zum Fundort oder zur Reise. Ideen: Wieso haben Sie den Stein mitgenommen und für die Ausstellung ausgewählt? Warum und mit wem waren Sie an dem Fundort? Woran erinnern Sie sich gerne, wenn Sie an die Reise denken? Was bedeutet die Erinnerung für Sie? Was machen Sie mit dem Stein?')}}
+                        {{_('Schreiben Sie Ihre persönliche Geschichte zum Stein und zum Fundort oder zur Reise. Ideen: Wieso haben Sie den Stein für die Ausstellung ausgewählt? Warum und mit wem waren Sie an dem Fundort? Woran erinnern Sie sich gerne, wenn Sie an die Reise denken? Was bedeutet die Erinnerung für Sie?')}}
                     </small>
                     {{ form.pers_geschichte(class_="form-control", rows=5, maxlength="400") }}
                     <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 400</small>
@@ -300,7 +300,7 @@
             </div>
             <div class="col-12 mt-4">
                 {{ form.submit(class_="btn btn-primary") }}
-                <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}" onclick="return confirm('{{_('Möchten Sie die Änderungen Verwerfen?')}}')">{{_('Verwerfen')}}</a>
+                <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}" onclick="return confirm('{{_('Möchten Sie die Änderungen verwerfen?')}}')">{{_('Verwerfen')}}</a>
             </div>
         </div>
     </form>
