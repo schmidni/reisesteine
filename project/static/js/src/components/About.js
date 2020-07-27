@@ -11,8 +11,6 @@ export default class About {
         
         document.querySelector('#rs-nav-background').classList.add('active');
         window.addEventListener('resize', this.keepMarkerCentered);
-        document.getElementById('rs-small-de').href = '/de/uber-uns';
-        document.getElementById('rs-small-en').href = '/en/about';
         
         document.getElementById('svg-path').style.fill = 'rgba(256, 256, 256, 0.9)';
 

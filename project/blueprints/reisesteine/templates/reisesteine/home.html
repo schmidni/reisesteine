@@ -37,8 +37,8 @@
             <li>Titel: {{ ste['titel'] }} </li>
             <li>Geschichte: {{ ste['pers_geschichte'] }} </li>
             <li>Geologie: {{ ste['geo_geschichte'] }} </li>
-            <li>Bild Herkunft: <img height="100" src="{{ url_for('static', filename='img/steine/'+ste['bild_herkunft']) }}"/> </li>
             <li>Bild Stein: <img height="100" src="{{ url_for('static', filename='img/steine/'+ste['bild_stein']) }}"/> </li>
+            <li>Bild Herkunft: <img height="100" src="{{ url_for('static', filename='img/steine/'+ste['bild_herkunft']) }}"/> </li>
         </ul>
         {% endif %}
     </div>

@@ -74,6 +74,7 @@ export default class FundortIndex {
         // tidy up listeners
         this.IndexView.removeMouseMoveMethod();
         this.IndexView.removeListeners();
+        document.querySelector('#rs-nav-background').classList.remove('active');
     }
 
     view () {

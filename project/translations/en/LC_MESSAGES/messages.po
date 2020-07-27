@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-07-27 15:50+0200\n"
+"POT-Creation-Date: 2020-07-27 16:20+0200\n"
 "PO-Revision-Date: 2020-07-16 08:39+0200\n"
 "Last-Translator: \n"
 "Language: en\n"
@@ -706,6 +706,14 @@ msgid ""
 "Vielen Dank für Deinen Stein. Er ist bei uns gut angekommen. Wir "
 "informieren Dich, sobald er online ist."
 msgstr "Thank you for your stone. We will inform you as soon as it is online."
+
+#: project/templates/404.html:1
+msgid "404 - Seite nicht gefunden"
+msgstr "404 - Page not found"
+
+#: project/templates/404.html:3
+msgid "Zurück zu unserer "
+msgstr "Return to our "
 
 #: project/templates/components/navigation.html:9
 #: project/templates/components/navigation.html:37

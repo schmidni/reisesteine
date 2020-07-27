@@ -14,7 +14,7 @@ app.config.from_object(Config)
 
 # Set up logger
 if not app.debug:
-    if not os.path.exists('logs'):
+    if not os.path.exists('logs'): 
         os.mkdir('logs')
     file_handler = RotatingFileHandler('logs/portfolio.log', maxBytes=10240,
                                        backupCount=10)
@@ -59,4 +59,7 @@ def home():
 # 404
 @app.errorhandler(404)
 def not_found_error(error):
+    g.lang_code = request.accept_languages.best_match(app.config['LANGUAGES'])
+    if not g.get('lang_code', None):
+        g.lang_code = 'de'
     return render_template('404.html'), 404
