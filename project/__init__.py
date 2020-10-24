@@ -1,4 +1,4 @@
-from flask import Flask, request, g, redirect, url_for, render_template
+from flask import Flask, request, g, redirect, url_for, render_template, send_from_directory
 from flask_babel import Babel
 from config import Config
 from flask_sqlalchemy import SQLAlchemy
@@ -55,6 +55,11 @@ def home():
     if not g.get('lang_code', None):
         g.lang_code = 'de'
     return redirect(url_for('reisesteine.index', lang_code=g.lang_code))
+
+# cert bot challenge
+@app.route('/.well-known/acme-challenge/<path:path>')
+def cert_bot_challenge(path):
+    return send_from_directory('{}/.well-known/acme-challenge'.format(os.path.dirname(app.instance_path)), path)
 
 # 404
 @app.errorhandler(404)

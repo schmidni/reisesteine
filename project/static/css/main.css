@@ -942,19 +942,23 @@ h4.active {
 }
 
 .leaflet-tooltip.rs-tooltip span {
+    line-height:1.3rem;
+    display: inline-block;
+    margin-top: 0.3rem;
+}
+
+.leaflet-tooltip.rs-tooltip span:last-child {
     font-family: 'Passion one', cursive;
     font-weight: 400;
     font-size: 1.4rem;
     letter-spacing: normal;
-    display: block;
-    line-height: 1.3rem;
-    margin-top: 0.3rem;
 }
 
 .leaflet-tooltip.rs-tooltip div{
-    margin: 20px 5px 0 5px;
+    margin: 18px 5px 0 5px;
 }
 
+.leaflet-tooltip.rs-tooltip div
 .leaflet-tooltip.rs-tooltip:before {
     border-top-color: rgba(256, 256, 256, 0.8);
 }

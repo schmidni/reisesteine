@@ -46,7 +46,6 @@ def verify_password(username, password):
             check_password_hash(users.get(username), password):
         return username
 
-
 # Frontend Routes ************************************
 @reisesteine.route('/')
 def index():
