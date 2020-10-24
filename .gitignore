@@ -4,7 +4,7 @@ config.py
 app.db
 project/static/img/steine/*
 project/static/img/user_images/*
-
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
