@@ -945,6 +945,7 @@ h4.active {
     line-height:1.3rem;
     display: inline-block;
     margin-top: 0.3rem;
+    min-width: 60%;
 }
 
 .leaflet-tooltip.rs-tooltip span:last-child {
@@ -952,6 +953,7 @@ h4.active {
     font-weight: 400;
     font-size: 1.4rem;
     letter-spacing: normal;
+    text-align: center,
 }
 
 .leaflet-tooltip.rs-tooltip div{
