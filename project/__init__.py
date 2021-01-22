@@ -9,6 +9,10 @@ import os
 
 from logging.handlers import RotatingFileHandler
 
+from project.bundles import bundles
+
+from flask_assets import Environment
+
 app = Flask(__name__)
 app.config.from_object(Config)
 
@@ -37,6 +41,14 @@ from project import models
 # import and register blueprints
 from project.blueprints.reisesteine import reisesteine
 app.register_blueprint(reisesteine)
+
+assets = Environment(app)
+
+# register static bundles
+assets.register('js_bundle', bundles['js_bundle'])
+assets.register('js_bundle_backend', bundles['js_bundle_backend'])
+assets.register('css_bundle', bundles['css_bundle'])
+assets.register('css_bundle_backend', bundles['css_bundle_backend'])
 
 # set up babel
 babel = Babel(app)

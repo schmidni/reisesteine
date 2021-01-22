@@ -72,10 +72,10 @@ export default class SteinView {
                     <p>{ctrl.attrs.info.absender}, {ctrl.attrs.info.wohnort}</p>
                 </div>
                 {!this.media.matches ? 
-                    <img style="will-change: transform, width, height" class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
+                    <img class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
                 :
                     <a href={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} class="rs-fundort-lightbox">
-                        <img style="will-change: transform, width, height" class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
+                        <img class="rs-fundort" src={"/static/img/steine/" + ctrl.attrs.info.bild_herkunft} />
                     </a>
                 }
             </div>

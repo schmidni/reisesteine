@@ -1,7 +1,7 @@
 import m from 'mithril';
-import anime from 'animejs';
 import SteinMain from './SteinMain.js';
 import IndexView from './IndexView.js';
+import lazyload from 'lazyload';
 
 export default class SteinIndex {
     constructor (ctrl) {
@@ -48,6 +48,9 @@ export default class SteinIndex {
     onupdate () {
         // init Index View with default measurements
         this.IndexView = new IndexView('.rs-index', '.rs-stein-link', this.onRockClick)
+        
+        // init lazyloader for rocks
+        var ll = new lazyload()
     }
 
 
@@ -85,7 +88,7 @@ export default class SteinIndex {
 
                 { this.imgs ? this.imgs.map((val, idx) => (
                     <div key={"img"+idx}>
-                        <a class="rs-stein-link"><img class="rs-stein" data-id={val[0]} src={'/static/img/steine/' + val[1]}></img></a>
+                        <a class="rs-stein-link"><img class="rs-stein lazyload" data-id={val[0]} data-src={'/static/img/steine/' + val[1]}></img></a>
                     </div>
                 )) : "" }
 

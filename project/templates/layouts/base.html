@@ -1,28 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head profile="http://www.w3.org/2005/10/profile">
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="{% block metadescription %}{% endblock %}">
+<head profile="http://www.w3.org/2005/10/profile">
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block metadescription %}{% endblock %}">
 
-        <title>Reisesteine</title>
+    <title>Reisesteine</title>
 
-        <link rel="icon" 
-            type="image/svg" 
-            href="{{ url_for('static', filename='img/favicon.svg')}}">
-            
-        {% block canonical %}{% endblock %}
-        
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Passion+One:wght@400;700&family=Sen&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"></script>
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/backend.css', version='1.0') }}"></script> 
-    </head>
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/favicon.svg')}}">
 
-    <body class="rs-backend"> 
-        {% block navigation %}{% endblock %}
-        {% block body %}{% endblock %}
-        <script type="text/javascript" src="{{ url_for('static', filename='js/ext/jquery-3.3.1.slim.min.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='js/ext/bootstrap.min.js') }}"></script>
-    </body>
+    {% block canonical %}{% endblock %}
+
+    {% assets "css_bundle_backend" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+    </link>
+    {% endassets %}
+
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Passion+One:wght@400;700&family=Sen&display=swap" rel="stylesheet">
+</head>
+
+<body class="rs-backend">
+    {% block navigation %}{% endblock %}
+    {% block body %}{% endblock %}
+    {% assets "js_bundle_backend" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}" async></script>
+    {% endassets %}
+</body>
+
 </html>

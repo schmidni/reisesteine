@@ -126,7 +126,15 @@ def steine_all():
 @reisesteine.route('/fundorte/images/all', methods=['GET'])
 def fundorte_all():
     img = Stein.query.filter_by(published=True).with_entities(Stein.id, Stein.bild_herkunft).all()
-    return jsonify(img)
+    img_list = []
+
+    for image in img:
+        im = Image.open(os.path.join(current_app.static_folder, 'img/steine', image[1]))
+        width, height = im.size
+        ratio_height = height / width
+        img_list.append([image[0], image[1], ratio_height])
+    
+    return jsonify(img_list)
 
 @reisesteine.route('/geschichten/all', methods=['GET'])
 def geschichten_all():

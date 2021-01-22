@@ -110,7 +110,6 @@ export default class svgFrame {
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.in,
                 d: this.calculatePath('mobilefull'),
-                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'mobilefull';
@@ -124,7 +123,6 @@ export default class svgFrame {
                 easing: this.settings.animation.shape.easing.out,
                 delay: this.settings.animation.shape.delay,
                 d: this.calculatePath('offset'),
-                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'offset';
@@ -136,7 +134,6 @@ export default class svgFrame {
                 duration: this.settings.animation.shape.duration,
                 easing: this.settings.animation.shape.easing.out,
                 d: this.calculatePath('full'),
-                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'full';
@@ -148,7 +145,6 @@ export default class svgFrame {
                 duration: 100,
                 easing: this.settings.animation.shape.easing.out,
                 d: this.calculatePath('full'),
-                translateZ: 0
             }).finished.then( () => {
                 this.isAnimating = false
                 this.paths.current = 'full';
@@ -160,7 +156,7 @@ export default class svgFrame {
                 duration: 1000,
                 easing: 'easeInCirc',
                 d: this.calculatePath('initial'),
-                translateZ: 0
+                
             }).finished.then( () => {
                 this.isAnimating = false
                 this.DOM.svg.style.display = 'none';

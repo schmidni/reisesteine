@@ -43,7 +43,6 @@ export default class worldMap {
                                 m(SteinMain, {'id': el[0], 'map':this, 'frame':this.frame, 'pushState': true})
                             }));
             if (!this.media.matches){
-                console.log(el);
                 marker.bindTooltip(
                     `<div>
                     ${convertDMS(el[1], null)} <br>

@@ -1,38 +1,43 @@
 <!DOCTYPE html>
 <html lang={{g.lang_code}}>
 
-    <head profile="http://www.w3.org/2005/10/profile">
+<head profile="http://www.w3.org/2005/10/profile">
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173558613-1"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-173558613-1');
-        </script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173558613-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', 'UA-173558613-1');
+    </script>
 
-        <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="description" content="{% block metadescription %}{% endblock %}">
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="{% block metadescription %}{% endblock %}">
 
-        <title>Home - Reisesteine</title>
-        <link rel="icon" 
-            type="image/svg" 
-            href="{{ url_for('static', filename='img/favicon.svg')}}">
-        {% block canonical %}{% endblock %}
+    <title>Home - Reisesteine</title>
+    <link rel="icon" type="image/svg" href="{{ url_for('static', filename='img/favicon.svg')}}">
+    {% block canonical %}{% endblock %}
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css', version='1.1') }}" />
-        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin=""/>
-        <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Passion+One:wght@400;700&family=Sen&display=swap" rel="stylesheet">
-        <link rel="stylesheet" href="{{url_for('static', filename='css/glightbox.min.css')}}">
-    </head>
+    {% assets "css_bundle" %}
+    <link rel="stylesheet" href="{{ ASSET_URL }}">
+    </link>
+    {% endassets %}
 
-    <body class="rs-frontend"> 
-        {% include 'components/navigation.html' %}
-        {% block body %}
-        
-        {% endblock %}
-        <script type="text/javascript" src="{{ url_for('static', filename='js/scripts/app.js', version='1.0') }}"></script>
-    </body>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="" />
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;700&family=Passion+One:wght@400;700&family=Sen&display=swap" rel="stylesheet">
+</head>
+
+<body class="rs-frontend">
+    {% include 'components/navigation.html' %}
+    {% block body %}
+
+    {% endblock %}
+
+    {% assets "js_bundle" %}
+    <script type="text/javascript" src="{{ ASSET_URL }}" async></script>
+    {% endassets %}
+</body>
+
 </html>

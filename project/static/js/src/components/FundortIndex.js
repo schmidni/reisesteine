@@ -3,6 +3,7 @@ import SteinMain from './SteinMain.js';
 import IndexView from './IndexView.js';
 import Masonry from 'masonry-layout';
 import imagesLoaded from 'imagesloaded';
+import lazyload from 'lazyload';
 
 
 export default class FundortIndex {
@@ -17,6 +18,10 @@ export default class FundortIndex {
             else
                 history.pushState('fundorte', 'Places - Travelstones', `/en/places`);
         }
+        this.media = window.matchMedia("(max-width: 1025px)");
+        this.img_width = 400;
+        if (this.media.matches)
+            this.img_width = 200;
     }
 
     oncreate (ctrl) {
@@ -32,6 +37,7 @@ export default class FundortIndex {
         })
         .then(result => {
             this.titles = result;
+            console.log(this.titles)
         });
     }
     
@@ -43,10 +49,12 @@ export default class FundortIndex {
             itemSelector: '.rs-fundort-grid',
             gutter: 0
         });
+        this.msnry.layout()
         imagesLoaded('.rs-fundort-grid').on('progress', (imgLoad, img) => {
             img.img.parentNode.parentNode.classList.remove('is-loading');
-            this.msnry.layout();
+            // this.msnry.layout()
         });
+        var ll = new lazyload()
     }
 
     onPlaceClick = async (e) => {
@@ -81,9 +89,9 @@ export default class FundortIndex {
         return(
             <div class="rs-index rs-index-fundort">
                 { this.titles ? this.titles.map((val, idx) => (
-                    <div class="rs-fundort-grid is-loading" key={"img"+idx}>
+                    <div class="rs-fundort-grid is-loading" style={'height: ' + val[2]*this.img_width + 'px;'} key={"img"+idx}>
                         <a class="rs-fundort-link">
-                            <img class="rs-fundort" data-id={val[0]} src={'/static/img/steine/' + val[1]}></img>
+                            <img class="rs-fundort lazyload" height={val[2]*this.img_width} width="400" data-id={val[0]} data-src={'/static/img/steine/' + val[1]}></img>
                         </a>
                     </div>
                 )) : "" }
