@@ -1,7 +1,7 @@
 import interact from 'interactjs';
 import anime from 'animejs';
 import {outerSize} from '../util/outerSize.js';
-import 'mdn-polyfills/element.prototype.closest';
+import 'mdn-polyfills/Element.prototype.closest';
 import 'mdn-polyfills/Array.prototype.findIndex';
 import 'mdn-polyfills/Node.prototype.remove';
 

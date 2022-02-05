@@ -4,7 +4,7 @@ import SteinIndex from './SteinIndex.js';
 import GeschichteIndex from './GeschichteIndex.js';
 import GeologieIndex from './GeologieIndex.js';
 import FundortIndex from './FundortIndex.js';
-import 'mdn-polyfills/element.prototype.closest';
+import 'mdn-polyfills/Element.prototype.closest';
 
 export default class Menu {
     constructor(map, frame, id) {

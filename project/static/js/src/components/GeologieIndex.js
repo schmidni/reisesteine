@@ -1,7 +1,7 @@
 import m from 'mithril';
 import SteinMain from './SteinMain.js';
 import IndexView from './IndexView.js';
-import 'mdn-polyfills/element.prototype.closest';
+import 'mdn-polyfills/Element.prototype.closest';
 
 export default class GeologieIndex {
     constructor (ctrl) {

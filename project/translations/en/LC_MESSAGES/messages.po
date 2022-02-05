@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2020-07-27 16:20+0200\n"
+"POT-Creation-Date: 2022-02-05 16:43+0100\n"
 "PO-Revision-Date: 2020-07-16 08:39+0200\n"
 "Last-Translator: \n"
 "Language: en\n"
@@ -221,11 +221,11 @@ msgstr "Place image is required."
 msgid "Bild Fundort zu gross."
 msgstr "Place image file size too large."
 
-#: project/blueprints/reisesteine/views.py:209
+#: project/blueprints/reisesteine/views.py:208
 msgid "Vielen Dank für deinen Stein"
 msgstr "Thank you for your stone"
 
-#: project/blueprints/reisesteine/views.py:312
+#: project/blueprints/reisesteine/views.py:310
 msgid "Dein Stein wurde veröffentlicht"
 msgstr "You're stone has been published"
 
@@ -244,6 +244,14 @@ msgstr "About"
 
 #: project/blueprints/reisesteine/templates/reisesteine/about.html:42
 msgid ""
+"Teilnahme am Wettbewerb <a href=\"http://www.fastforwardscience.de\" "
+"target=\"_blank\">Fast Forward Science 2021/22</a>"
+msgstr ""
+"Participation in the <a href=\"http://www.fastforwardscience.de\" "
+"target=\"_blank\">Fast Forward Science 2021/22</a> competition "
+
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:45
+msgid ""
 "Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in "
 "die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt "
 "oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung "
@@ -255,20 +263,20 @@ msgstr ""
 "Are you also constantly gripped by the desire to travel and the longing "
 "to go out into the world? Travel with your stones to the end of the world"
 " or to your front garden. The exhibition is a virtual collection of your "
-"favourite stones from anywhere in the world and the story you "
-"associate with them. In the exhibition you can discover more about our "
-"jointly created stone collection, its locations and learn about the "
-"personal and geological stories associated with it."
+"favourite stones from anywhere in the world and the story you associate "
+"with them. In the exhibition you can discover more about our jointly "
+"created stone collection, its locations and learn about the personal and "
+"geological stories associated with it."
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:45
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:48
 msgid "Konzeptentwicklerin, Herausgeberin & Redaktion:"
 msgstr "Concept developer, publisher & editor:"
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:46
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:49
 msgid "Gestaltung & technische Umsetzung:"
 msgstr "Design & technical implementation:"
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:49
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:52
 msgid ""
 "Die Ausstellung wurde inspiriert durch das Projekt «Nowhere – Die Spur "
 "der Steine» von Anna Sullivan."
@@ -276,7 +284,7 @@ msgstr ""
 "The exhibition was inspired by the project 'Nowhere - The Trace of "
 "Stones' by Anna Sullivan."
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:59
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:62
 msgid ""
 "Diese Webseite sowie ihre Teile sind urheberrechtlich geschützt und "
 "dürfen nur zum privaten, wissenschaftlichen und nicht gewerblichen "
@@ -300,7 +308,7 @@ msgstr ""
 "as the <i>focus</i>&#8239;Terra logo. Intermediate storage in a cache or "
 "on a proxy server to optimise access speed is permitted."
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:61
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:64
 msgid ""
 "Das Zitieren der Webseiteninhalte unter korrekten Quellenangaben sowie "
 "das Setzen von Links auf unsere Website sind ausdrücklich erlaubt."
@@ -308,24 +316,24 @@ msgstr ""
 "The citation of the website’s content with a correct statement of the "
 "source and the setting of links to our website is expressly allowed."
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:82
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:85
 #: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:123
 #: project/blueprints/reisesteine/templates/reisesteine/home.html:63
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:112
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:115
 msgid "Stein"
 msgstr "Stone"
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:82
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:85
 #: project/blueprints/reisesteine/templates/reisesteine/home.html:63
 msgid "Geschichte"
 msgstr "Story"
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:82
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:85
 #: project/blueprints/reisesteine/templates/reisesteine/home.html:63
 msgid "Fundort"
 msgstr "Place"
 
-#: project/blueprints/reisesteine/templates/reisesteine/about.html:82
+#: project/blueprints/reisesteine/templates/reisesteine/about.html:85
 #: project/blueprints/reisesteine/templates/reisesteine/home.html:63
 msgid "Geologie"
 msgstr "Geology"
@@ -392,7 +400,11 @@ msgstr ""
 msgid "Wir freuen uns auf Ihre Reisesteine!"
 msgstr "We look forward to your travel stones!"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:40
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:39
+msgid "Hier finden Sie eine Anleitung:"
+msgstr "Please find an instruction here:"
+
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:43
 msgid ""
 "Bitte beachten Sie, dass in einigen Ländern und an einigen Orten die "
 "Mitnahme von Steinen aus der Natur verboten ist und unter Strafe steht. "
@@ -409,15 +421,15 @@ msgstr ""
 "beautiful photos of stones with you. It is generally forbidden to remove "
 "processed, antique stones from their surroundings."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:44
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:47
 msgid "* Diese Felder werden benötigt"
 msgstr "* These fields are required"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:50
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:53
 msgid "Personalien"
 msgstr "Personal information"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:52
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:55
 msgid ""
 "Die Publikation erfolgt mit Angabe des Vornamens und des Wohnorts, ohne "
 "Ihre Kontaktangaben."
@@ -425,7 +437,7 @@ msgstr ""
 "The submission will be published with your first name and place of "
 "residence, but without your contact details."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:120
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:123
 msgid ""
 "Geben Sie den Namen des Ortes, an dem Sie den Stein gefunden haben, "
 "möglichst genau an: z.B. unter Lokalität/Ort: Ätna, Sizilien; unter Land:"
@@ -434,15 +446,15 @@ msgstr ""
 "Enter the name of the place where you found the stone as precisely as "
 "possible: e.g. location/place: Etna, Sicily; country: Italy."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:164
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:167
 msgid "Längen- und Breitengrade"
 msgstr "Longitude and latitude"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:171
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:174
 msgid "Wie finde ich die korrekten Koordinaten?"
 msgstr "How do I find the correct coordinates?"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:173
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:176
 msgid ""
 "Auf <a href=\"https://www.google.ch/maps\" target=\"_blank\">Google "
 "Maps</a> können Sie mit der rechten Maustaste auf den gewünschten Ort "
@@ -455,7 +467,7 @@ msgstr ""
 "select 'What's here?'. The coordinates are then displayed in the lower "
 "part of the screen."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:176
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:179
 msgid ""
 "Mehr Informationen dazu finden Sie <a "
 "href=\"https://support.google.com/maps/answer/18539?co=GENIE.Platform&percnt;3DDesktop&hl=de\""
@@ -465,11 +477,11 @@ msgstr ""
 "href=\"https://support.google.com/maps/answer/18539?co=GENIE.Platform&percnt;3DDesktop&hl=en\""
 " target=\"_blank\">here</a>."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:178
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:181
 msgid "Schreibweise"
 msgstr "Types of coordinates"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:180
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:183
 msgid ""
 "Zur Eingabe kann entweder die Koordinatenschreibweise mit <span class"
 "=\"font-italic\">11°11'11.0\"N, 11°11'11.0\"E</span> verwendet werden, "
@@ -480,7 +492,7 @@ msgstr ""
 "italic\">11°11'11.0\"N, 11°11'11.0\"E</span> or the notation in decimal "
 "numbers <span class=\"font-italic\">11.123456789, 11.123456789.</span>"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:188
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:191
 msgid ""
 "Laden Sie bis zu drei <b>Nah</b>aufnahmen des Steins hoch. Das Bild "
 "sollte scharf und so hoch aufgelöst wie möglich sein. Idealerweise "
@@ -491,7 +503,7 @@ msgstr ""
 "sharp and as high resolution as possible. Ideally use a white or light "
 "background (e.g. light sand, white cloth or paper)."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:190
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:193
 msgid ""
 "Für eine bessere Einschätzung, um was für einen Stein es sich handelt, "
 "hilft es uns, mehrere Fotos des Steins zu haben. "
@@ -499,8 +511,8 @@ msgstr ""
 "For a better assessment of the rock type, it helps to have several photos"
 " of the stone. "
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:196
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:213
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:199
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:216
 msgid ""
 "Für das Hochladen mehrerer Bilder (max. 3 Files à 8 MB) wählen Sie bitte "
 "alle Files gleichzeitig aus."
@@ -508,7 +520,7 @@ msgstr ""
 "When uploading several images (max. 3 files of 8 MB each) please select "
 "all files at the same time."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:207
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:210
 msgid ""
 "Laden Sie bis zu drei <b>Natur</b>aufnahmen des Fundortes hoch, gerne mit"
 " Horizont und wenn möglich im Querformat. Die Landschaft sollte erkennbar"
@@ -519,7 +531,7 @@ msgstr ""
 "landscape should be recognizable, e.g. a beach, mountain or your garden; "
 "with or without people. "
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:224
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:227
 msgid ""
 "Bitte laden Sie nur Bilder hoch, über deren Verwendungsrechte Sie "
 "verfügen. Bei einer Urheberrechtsverletzung lehnt "
@@ -529,7 +541,7 @@ msgstr ""
 "<i>focus</i>&#8239;Terra declines any responsibility in case of copyright"
 " infringement. "
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:253
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:256
 msgid ""
 "Geben Sie einen möglichst kurzen, kreativen und aussagekräftigen Titel "
 "für Ihre persönliche Geschichte ein. Ideen finden Sie unter "
@@ -537,12 +549,12 @@ msgstr ""
 "Enter a short, creative and meaningful title for your personal story. "
 "Ideas can be found under "
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:254
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:257
 #: project/templates/components/navigation.html:41
 msgid "Geschichten"
 msgstr "Stories"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:262
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:265
 msgid ""
 "Schreiben Sie Ihre persönliche Geschichte zum Stein und zum Fundort oder "
 "zur Reise. Ideen: Wieso haben Sie den Stein für die Ausstellung "
@@ -551,12 +563,12 @@ msgid ""
 " für Sie?"
 msgstr ""
 "Write your personal story about the stone and the place where you found "
-"it or the journey. Ideas: Why did you choose the stone for the exhibition? Why "
-"and with whom did you go to the location where it was found? What do you "
-"like to remember when you think of the journey? What does the memory mean"
-" to you?"
+"it or the journey. Ideas: Why did you choose the stone for the "
+"exhibition? Why and with whom did you go to the location where it was "
+"found? What do you like to remember when you think of the journey? What "
+"does the memory mean to you?"
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:270
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:273
 msgid ""
 "Wenn Sie die Geologie des Steines kennen, können Sie hier den Text dazu "
 "schreiben. Oder teilen Sie uns mögliche Hinweise oder Vermutungen mit, um"
@@ -565,11 +577,11 @@ msgstr ""
 "If you know the geology of the stone, you can write the text here. Or "
 "tell us possible hints or assumptions of what kind of stone it could be."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:276
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:279
 msgid "Haben Sie noch weitere Informationen für uns? "
 msgstr "Do you have any further information for us? "
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:292
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:295
 msgid ""
 "Mit dem Einsenden Ihrer Informationen übertragen Sie die Rechte an Ihren "
 "Bildern und Geschichten an <i>focus</i>&#8239;Terra und erklären sich mit"
@@ -578,12 +590,12 @@ msgstr ""
 "By submitting your information, you transfer the rights on your images "
 "and stories to <i>focus</i>&#8239;Terra and agree to their publication."
 
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:303
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:306
 msgid "Möchten Sie die Änderungen verwerfen?"
 msgstr "Do you want to discard the changes?"
 
 #: project/blueprints/reisesteine/templates/reisesteine/backend/editStein.html:286
-#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:303
+#: project/blueprints/reisesteine/templates/reisesteine/mitmachen.html:306
 msgid "Verwerfen"
 msgstr "Discard"
 
@@ -743,3 +755,9 @@ msgstr "Places"
 msgid "Gesteinstypen"
 msgstr "Rock types"
 
+#: project/templates/layouts/base_app.html:19
+msgid ""
+"Fast Forward Science, Webvideo-Wettbewerb, Wissenschaft, Science, Wissen,"
+" Wissenschaft im Dialog, Open Box Special"
+msgstr ""
+"Fast Forward Science, competition, Science, Knowledge, Research, Wissenschaft im Dialog, Open Box Special"
