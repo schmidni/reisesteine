@@ -5,15 +5,17 @@
 {% endblock %}
 
 {% block canonical %}
-        <link rel="alternate" hreflang="de" href="{{ url_for(request.endpoint, _external=True, lang_code='de', **request.view_args) }}" />
-        <link rel="alternate" hreflang="en" href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
+<link rel="alternate" hreflang="de"
+    href="{{ url_for(request.endpoint, _external=True, lang_code='de', **request.view_args) }}" />
+<link rel="alternate" hreflang="en"
+    href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
 {% endblock %}
 
 {% block body %}
 <noscript>
     <style>
         body.rs-frontend {
-            overflow: visible!important;
+            overflow: visible !important;
         }
     </style>
 </noscript>
@@ -39,24 +41,29 @@
     <div id="rs-about">
         <h1>{{_('Über REISESTEINE')}}</h1>
         <p>
-            {{_('Teilnahme am Wettbewerb <a href="http://www.fastforwardscience.de" target="_blank">Fast Forward Science 2021/22</a>')}}
+            {{_('Preisträger beim Wettbewerb <a href="http://www.fastforwardscience.de" target="_blank">Fast Forward Science 2021/22</a>')}}
         </p>
         <p>
             {{_('Werden Sie auch immer wieder von Reiselust gepackt und der Sehnsucht, in die Welt hinauszuziehen? Reisen Sie mit Ihren Steinen ans Ende der Welt oder in Ihren Vorgarten. Die Ausstellung ist eine virtuelle Sammlung Ihrer Lieblingssteine von irgendwo auf der Welt und Ihrer Geschichte, die Sie damit verbinden. Entdecken Sie in der Ausstellung mehr über unsere gemeinsam erstellte Steinsammlung, ihre Fundorte und lernen Sie die damit verbundenen persönlichen und geologischen Geschichten kennen.')}}
         </p>
         <p>
-            <b>{{_('Konzeptentwicklerin, Herausgeberin & Redaktion:')}}</b> <a href="https://focusterra.ethz.ch" target="_blank"><i>focus</i>&#8239;Terra</a><br/>
-            <b>{{_('Gestaltung & technische Umsetzung:')}}</b> <a href="{{ url_for('reisesteine.marion') }}">Marion Deichmann</a> und <a href="{{ url_for('reisesteine.nicolas') }}">Nicolas Schmid</a>
+            <b>{{_('Konzeptentwicklerin, Herausgeberin & Redaktion:')}}</b> <a href="https://focusterra.ethz.ch"
+                target="_blank"><i>focus</i>&#8239;Terra</a><br />
+            <b>{{_('Gestaltung & technische Umsetzung:')}}</b> <a href="{{ url_for('reisesteine.marion') }}">Marion
+                Deichmann</a> und <a href="{{ url_for('reisesteine.nicolas') }}">Nicolas Schmid</a>
         </p>
         <p style="font-size: smaller">
-            {{_('Die Ausstellung wurde inspiriert durch das Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan.')}} 
+            {{_('Die Ausstellung wurde inspiriert durch das Projekt «Nowhere – Die Spur der Steine» von Anna Sullivan.')}}
         </p>
         <p class="rs-about-logos">
-            <a href="https://ethz.ch" target="_blank"><img id="rs-eth-logo" src=" {{ url_for('static', filename='img/eth_logo.svg') }} "/></a>
-            <a href="https://focusterra.ethz.ch" target="_blank"><img src=" {{ url_for('static', filename='img/focusTerra_logo.svg') }} "/></a>
+            <a href="https://ethz.ch" target="_blank"><img id="rs-eth-logo"
+                    src=" {{ url_for('static', filename='img/eth_logo.svg') }} " /></a>
+            <a href="https://focusterra.ethz.ch" target="_blank"><img
+                    src=" {{ url_for('static', filename='img/focusTerra_logo.svg') }} " /></a>
         </p>
         <p>
-            <a href="https://focusterra.ethz.ch/footer/copyright.html" target="_blank">© 2020, <i>focus</i>&#8239;Terra – ETH Zürich</a>
+            <a href="https://focusterra.ethz.ch/footer/copyright.html" target="_blank">© 2020, <i>focus</i>&#8239;Terra
+                – ETH Zürich</a>
         </p>
         <p class="rs-copyright">
             {{_('Diese Webseite sowie ihre Teile sind urheberrechtlich geschützt und dürfen nur zum privaten, wissenschaftlichen und nicht gewerblichen Gebrauch kopiert und ausgedruckt werden. Ohne vorgängige schriftliche Erlaubnis von <i>focus</i>&#8239;Terra – ETH Zürich dürfen die Webseite sowie ihre Teile weder vervielfältigt noch auf anderen Servern gespeichert, in Newsgroups oder Online-Dienste eingespeist oder auf einer CD-ROM oder anderen Datenträgern gespeichert werden. Dies gilt insbesondere für das Logo der ETH Zürich sowie das Logo von <i>focus</i>&#8239;Terra. Die Zwischenspeicherung in einem Cache oder auf einem Proxy-Server zur Optimierung der Zugriffsgeschwindigkeit ist gestattet.')}}
@@ -78,10 +85,11 @@
     document.getElementById('map').style.zIndex = 1;
     document.getElementById('map').style.backgroundColor = 'white';
 
-    var data_index = {{ steine|tojson|safe }};
-    var data_stein = {{ {} if not ste else ste|tojson|safe }};
+    var data_index = {{ steine| tojson | safe }};
+    var data_stein = {{ { } if not ste else ste | tojson | safe }};
 
 </script>
-<div id="rs-nav-rock-strings" style="display: none" data-ste="{{_('Stein')}}" data-gesch="{{_('Geschichte')}}" data-fund="{{_('Fundort')}}" data-geo="{{_('Geologie')}}">
+<div id="rs-nav-rock-strings" style="display: none" data-ste="{{_('Stein')}}" data-gesch="{{_('Geschichte')}}"
+    data-fund="{{_('Fundort')}}" data-geo="{{_('Geologie')}}">
 </div>
 {% endblock %}

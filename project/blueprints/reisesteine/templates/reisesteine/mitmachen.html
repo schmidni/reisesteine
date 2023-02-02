@@ -5,17 +5,19 @@
 {% endblock %}
 
 {% block canonical %}
-        <link rel="alternate" hreflang="de" href="{{ url_for(request.endpoint, _external=True, lang_code='de', **request.view_args) }}" />
-        <link rel="alternate" hreflang="en" href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
+<link rel="alternate" hreflang="de"
+    href="{{ url_for(request.endpoint, _external=True, lang_code='de', **request.view_args) }}" />
+<link rel="alternate" hreflang="en"
+    href="{{ url_for(request.endpoint, _external=True, lang_code='en', **request.view_args) }}" />
 {% endblock %}
 
 {% block navigation %}
 <div id="rs-backend-navigation">
     <a id="rs-backend-logo" href="{{ url_for('reisesteine.index') }}">
-        <img src="{{ url_for('static', filename='img/pfeil.svg') }}" style="transform: rotate(180deg);"/>
+        <img src="{{ url_for('static', filename='img/pfeil.svg') }}" style="transform: rotate(180deg);" />
     </a>
     <span id="rs-backend-lang">
-        <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> / 
+        <a id="rs-small-de" href="{{ url_for(request.endpoint, lang_code='de') }}">de</a> /
         <a id="rs-small-en" href="{{ url_for(request.endpoint, lang_code='en') }}">en</a>
     </span>
 </div>
@@ -36,7 +38,7 @@
                     {{_('Wir freuen uns auf Ihre Reisesteine!')}}
                 </p>
                 <p>
-                    {{_('Hier finden Sie eine Anleitung:')}} <a href="https://youtu.be/AGX36kK1o2A" target="_blank">https://youtu.be/AGX36kK1o2A</a>
+                    {{_('Hier finden Sie eine Anleitung: <a href="https://youtu.be/AGX36kK1o2A" target="_blank">https://youtu.be/AGX36kK1o2A</a>')}}
                 </p>
                 <p>
                     <small class="text-muted form-text">
@@ -73,9 +75,9 @@
                             <div class="col-sm-8">
                                 {{ form.wohnort(class_="form-control") }}
                                 {% for error in form.wohnort.errors %}
-                                    <div class="invalid-feedback">
-                                        {{error}}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{error}}
+                                </div>
                                 {% endfor %}
                             </div>
                         </div>
@@ -110,7 +112,7 @@
                         </div>
                     </div>
                 </div>
-            </div>    
+            </div>
             <div class="col-md-6">
                 <h2>{{_('Stein')}}</h2>
                 <small class="form-text text-muted mb-3">
@@ -136,9 +138,10 @@
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-6">
-                                {{ form.latitude.label }} 
+                                {{ form.latitude.label }}
                                 <a class="rs-form-popover" data-toggle="modal" data-target="#coords-modal">
-                                    <img class="rs-form-info" src="{{ url_for('static', filename='img/info-circle-solid.svg') }}"/>
+                                    <img class="rs-form-info"
+                                        src="{{ url_for('static', filename='img/info-circle-solid.svg') }}" />
                                 </a>
                                 {{ form.latitude(class_="form-control" + (" is-invalid" if form.latitude.errors else "")) }}
                                 {% for error in form.latitude.errors %}
@@ -148,9 +151,10 @@
                                 {% endfor %}
                             </div>
                             <div class="form-group col-md-6">
-                                {{ form.longitude.label }} 
+                                {{ form.longitude.label }}
                                 <a class="rs-form-popover" data-toggle="modal" data-target="#coords-modal">
-                                    <img class="rs-form-info" src="{{ url_for('static', filename='img/info-circle-solid.svg') }}"/>
+                                    <img class="rs-form-info"
+                                        src="{{ url_for('static', filename='img/info-circle-solid.svg') }}" />
                                 </a>
                                 {{ form.longitude(class_="form-control" + (" is-invalid" if form.longitude.errors else "")) }}
                                 {% for error in form.longitude.errors %}
@@ -159,7 +163,8 @@
                                 </div>
                                 {% endfor %}
                             </div>
-                            <div class="modal fade" id="coords-modal" tabindex="-1" role="dialog" aria-labelledby="coords-modal-label" aria-hidden="true">
+                            <div class="modal fade" id="coords-modal" tabindex="-1" role="dialog"
+                                aria-labelledby="coords-modal-label" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -196,7 +201,8 @@
                             <div class="form-group">
                                 {{ form.bild_stein.label }}
                                 {{ form.bild_stein(class_="form-control-file" + (" is-invalid" if form.bild_stein.errors else "")) }}
-                                <small id="steinHelp" class="form-text text-muted">{{_('Für das Hochladen mehrerer Bilder (max. 3 Files à 8 MB) wählen Sie bitte alle Files gleichzeitig aus.')}}</small>
+                                <small id="steinHelp"
+                                    class="form-text text-muted">{{_('Für das Hochladen mehrerer Bilder (max. 3 Files à 8 MB) wählen Sie bitte alle Files gleichzeitig aus.')}}</small>
                                 <div id="fileListStein">
                                 </div>
                                 {% for error in form.bild_stein.errors %}
@@ -213,13 +219,14 @@
                             <div class="form-group">
                                 {{ form.bild_herkunft.label }}
                                 {{ form.bild_herkunft(class_="form-control-file" + (" is-invalid" if form.bild_herkunft.errors else "")) }}
-                                <small id="herkunftHelp" class="form-text text-muted">{{_('Für das Hochladen mehrerer Bilder (max. 3 Files à 8 MB) wählen Sie bitte alle Files gleichzeitig aus.')}}</small>
+                                <small id="herkunftHelp"
+                                    class="form-text text-muted">{{_('Für das Hochladen mehrerer Bilder (max. 3 Files à 8 MB) wählen Sie bitte alle Files gleichzeitig aus.')}}</small>
                                 <div id="fileListHerkunft">
                                 </div>
                                 {% for error in form.bild_herkunft.errors %}
-                                    <div class="invalid-feedback">
-                                        {{error}}
-                                    </div>
+                                <div class="invalid-feedback">
+                                    {{error}}
+                                </div>
                                 {% endfor %}
                             </div>
                             <div class="form-group">
@@ -228,20 +235,20 @@
                                 </small>
                             </div>
 
-                            
+
                             <script>
-                                function updateList (inputSel, fileList) {
+                                function updateList(inputSel, fileList) {
                                     var input = document.getElementById(inputSel);
                                     var output = document.getElementById(fileList);
                                     var children = "";
                                     console.log(input.files);
-                                    for (var i=0; i<input.files.length; ++i) {
-                                        children += '<li>' + input.files.item(i).name + ' (' + Math.round(input.files.item(i).size/1024/1024*100)/100 + 'MB)</li>';
+                                    for (var i = 0; i < input.files.length; ++i) {
+                                        children += '<li>' + input.files.item(i).name + ' (' + Math.round(input.files.item(i).size / 1024 / 1024 * 100) / 100 + 'MB)</li>';
                                     }
-                                    output.innerHTML = '<ul>'+children+'</ul>';
+                                    output.innerHTML = '<ul>' + children + '</ul>';
                                 }
-                                document.getElementById('bild_stein').addEventListener('change', function() {updateList('bild_stein', 'fileListStein');});
-                                document.getElementById('bild_herkunft').addEventListener('change', function() {updateList('bild_herkunft', 'fileListHerkunft');});
+                                document.getElementById('bild_stein').addEventListener('change', function () { updateList('bild_stein', 'fileListStein'); });
+                                document.getElementById('bild_herkunft').addEventListener('change', function () { updateList('bild_herkunft', 'fileListHerkunft'); });
                             </script>
                         </div>
                     </div>
@@ -265,7 +272,8 @@
                         {{_('Schreiben Sie Ihre persönliche Geschichte zum Stein und zum Fundort oder zur Reise. Ideen: Wieso haben Sie den Stein für die Ausstellung ausgewählt? Warum und mit wem waren Sie an dem Fundort? Woran erinnern Sie sich gerne, wenn Sie an die Reise denken? Was bedeutet die Erinnerung für Sie?')}}
                     </small>
                     {{ form.pers_geschichte(class_="form-control", rows=5, maxlength="400") }}
-                    <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/ 400</small>
+                    <small id="geschHelp" class="form-text text-muted"><span id="current_geschichte">0</span>/
+                        400</small>
                 </div>
                 <div class="form-group">
                     {{ form.geo_geschichte.label(class_="mb-0") }}
@@ -276,14 +284,15 @@
                 </div>
                 <div class="form-group">
                     {{ form.bemerkungen.label(class_="mb-0") }}
-                    <small class="form-text text-muted mb-1 mt-0">{{_('Haben Sie noch weitere Informationen für uns? ')}}</small>
+                    <small
+                        class="form-text text-muted mb-1 mt-0">{{_('Haben Sie noch weitere Informationen für uns? ')}}</small>
                     {{ form.bemerkungen(class_="form-control", rows=5) }}
                 </div>
 
                 <div class="form-group">
                     {{ form.recaptcha }}
                     {% if form.recaptcha.errors|length > 0 %}
-                        <p class="uk-text-danger">reCaptcha verification Failed</p>
+                    <p class="uk-text-danger">reCaptcha verification Failed</p>
                     {% endif %}
                 </div>
 
@@ -303,7 +312,8 @@
             </div>
             <div class="col-12 mt-4">
                 {{ form.submit(class_="btn btn-primary") }}
-                <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}" onclick="return confirm('{{_('Möchten Sie die Änderungen verwerfen?')}}')">{{_('Verwerfen')}}</a>
+                <a class="btn btn-secondary" href="{{ url_for('reisesteine.mitmachen') }}"
+                    onclick="return confirm('{{_('Möchten Sie die Änderungen verwerfen?')}}')">{{_('Verwerfen')}}</a>
             </div>
         </div>
     </form>
@@ -314,11 +324,11 @@
 
 <script>
     document.getElementById('current_geschichte').innerHTML = document.getElementById('pers_geschichte').value.length;
-    document.getElementById('pers_geschichte').addEventListener('keyup', function(e){
+    document.getElementById('pers_geschichte').addEventListener('keyup', function (e) {
         document.getElementById('current_geschichte').innerHTML = this.value.length;
     });
     document.getElementById('current_titel').innerHTML = document.getElementById('titel').value.length;
-    document.getElementById('titel').addEventListener('keyup', function(e){
+    document.getElementById('titel').addEventListener('keyup', function (e) {
         document.getElementById('current_titel').innerHTML = this.value.length;
     });
 </script>
